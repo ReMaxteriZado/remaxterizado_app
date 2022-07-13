@@ -1,0 +1,70 @@
+@import "_variables";
+@import "_sidebar";
+@import "_inputs";
+@import "theme";
+
+// @import "bootstrap";
+
+::-moz-selection {
+    /* Code for Firefox */
+    color: white;
+    background: $primary;
+}
+
+::selection {
+    color: white;
+    background: $primary;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: $dark;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $primary;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: darken($primary, 20%);
+}
+
+* {
+    box-shadow: none !important;
+}
+
+#app {
+    font-family: Work_Sans, sans-serif;
+
+    section {
+        padding-top: 5rem;
+    }
+
+    footer {
+        margin-top: 5rem;
+    }
+
+    .datatable {
+        a {
+            color: $primary;
+            text-decoration: none;
+        }
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    hr {
+        height: 2px;
+        background-color: white;
+    }
+}

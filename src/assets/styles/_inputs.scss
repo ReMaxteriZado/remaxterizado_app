@@ -1,0 +1,48 @@
+// form {
+//     .p-inputtext,
+//     .p-dropdown {
+//         background-color: darken($primary, 10%);
+//         border: none;
+//         color: white;
+
+//         &::placeholder {
+//             color: white;
+//         }
+
+//         &:focus {
+//             box-shadow: none;
+//             background-color: darken($primary, 20%);
+//         }
+
+//         &:enabled:focus {
+//             box-shadow: none;
+//             background-color: darken($primary, 20%);
+//         }
+
+//         &:not(.p-disabled).p-focus {
+//             box-shadow: none;
+//         }
+
+//         .p-dropdown-label.p-placeholder {
+//             color: white;
+//         }
+
+//         .p-dropdown-trigger {
+//             span {
+//                 color: white;
+//             }
+//         }
+//     }
+
+//     .p-float-label > label {
+//         color: white;
+//     }
+
+//     .p-float-label input:focus ~ label {
+//         left: 0;
+//     }
+
+//     .p-float-label input.p-filled ~ label {
+//         left: 0;
+//     }
+// }
