@@ -3,8 +3,8 @@ const state = {
     layout: "web-layout",
 
     // Admin
-    defaultApiRoute: "http://remaxterizado_api.test/api",
-    // defaultApiRoute: "https://www.remaxterizado.es/api/api",
+    // defaultApiRoute: "http://remaxterizado_api.test/api",
+    defaultApiRoute: "https://api.remaxterizado.es/api",
     loading: false,
     showSidebar: false,
     showNotLoggedToast: false,

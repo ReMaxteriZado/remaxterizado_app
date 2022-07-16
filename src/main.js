@@ -6,7 +6,7 @@ import App from "./components/App.vue";
 import store from "././store/index.js";
 
 // Axios
-import axios from "./axios";
+import base from "./axios";
 
 // Router
 import router from "./router";
@@ -55,7 +55,7 @@ app.use(ConfirmationService);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 
-app.config.globalProperties.$http = axios;
+app.config.globalProperties.$http = base;
 app.config.globalProperties.$store = store;
 
 app.mount("#app");
