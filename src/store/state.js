@@ -5,7 +5,7 @@ const state = {
     // Admin
     // defaultApiRoute: "http://remaxterizado_api.test/api",
     defaultApiRoute: "https://api.remaxterizado.es/api",
-    loading: false,
+    // loading: false,
     showSidebar: false,
     showNotLoggedToast: false,
     userLogged: null,
