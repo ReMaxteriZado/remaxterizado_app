@@ -1,14 +1,12 @@
 <template>
     <DataTable
         :value="links"
-        :paginator="datatable_defaults.paginator"
-        :rows="datatable_defaults.rows"
-        :rowHover="datatable_defaults.rowHover"
-        :loading="datatable_defaults.loading"
-        :paginatorTemplate="datatable_defaults.paginatorTemplate"
-        :currentPageReportTemplate="
-            datatable_defaults.currentPageReportTemplate
-        "
+        :paginator="datatableDefaults.paginator"
+        :rows="datatableDefaults.rows"
+        :rowHover="datatableDefaults.rowHover"
+        :loading="datatableDefaults.loading"
+        :paginatorTemplate="datatableDefaults.paginatorTemplate"
+        :currentPageReportTemplate="datatableDefaults.currentPageReportTemplate"
         class="datatable p-0"
     >
         <template #header>
@@ -38,10 +36,7 @@
         >
         <Column header="Link">
             <template #body="{ data }">
-                <a
-                    @click="incrementViews(data)"
-                    target="_blank"
-                    :href="data.link"
+                <a @click="increment(data)" target="_blank" :href="data.link"
                     >Link</a
                 >
             </template></Column
@@ -87,7 +82,7 @@ export default {
         };
     },
     methods: {
-        ...mapActions(["getLinks", "sendDeleteRequest", "sendPostRequest"]),
+        ...mapActions(["getLinks", "sendDeleteRequest", "incrementViews"]),
         ...mapMutations([
             "toggleNewItemSidebar",
             "changeFormComponent",
@@ -114,16 +109,14 @@ export default {
                 },
             });
         },
-        incrementViews(link) {
-            this.sendPostRequest({
-                url: "/links/incremet-views/" + link.id,
-            }).then(() => {
+        increment(link) {
+            this.incrementViews(link.id).then(() => {
                 this.getLinks();
             });
         },
     },
     computed: {
-        ...mapState(["datatable_defaults", "links"]),
+        ...mapState(["datatableDefaults", "links"]),
     },
     mounted() {
         this.getLinks();

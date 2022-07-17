@@ -188,10 +188,10 @@ export default {
         },
     },
     computed: {
-        ...mapState(["categories", "new_link_category_selected"]),
+        ...mapState(["categories", "newLinkCategorySelected"]),
     },
     mounted() {
-        this.getCategories(this.search);
+        this.getCategories();
     },
     watch: {
         categories() {

@@ -36,7 +36,7 @@
 
             <Dropdown
                 v-model="form.code_language"
-                :options="code_languages"
+                :options="codeLanguages"
                 :filter="true"
                 placeholder="Select a language"
                 :showClear="true"
@@ -168,7 +168,7 @@ export default {
         ...mapState([
             "editModel",
             "links",
-            "code_languages",
+            "codeLanguages",
             "showNewItemSidebar",
         ]),
     },

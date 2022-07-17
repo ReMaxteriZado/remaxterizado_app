@@ -28,7 +28,7 @@
                 class="w-100 mt-4"
             >
                 <template #option="slotProps">
-                    <div>{{ slotProps.option.category_tree }}</div>
+                    <div>{{ slotProps.option.categoryTree }}</div>
                 </template>
             </Dropdown>
 

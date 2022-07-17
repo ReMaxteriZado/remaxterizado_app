@@ -34,12 +34,14 @@ export default {
         Toast,
         ConfirmDialog,
     },
-    mounted() {
-        this.setFormAccessToken;
-    },
     computed: {
         ...mapState(["showNotLoggedToast", "showFormGeneralErrorToast"]),
+    },
+    methods: {
         ...mapActions(["setFormAccessToken"]),
+    },
+    mounted() {
+        this.setFormAccessToken();
     },
     watch: {
         showNotLoggedToast(value) {
@@ -92,7 +94,7 @@ export default {
 
         .slide-enter-active,
         .slide-leave-active {
-            transition: all .3s ease;
+            transition: all 0.3s ease;
         }
 
         .slide-enter-from,

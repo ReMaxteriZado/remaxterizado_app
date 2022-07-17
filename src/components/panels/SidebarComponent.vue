@@ -6,7 +6,7 @@
         id="web-sidebar"
     >
         <form
-            @submit.prevent="login()"
+            @submit.prevent="doLogin()"
             @keydown="form.onKeydown($event)"
             class="d-flex flex-column align-items-center justify-content-sart"
         >
@@ -60,6 +60,8 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import Form from "vform";
 
+import { mapActions } from "vuex";
+
 export default {
     components: {
         InputText,
@@ -74,36 +76,13 @@ export default {
         errors: null,
     }),
     methods: {
-        login() {
-            this.$store.dispatch("login", {
+        ...mapActions(["login"]),
+        doLogin() {
+            this.login({
                 form: this.form,
-                url: "/login",
                 errors: this.errors,
             });
-            // .then((response) => {
-            //     if (response.data?.message) {
-            //         this.errors.set("email", response.data.message);
-            //     }
-            // });
         },
-        // async login() {
-        //     try {
-        //         const response = await this.form.post(
-        //             this.$store.state.defaultApiRoute + "/login"
-        //         );
-
-        //         localStorage.setItem("access_token", response.data.token);
-
-        //         this.$store.commit("toggleSidebar", false);
-
-        //         this.$router.push("/admin/dashboard");
-        //     } catch (error) {
-        //         if (!error.response.data?.errors) {
-        //             this.errors.set("email", error.response.data.message);
-        //         }
-        //         console.error(error.response);
-        //     }
-        // },
     },
     mounted() {
         this.errors = this.form.errors;

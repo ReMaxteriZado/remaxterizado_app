@@ -10,7 +10,7 @@
             <div class="d-flex flex-column gap-1 my-3">
                 <label for="">Comment</label>
                 <Textarea
-                    v-model="view_code.comment"
+                    v-model="viewCode.comment"
                     :autoResize="true"
                     class="w-100"
                     disabled
@@ -21,8 +21,8 @@
                 <label for="">Code</label>
                 <CodeEditor
                     :readonly="true"
-                    :language="view_code.language"
-                    :load_code="view_code.code"
+                    :language="viewCode.language"
+                    :load_code="viewCode.code"
                 />
             </div>
         </Dialog>
@@ -44,7 +44,7 @@ export default {
         Textarea,
     },
     computed: {
-        ...mapState(["view_code"]),
+        ...mapState(["viewCode"]),
     },
     methods: {
         ...mapMutations(["toggleCodeDialog"]),

@@ -42,7 +42,7 @@
                 class="w-100 mt-4"
             >
                 <template #option="slotProps">
-                    <div>{{ slotProps.option.category_tree }}</div>
+                    <div>{{ slotProps.option.categoryTree }}</div>
                 </template>
             </Dropdown>
 
@@ -161,8 +161,8 @@ export default {
             this.form.tags = JSON.parse(this.editModel.tags);
         }
 
-        if (this.new_link_category_selected != null) {
-            this.form.category_id = this.new_link_category_selected.id;
+        if (this.newLinkCategorySelected != null) {
+            this.form.category_id = this.newLinkCategorySelected.id;
         }
     },
     computed: {
@@ -170,7 +170,7 @@ export default {
             "editModel",
             "categories",
             "showNewItemSidebar",
-            "new_link_category_selected",
+            "newLinkCategorySelected",
         ]),
     },
     watch: {

@@ -1,40 +1,26 @@
 import router from "/src/router";
 import Form from "vform";
-import axios from "axios";
+import http from "../axios";
 
 const actions = {
-    async login({ state, commit }, { form, url, errors }) {
+    // Auth functions
+    async login({ state, dispatch }, { form, errors }) {
         try {
-            state.loading = true;
-
-            const response = await form.post(state.defaultApiRoute + url);
+            const response = await form.post(state.defaultApiRoute + "/login");
 
             localStorage.setItem("access_token", response.data.token);
 
-            commit("toggleSidebar", false);
+            dispatch("setFormAccessToken");
 
             router.push("/admin/dashboard");
-
-            const instance = axios.create({
-                headers: {
-                    Authorization:
-                        "Bearer " + localStorage.getItem("access_token"),
-                },
-            });
-
-            state.loading = false;
-
-            Form.axios = instance;
         } catch (error) {
-            state.loading = false;
-
             if (error.response?.data?.message) {
                 errors.set("email", error.response.data.message);
             }
         }
     },
     setFormAccessToken() {
-        const instance = axios.create({
+        const instance = http.create({
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("access_token"),
             },
@@ -46,6 +32,8 @@ const actions = {
         localStorage.removeItem("access_token");
         router.push("/");
     },
+
+    // VForm functions
     async sendPostForm({ state }, { form, url, errors }) {
         try {
             state.loading = true;
@@ -66,26 +54,6 @@ const actions = {
             }
 
             return error.response;
-        }
-    },
-    async sendPostRequest({ state }, { url, params }) {
-        try {
-            const response = await axios({
-                method: "post",
-                url: state.defaultApiRoute + url,
-                headers: {
-                    Authorization:
-                        "Bearer " + localStorage.getItem("access_token"),
-                },
-                params,
-            });
-
-            return response;
-        } catch (error) {
-            console.error(error);
-            state.showFormGeneralErrorToast = true;
-
-            return error;
         }
     },
     async sendPutForm({ state }, { form, url, errors }) {
@@ -109,41 +77,23 @@ const actions = {
             return error.response;
         }
     },
-    async sendGetRequest({ state }, { url, params }) {
-        try {
-            const response = await axios({
-                method: "get",
-                url: state.defaultApiRoute + url,
-                headers: {
-                    Authorization:
-                        "Bearer " + localStorage.getItem("access_token"),
-                },
-                params,
-            });
 
-            return response;
-        } catch (error) {
-            console.error(error);
-            state.showFormGeneralErrorToast = true;
-
-            return error;
-        }
-    },
+    // Delete function
     async sendDeleteRequest({ state }, { url }) {
         try {
             state.loading = true;
-            const response = await axios({
+
+            const response = await http({
                 method: "delete",
-                url: state.defaultApiRoute + url,
-                headers: {
-                    Authorization:
-                        "Bearer " + localStorage.getItem("access_token"),
-                },
+                url: url,
             });
+
             state.loading = false;
+
             return response;
         } catch (error) {
             console.error(error);
+
             state.loading = false;
             state.showFormGeneralErrorToast = true;
 
@@ -154,13 +104,9 @@ const actions = {
     // Dashboard
     async getStats({ state }) {
         try {
-            const response = await axios({
+            const response = await http({
                 method: "get",
-                url: state.defaultApiRoute + "/stats",
-                headers: {
-                    Authorization:
-                        "Bearer " + localStorage.getItem("access_token"),
-                },
+                url: "/stats",
             });
 
             return response;
@@ -173,35 +119,44 @@ const actions = {
     },
 
     // Categories
-    getCategories({ dispatch, state }, search) {
-        dispatch("sendGetRequest", {
-            url: "/categories",
-            params: {
-                search,
-            },
-        }).then((response) => {
+    async getCategories({ dispatch, state }, search) {
+        try {
+            const response = await http({
+                url: "/categories",
+                params: {
+                    search,
+                },
+            });
+
             state.categories = response.data;
 
             state.categories.forEach((category) => {
-                category.category_tree = "";
-                state.category_tree = "";
+                category.categoryTree = "";
+                state.categoryTree = "";
 
                 if (category.parent_id != null) {
                     dispatch("formatParentCategories", category);
-                    category.category_tree = state.category_tree + " > ";
+                    category.categoryTree = state.categoryTree + " > ";
                 }
 
-                category.category_tree += category.name;
+                category.categoryTree += category.name;
             });
-        });
+
+            return response;
+        } catch (error) {
+            console.error(error);
+            state.showFormGeneralErrorToast = true;
+
+            return error;
+        }
     },
     formatParentCategories({ dispatch, state }, category) {
         state.categories.forEach((category_2) => {
             if (category.parent_id == category_2.id) {
-                state.category_tree += category_2.name;
+                state.categoryTree += category_2.name;
 
                 if (category_2.parent_id != null) {
-                    state.category_tree += " > ";
+                    state.categoryTree += " > ";
                     dispatch("formatParentCategories", category_2);
                 }
             }
@@ -209,41 +164,60 @@ const actions = {
     },
 
     // Links
-    getLinks({ dispatch, state }, search) {
-        dispatch("sendGetRequest", {
-            url: "/links",
-            params: {
-                search,
-            },
-        }).then((response) => {
+    async getLinks({ state }, search) {
+        try {
+            const response = await http({
+                url: "/links",
+                params: {
+                    search,
+                },
+            });
+
             state.links = response.data;
-        });
+
+            return response;
+        } catch (error) {
+            console.error(error);
+            state.showFormGeneralErrorToast = true;
+
+            return error;
+        }
     },
-    getLink({ dispatch, state }, id) {
-        dispatch("sendGetRequest", {
-            url: "/link/" + id,
-        }).then((response) => {
-            state.links = response.data;
-        });
+    async incrementViews({ state }, id) {
+        try {
+            const response = await http({
+                method: "post",
+                url: "/links/incremet-views/" + id,
+            });
+
+            return response;
+        } catch (error) {
+            console.error(error);
+            state.showFormGeneralErrorToast = true;
+
+            return error;
+        }
     },
 
     // Codes
-    getCodes({ dispatch, state }, search) {
-        dispatch("sendGetRequest", {
-            url: "/codes",
-            params: {
-                search,
-            },
-        }).then((response) => {
+    async getCodes({ state }, search) {
+        try {
+            const response = await http({
+                url: "/codes",
+                params: {
+                    search,
+                },
+            });
+
             state.codes = response.data;
-        });
-    },
-    getCode({ dispatch, state }, id) {
-        dispatch("sendGetRequest", {
-            url: "/code/" + id,
-        }).then((response) => {
-            state.codes = response.data;
-        });
+
+            return response;
+        } catch (error) {
+            console.error(error);
+            state.showFormGeneralErrorToast = true;
+
+            return error;
+        }
     },
 };
 

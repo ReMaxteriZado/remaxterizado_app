@@ -6,7 +6,6 @@ import AdminLayout from "/src/components/layouts/AdminLayout.vue";
 
 // Web
 import HomeComponent from "./components/web/HomeComponent.vue";
-import AboutMeComponent from "./components/web/AboutMeComponent.vue";
 
 // Admin
 import DashboardComponent from "@/components/admin/dashboard/DashboardComponent.vue";
@@ -26,11 +25,6 @@ const routes = [
                 path: "",
                 name: "home",
                 component: HomeComponent,
-            },
-            {
-                path: "about",
-                name: "about",
-                component: AboutMeComponent,
             },
             {
                 path: "/:pathMatch(.*)*",

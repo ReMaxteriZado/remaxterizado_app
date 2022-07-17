@@ -1,113 +1,79 @@
 <template>
     <div>
-        <FormComponent />
         <div class="container">
-            <img
-                class="logo"
-                src="@/assets/images/logo.png"
-                alt=""
-                width="400"
-            />
-            {{ counter.value }}
-
-            <div class="d-flex gap-3">
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
+            <div class="group-animation">
+                <div class="d-flex flex-column gap-3">
+                    <div class="circle first"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle last"></div>
+                </div>
+                <img
+                    class="se-mueve"
+                    src="@/assets/images/logo.png"
+                    alt=""
+                    width="400"
+                />
             </div>
-            <button
-                class="btn btn-primary text-white"
-                @click="animation.pause()"
-            >
-                Pausa
-            </button>
-            <button
-                class="btn btn-primary text-white"
-                @click="animation.play()"
-            >
-                Play
-            </button>
         </div>
     </div>
 </template>
 
 <script>
-import FormComponent from "./FormComponent.vue";
-
 // import gsap
-// import { gsap } from "gsap";
-
-// mapActions
-
-import { mapActions } from "vuex";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default {
-    components: {
-        FormComponent,
-    },
     data: () => ({
         counter: {
             value: 0,
         },
         animation: null,
     }),
-    methods: {
-        ...mapActions(["getCategories"]),
-    },
     mounted() {
-        this.getCategories();
-        // gsap.set(".logo", {
-        //     transformOrigin: "50% 50%",
-        //     border: "1px solid blue",
-        // });
+        gsap.registerPlugin(ScrollTrigger);
 
-        // const tl = gsap.timeline({
-        //     repeat: 2,
-        //     yoyo: true,
-        // });
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".first",
+                start: "top center",
+                end: "+=500",
+                toggleActions: "play pause resume reverse",
+                markers: true,
+                scrub: true,
+                pin: true,
+            },
+        });
 
-        // this.animation = tl.from(".circle", {
-        //     // random y value
-        //     y: () => Math.random() * 500 - 300,
-        //     x: "random(-500, 500)",
-        //     duration: 1,
-        //     opacity: 0,
-        //     ease: "power3.out",
-        //     stagger: 0.5,
-        // });
-
-        // tl.from(".logo", {
-        //     duration: 1,
-        //     x: -500,
-        //     backgroundColor: "#blue",
-        // });
-
-        // tl.to(this.counter, {
-        //     duration: 1,
-        //     value: 500,
-        //     onUpdate: () => {
-        //         console.log(this.counter);
-        //     },
-        // }, "-=1");
-
-        // tl.to(".logo", {
-        //     duration: 1,
-        //     x: 500,
-        //     backgroundColor: "#ff5522",
-        //     ease: "power3.out",
-        //     rotation: 360,
-        // });
+        tl.to(".first", {
+            x: 300,
+            duration: 1.5,
+            ease: "power2.inOut",
+        });
     },
 };
 </script>
 
 <style lang="scss" scoped>
 .circle {
-    width: 100px;
-    height: 100px;
+    width: 20rem;
+    height: 20rem;
     background-color: #ff5522;
     border-radius: 50%;
+}
+
+.container {
+    height: 400vh;
+    .group-animation {
+        position: relative;
+
+        .se-mueve {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
 }
 </style>

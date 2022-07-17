@@ -1,14 +1,12 @@
 <template>
     <DataTable
         :value="codes"
-        :paginator="datatable_defaults.paginator"
-        :rows="datatable_defaults.rows"
-        :rowHover="datatable_defaults.rowHover"
-        :loading="datatable_defaults.loading"
-        :paginatorTemplate="datatable_defaults.paginatorTemplate"
-        :currentPageReportTemplate="
-            datatable_defaults.currentPageReportTemplate
-        "
+        :paginator="datatableDefaults.paginator"
+        :rows="datatableDefaults.rows"
+        :rowHover="datatableDefaults.rowHover"
+        :loading="datatableDefaults.loading"
+        :paginatorTemplate="datatableDefaults.paginatorTemplate"
+        :currentPageReportTemplate="datatableDefaults.currentPageReportTemplate"
         class="datatable p-0"
     >
         <template #header>
@@ -124,7 +122,7 @@ export default {
         },
     },
     computed: {
-        ...mapState(["datatable_defaults", "codes", "view_code"]),
+        ...mapState(["datatableDefaults", "codes", "viewCode"]),
     },
     mounted() {
         this.getCodes();

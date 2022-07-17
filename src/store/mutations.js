@@ -28,15 +28,15 @@ const mutations = {
     },
     toggleCodeDialog(state, n) {
         if (!n) {
-            state.view_code = null;
+            state.viewCode = null;
         }
         state.displayCodeDialog = n;
     },
     changeViewCode(state, n) {
-        state.view_code = n;
+        state.viewCode = n;
     },
     changeNewLinkCategorySelected(state, n) {
-        state.new_link_category_selected = n;
+        state.newLinkCategorySelected = n;
     },
 };
 

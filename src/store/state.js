@@ -18,19 +18,19 @@ const state = {
 
     // Categories
     categories: [],
-    category_tree: "",
+    categoryTree: "",
 
     // Links
     links: [],
-    new_link_category_selected: null,
+    newLinkCategorySelected: null,
 
     // Codes
     codes: [],
-    code_languages: ["PHP", "JavaScript", "CSS", "HTML", "SCSS"],
-    view_code: null,
+    codeLanguages: ["PHP", "JavaScript", "CSS", "HTML", "SCSS"],
+    viewCode: null,
 
     // Datatable defaults
-    datatable_defaults: {
+    datatableDefaults: {
         loading: false,
         paginator: true,
         rows: 5,

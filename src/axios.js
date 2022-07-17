@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const base = axios.create({
+const http = axios.create({
     // baseURL: "http://remaxterizado_api.test/api",
     baseURL: "https://api.remaxterizado.es/api",
-    // headers: {
-    //     "Access-Control-Allow-Origin": "*",
-    // },
+    headers: {
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+    },
 });
 
-export default base;
+export default http;
