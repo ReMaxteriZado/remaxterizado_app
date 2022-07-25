@@ -1,0 +1,38 @@
+.p-tabview {
+    box-shadow: $smooth-box-shadow;
+    border-radius: $border-radius;
+    
+    .p-tabview-nav {
+        background-color: transparent;
+        display: flex;
+        border: none;
+    
+        li {
+            margin-right: 0.5rem;
+            flex: 1;
+    
+            &:nth-last-child(2) {
+                margin-right: 0;
+            }
+    
+            .p-tabview-nav-link {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                border: none;
+    
+                &:not(.p-disabled):focus {
+                    box-shadow: none;
+                }
+            }
+    
+            &:not(.p-highlight) {
+                .p-tabview-nav-link {
+                    background-color: #e7e7e7;
+                }
+            }
+        }
+    }
+    
+} 

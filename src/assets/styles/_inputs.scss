@@ -46,3 +46,14 @@
 //         left: 0;
 //     }
 // }
+.p-float-label input:focus ~ label {
+    left: 0;
+}
+
+.p-float-label input.p-filled ~ label {
+    left: 0;
+}
+
+.p-dropdown-panel {
+    box-shadow: $smooth-box-shadow;
+}

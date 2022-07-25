@@ -141,10 +141,6 @@ export default {
 
 <style lang="scss" scoped>
 .datatable {
-    border-radius: $border-radius;
-    overflow: hidden;
-    box-shadow: $smooth-box-shadow !important;
-
     .view-code {
         color: $primary;
     }

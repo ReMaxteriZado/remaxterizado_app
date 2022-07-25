@@ -1,7 +1,14 @@
 @import "_variables";
-@import "_sidebar";
-@import "_inputs";
+
 @import "theme";
+
+@import "_cards";
+@import "_forms";
+@import "_inputs";
+@import "_modals";
+@import "_sidebar";
+@import "_tables";
+@import "_tabs";
 
 // @import "bootstrap";
 
@@ -35,10 +42,6 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: darken($primary, 20%);
-}
-
-* {
-    box-shadow: none !important;
 }
 
 #app {

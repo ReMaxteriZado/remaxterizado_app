@@ -165,17 +165,37 @@ const actions = {
     },
 
     // Links
-    async getLinks({ state }, search) {
+    async getLinks({ state }, params) {
         try {
+            state.datatable_defaults.loading = true;
+
+            const form = document.getElementById("filters");
+            let formProps = null;
+
+            if (form != undefined) {
+                const formData = new FormData(form);
+
+                formProps = Object.fromEntries(formData);
+            }
+
             const response = await axios({
                 url: "/links",
                 params: {
-                    search,
+                    ...formProps,
+                    pagination: {
+                        currentPage: params != null ? params.page : 0,
+                        rows:
+                            params != null
+                                ? params.rows
+                                : state.datatable_defaults.rows,
+                    },
                 },
             });
 
             state.links = response.data;
-
+            state.total_links = response.data.total;
+            
+            state.datatable_defaults.loading = false;
             return response;
         } catch (error) {
             console.error(error);

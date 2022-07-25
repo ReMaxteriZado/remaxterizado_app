@@ -1,30 +1,51 @@
 <template>
     <DataTable
+        stripedRows
+        ref="datatable"
+        v-model:selection="selecteds_incidences_types"
         :value="links"
-        :paginator="datatableDefaults.paginator"
-        :rows="datatableDefaults.rows"
-        :rowHover="datatableDefaults.rowHover"
-        :loading="datatableDefaults.loading"
-        :paginatorTemplate="datatableDefaults.paginatorTemplate"
-        :currentPageReportTemplate="datatableDefaults.currentPageReportTemplate"
-        class="datatable p-0"
+        :totalRecords="total_incidences_types"
+        :paginator="datatable_defaults.paginator"
+        :rows="datatable_defaults.rows"
+        :rowsPerPageOptions="datatable_defaults.rowsPerPageOptions"
+        :rowHover="datatable_defaults.rowHover"
+        :loading="datatable_defaults.loading"
+        :paginatorTemplate="datatable_defaults.paginatorTemplate"
+        :currentPageReportTemplate="
+            datatable_defaults.currentPageReportTemplate
+        "
+        :scrollable="datatable_defaults.scrollable"
+        :scrollHeight="datatable_defaults.scrollHeight"
+        :lazy="datatable_defaults.lazy"
+        @page="changeCurrentPage($event)"
+        @row-click="showModel($event)"
     >
         <template #header>
-            <div class="d-flex justify-content-between align-items-center">
-                <Button
-                    label="Add Link"
-                    class="text-white"
-                    icon="pi pi-plus"
-                    @click="addLink()"
-                />
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                    <InputText v-model="search" placeholder="Search links..." />
-                </span>
+            <div
+                class="d-flex justify-content-between align-items-incidence_type"
+            >
+                <TableFilters :filters="filters" />
+                <div class="d-flex align-items-incidence_type gap-3">
+                    <Button
+                        label="Add link"
+                        class="bg-secondary border-0 text-white"
+                        @click="addLink()"
+                    />
+                    <Button
+                        label="Delete selected links"
+                        class="text-white"
+                        icon="pi pi-trash"
+                        @click="deleteSelectedsLinks()"
+                    />
+                </div>
             </div>
         </template>
-        <template #empty>No results found</template>
-        <template #loading>Loading results. Please wait.</template>
+        <template #empty>{{ datatable_defaults.no_results }}</template>
+        <template #loading>
+            <LoadingTable />
+        </template>
+        <Column selectionMode="multiple" headerStyle="width: 3em"></Column>
+
         <Column :sortable="true" header="Title" field="title"></Column>
         <Column :sortable="true" header="Category">
             <template #body="{ data }">
@@ -62,8 +83,10 @@
 <script>
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import InputText from "primevue/inputtext";
 import Button from "primevue/button";
+
+import LoadingTable from "../partials/LoadingTableComponent.vue";
+import TableFilters from "../partials/TableFiltersComponent.vue";
 
 import { mapState, mapActions, mapMutations } from "vuex";
 
@@ -71,8 +94,9 @@ export default {
     components: {
         DataTable,
         Column,
-        InputText,
         Button,
+        LoadingTable,
+        TableFilters,
     },
     props: ["links_v"],
     data() {
@@ -116,7 +140,7 @@ export default {
         },
     },
     computed: {
-        ...mapState(["datatableDefaults", "links"]),
+        ...mapState(["datatable_defaults", "links"]),
     },
     mounted() {
         this.getLinks();
@@ -132,11 +156,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss" scoped>
-.datatable {
-    border-radius: $border-radius;
-    overflow: hidden;
-    box-shadow: $smooth-box-shadow !important;
-}
-</style>

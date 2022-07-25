@@ -26,10 +26,10 @@
     }
 }
 
-.admin-sidebar {
+.sidebar-section {
     height: 100%;
     box-shadow: $smooth-box-shadow !important;
-    background-color: $primary;
+    background-color: white;
 
     .avatar {
         padding: 1rem 0.75rem 0;
@@ -45,7 +45,6 @@
     }
 
     .custom-menu {
-        background-color: $primary;
         width: 100%;
         border: none;
         padding: 0;
@@ -54,26 +53,19 @@
 
         .p-submenu-header {
             background-color: transparent;
-            color: white;
             text-transform: uppercase;
         }
 
         .p-menuitem {
+            width: 100%;
+
             .p-menuitem-link {
                 transition: $transition;
 
                 &:not(.p-disabled) {
                     &:hover {
                         background: rgba(white, 0.3);
-
-                        span {
-                            color: white;
-                        }
                     }
-                }
-
-                span {
-                    color: white;
                 }
 
                 &:focus {

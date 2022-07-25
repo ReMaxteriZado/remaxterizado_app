@@ -22,19 +22,26 @@ const state = {
 
     // Links
     links: [],
+    total_links: 0,
     newLinkCategorySelected: null,
 
     // Codes
     codes: [],
-    codeLanguages: ["PHP", "JavaScript", "CSS", "HTML", "SCSS"],
+    code_languages: ["PHP", "JavaScript", "CSS", "HTML", "SCSS"],
     viewCode: null,
 
     // Datatable defaults
-    datatableDefaults: {
-        loading: false,
+    datatable_defaults: {
+        no_results: "No results found",
+        lazy: true,
+        loading: true,
         paginator: true,
         rows: 5,
+        rowsPerPageOptions: [5, 10, 20],
         rowHover: true,
+        scrollable: true,
+        scrollHeight: "600px",
+        currentPage: 0,
         paginatorTemplate:
             "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
         currentPageReportTemplate:

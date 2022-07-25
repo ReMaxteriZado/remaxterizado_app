@@ -1,0 +1,29 @@
+$default_padding: 1.5rem;
+
+.p-card {
+    border-radius: $border-radius;
+    box-shadow: $smooth-box-shadow;
+
+    &:not(.no-custom-card) {
+        .p-card-body {
+            padding: 0;
+
+            .p-card-title,
+            .p-card-content {
+                padding: $default_padding;
+                margin-bottom: 0;
+            }
+
+            .p-card-title {
+                border-bottom: 1px solid lightgray;
+                padding-top: calc($default_padding / 2);
+                padding-bottom: calc($default_padding / 2);
+                color: $primary;
+            }
+
+            .p-card-content {
+                padding-top: calc($default_padding / 2);
+            }
+        }
+    }
+}

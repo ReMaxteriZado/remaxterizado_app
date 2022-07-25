@@ -1,0 +1,17 @@
+.p-dialog {
+    .p-dialog-header {
+        border-radius: $border-radius $border-radius 0 0;
+        padding-bottom: 0;
+        align-items: flex-start;
+
+        img {
+            transform: translate(30px, -40px);
+            box-shadow: $smooth-box-shadow;
+            border-radius: $border-radius;
+        }
+    }
+
+    .p-dialog-content {
+        border-radius: 0 0 $border-radius $border-radius;
+    }
+}

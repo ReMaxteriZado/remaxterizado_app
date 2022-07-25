@@ -1,0 +1,54 @@
+.p-progressbar {
+    background-color: rgba($primary, 0.2);
+    height: 10px;
+    width: 90vw;
+    max-width: 500px;
+}
+
+.p-datatable {
+    border-radius: $border-radius;
+    overflow: hidden;
+
+    .p-datatable-wrapper {
+        box-shadow: $smooth-box-shadow;
+    }
+
+    .p-sortable-column:not(.p-highlight) {
+        transition: $transition;
+    }
+
+    .p-datatable-header {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        padding-bottom: 1rem;
+    }
+
+    .p-datatable-tbody {
+        tr {
+            transition: $transition;
+            cursor: pointer;
+
+            td {
+                border: none;
+            }
+        }
+    }
+
+    .p-paginator {
+        border: none;
+    }
+
+    a {
+        color: $primary;
+        text-decoration: none;
+    }
+}
+
+.p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+    background-color: rgba($secondary, 0.1);
+
+    &:hover {
+        background-color: rgba($secondary, 0.2);
+    }
+}
