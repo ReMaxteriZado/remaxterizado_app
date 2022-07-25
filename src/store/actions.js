@@ -1,12 +1,12 @@
 import router from "/src/router";
 import Form from "vform";
-import http from "../axios";
+import axios from "../axios";
 
 const actions = {
     // Auth functions
     async login({ state, dispatch }, { form, errors }) {
         try {
-            const response = await form.post(state.defaultApiRoute + "/login");
+            const response = await form.post(state.baseURL + "/login");
 
             localStorage.setItem("access_token", response.data.token);
 
@@ -14,13 +14,15 @@ const actions = {
 
             router.push("/admin/dashboard");
         } catch (error) {
+            console.error(error);
+
             if (error.response?.data?.message) {
                 errors.set("email", error.response.data.message);
             }
         }
     },
     setFormAccessToken() {
-        const instance = http.create({
+        const instance = axios.create({
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("access_token"),
             },
@@ -38,7 +40,7 @@ const actions = {
         try {
             state.loading = true;
 
-            const response = await form.post(state.defaultApiRoute + url);
+            const response = await form.post(state.baseURL + url);
 
             state.loading = false;
             return response;
@@ -59,7 +61,7 @@ const actions = {
     async sendPutForm({ state }, { form, url, errors }) {
         try {
             state.loading = true;
-            const response = await form.put(state.defaultApiRoute + url);
+            const response = await form.put(state.baseURL + url);
 
             state.loading = false;
             return response;
@@ -83,7 +85,7 @@ const actions = {
         try {
             state.loading = true;
 
-            const response = await http({
+            const response = await axios({
                 method: "delete",
                 url: url,
             });
@@ -104,8 +106,7 @@ const actions = {
     // Dashboard
     async getStats({ state }) {
         try {
-            const response = await http({
-                method: "get",
+            const response = await axios({
                 url: "/stats",
             });
 
@@ -121,7 +122,7 @@ const actions = {
     // Categories
     async getCategories({ dispatch, state }, search) {
         try {
-            const response = await http({
+            const response = await axios({
                 url: "/categories",
                 params: {
                     search,
@@ -166,7 +167,7 @@ const actions = {
     // Links
     async getLinks({ state }, search) {
         try {
-            const response = await http({
+            const response = await axios({
                 url: "/links",
                 params: {
                     search,
@@ -185,7 +186,7 @@ const actions = {
     },
     async incrementViews({ state }, id) {
         try {
-            const response = await http({
+            const response = await axios({
                 method: "post",
                 url: "/links/incremet-views/" + id,
             });
@@ -202,7 +203,7 @@ const actions = {
     // Codes
     async getCodes({ state }, search) {
         try {
-            const response = await http({
+            const response = await axios({
                 url: "/codes",
                 params: {
                     search,

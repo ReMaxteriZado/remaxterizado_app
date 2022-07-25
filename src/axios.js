@@ -1,8 +1,8 @@
 import axios from "axios";
+import state from "../src/store/state";
 
 const http = axios.create({
-    // baseURL: "http://remaxterizado_api.test/api",
-    baseURL: "https://api.remaxterizado.es/api",
+    baseURL: state.baseURL,
     headers: {
         Authorization: "Bearer " + localStorage.getItem("access_token"),
     },

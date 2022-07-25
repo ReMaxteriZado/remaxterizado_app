@@ -86,11 +86,12 @@ function checkAdminRights(to, from, next) {
                 next();
             })
             .catch((error) => {
+                console.log("🚀 ~ file: router.js ~ line 89 ~ checkAdminRights ~ error", error)
                 if (
                     error.response.data.user_not_logged ||
                     !error.response.data.is_amdin
                 ) {
-                    localStorage.removeItem("access_token");
+                    // localStorage.removeItem("access_token");
                     next({ path: "/" });
                 }
             });
