@@ -52,6 +52,16 @@ export default {
         return {
             items: [
                 {
+                    label: "Holas",
+                    items: [
+                        {
+                            label: "Holas",
+                            icon: "pi pi-fw pi-list",
+                            to: "/admin/holas",
+                        },
+                    ],
+                },
+                {
                     label: "Categories",
                     items: [
                         {

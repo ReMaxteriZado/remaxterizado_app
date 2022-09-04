@@ -3,243 +3,287 @@ import Form from "vform";
 import axios from "../axios";
 
 const actions = {
-    // Auth functions
-    async login({ state, dispatch }, { form, errors }) {
-        try {
-            const response = await form.post(state.baseURL + "/login");
+  // Auth functions
+  async login({ state, dispatch }, { form, errors }) {
+    try {
+      const response = await form.post(state.baseURL + "/login");
 
-            localStorage.setItem("access_token", response.data.token);
+      localStorage.setItem("access_token", response.data.token);
 
-            dispatch("setFormAccessToken");
+      dispatch("setFormAccessToken");
 
-            router.push("/admin/dashboard");
-        } catch (error) {
-            console.error(error);
+      router.push("/admin/dashboard");
+    } catch (error) {
+      console.error(error);
 
-            if (error.response?.data?.message) {
-                errors.set("email", error.response.data.message);
-            }
+      if (error.response?.data?.message) {
+        errors.set("email", error.response.data.message);
+      }
+    }
+  },
+  setFormAccessToken() {
+    const instance = axios.create({
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+    });
+
+    Form.axios = instance;
+  },
+  logout() {
+    localStorage.removeItem("access_token");
+    router.push("/");
+  },
+
+  // VForm functions
+  async sendPostForm({ state }, { form, url, errors }) {
+    try {
+      state.loading = true;
+
+      const response = await form.post(state.baseURL + url);
+
+      state.loading = false;
+      return response;
+    } catch (error) {
+      console.error(error);
+
+      state.loading = false;
+
+      if (error.response?.data) {
+        for (const key in error.response.data) {
+          errors.set(key, error.response.data[key]);
         }
-    },
-    setFormAccessToken() {
-        const instance = axios.create({
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("access_token"),
-            },
-        });
+      }
 
-        Form.axios = instance;
-    },
-    logout() {
-        localStorage.removeItem("access_token");
-        router.push("/");
-    },
+      return error.response;
+    }
+  },
+  async sendPutForm({ state }, { form, url, errors }) {
+    try {
+      state.loading = true;
+      const response = await form.put(state.baseURL + url);
 
-    // VForm functions
-    async sendPostForm({ state }, { form, url, errors }) {
-        try {
-            state.loading = true;
+      state.loading = false;
+      return response;
+    } catch (error) {
+      console.error(error);
 
-            const response = await form.post(state.baseURL + url);
+      state.loading = false;
 
-            state.loading = false;
-            return response;
-        } catch (error) {
-            console.error(error);
-
-            state.loading = false;
-
-            if (error.response?.data) {
-                for (const key in error.response.data) {
-                    errors.set(key, error.response.data[key]);
-                }
-            }
-
-            return error.response;
+      if (error.response?.data) {
+        for (const key in error.response.data) {
+          errors.set(key, error.response.data[key]);
         }
-    },
-    async sendPutForm({ state }, { form, url, errors }) {
-        try {
-            state.loading = true;
-            const response = await form.put(state.baseURL + url);
+      }
 
-            state.loading = false;
-            return response;
-        } catch (error) {
-            console.error(error);
+      return error.response;
+    }
+  },
 
-            state.loading = false;
+  // Delete function
+  async sendDeleteRequest({ state }, { url }) {
+    try {
+      state.loading = true;
 
-            if (error.response?.data) {
-                for (const key in error.response.data) {
-                    errors.set(key, error.response.data[key]);
-                }
-            }
+      const response = await axios({
+        method: "delete",
+        url: url,
+      });
 
-            return error.response;
+      state.loading = false;
+
+      return response;
+    } catch (error) {
+      console.error(error);
+
+      state.loading = false;
+      state.showFormGeneralErrorToast = true;
+
+      return error;
+    }
+  },
+
+  // Dashboard
+  async getStats({ state }) {
+    try {
+      const response = await axios({
+        url: "/stats",
+      });
+
+      return response;
+    } catch (error) {
+      console.error(error);
+      state.showFormGeneralErrorToast = true;
+
+      return error;
+    }
+  },
+
+  // Categories
+  async getCategories({ dispatch, state }, search) {
+    try {
+      const response = await axios({
+        url: "/categories",
+        params: {
+          search,
+        },
+      });
+
+      state.categories = response.data;
+
+      state.categories.forEach((category) => {
+        category.categoryTree = "";
+        state.categoryTree = "";
+
+        if (category.parent_id != null) {
+          dispatch("formatParentCategories", category);
+          category.categoryTree = state.categoryTree + " > ";
         }
-    },
 
-    // Delete function
-    async sendDeleteRequest({ state }, { url }) {
-        try {
-            state.loading = true;
+        category.categoryTree += category.name;
+      });
 
-            const response = await axios({
-                method: "delete",
-                url: url,
-            });
+      return response;
+    } catch (error) {
+      console.error(error);
+      state.showFormGeneralErrorToast = true;
 
-            state.loading = false;
+      return error;
+    }
+  },
+  formatParentCategories({ dispatch, state }, category) {
+    state.categories.forEach((category_2) => {
+      if (category.parent_id == category_2.id) {
+        state.categoryTree += category_2.name;
 
-            return response;
-        } catch (error) {
-            console.error(error);
-
-            state.loading = false;
-            state.showFormGeneralErrorToast = true;
-
-            return error;
+        if (category_2.parent_id != null) {
+          state.categoryTree += " > ";
+          dispatch("formatParentCategories", category_2);
         }
-    },
+      }
+    });
+  },
 
-    // Dashboard
-    async getStats({ state }) {
-        try {
-            const response = await axios({
-                url: "/stats",
-            });
+  // Links
+  async getLinks({ state }, params) {
+    try {
+      state.datatable_defaults.loading = true;
 
-            return response;
-        } catch (error) {
-            console.error(error);
-            state.showFormGeneralErrorToast = true;
+      const form = document.getElementById("filters");
+      let formProps = null;
 
-            return error;
-        }
-    },
+      if (form != undefined) {
+        const formData = new FormData(form);
 
-    // Categories
-    async getCategories({ dispatch, state }, search) {
-        try {
-            const response = await axios({
-                url: "/categories",
-                params: {
-                    search,
-                },
-            });
+        formProps = Object.fromEntries(formData);
+      }
 
-            state.categories = response.data;
+      const response = await axios({
+        url: "/links",
+        params: {
+          ...formProps,
+          pagination: {
+            currentPage: params != null ? params.page : 0,
+            rows: params != null ? params.rows : state.datatable_defaults.rows,
+          },
+        },
+      });
 
-            state.categories.forEach((category) => {
-                category.categoryTree = "";
-                state.categoryTree = "";
+      state.links = response.data;
+      state.total_links = response.data.total;
 
-                if (category.parent_id != null) {
-                    dispatch("formatParentCategories", category);
-                    category.categoryTree = state.categoryTree + " > ";
-                }
+      state.datatable_defaults.loading = false;
+      return response;
+    } catch (error) {
+      console.error(error);
+      state.showFormGeneralErrorToast = true;
 
-                category.categoryTree += category.name;
-            });
+      return error;
+    }
+  },
+  async incrementViews({ state }, id) {
+    try {
+      const response = await axios({
+        method: "post",
+        url: "/links/incremet-views/" + id,
+      });
 
-            return response;
-        } catch (error) {
-            console.error(error);
-            state.showFormGeneralErrorToast = true;
+      return response;
+    } catch (error) {
+      console.error(error);
+      state.showFormGeneralErrorToast = true;
 
-            return error;
-        }
-    },
-    formatParentCategories({ dispatch, state }, category) {
-        state.categories.forEach((category_2) => {
-            if (category.parent_id == category_2.id) {
-                state.categoryTree += category_2.name;
+      return error;
+    }
+  },
 
-                if (category_2.parent_id != null) {
-                    state.categoryTree += " > ";
-                    dispatch("formatParentCategories", category_2);
-                }
-            }
-        });
-    },
+  // Codes
+  async getCodes({ state }, search) {
+    try {
+      const response = await axios({
+        url: "/codes",
+        params: {
+          search,
+        },
+      });
 
-    // Links
-    async getLinks({ state }, params) {
-        try {
-            state.datatable_defaults.loading = true;
+      state.codes = response.data;
 
-            const form = document.getElementById("filters");
-            let formProps = null;
+      return response;
+    } catch (error) {
+      console.error(error);
+      state.showFormGeneralErrorToast = true;
 
-            if (form != undefined) {
-                const formData = new FormData(form);
+      return error;
+    }
+  },
 
-                formProps = Object.fromEntries(formData);
-            }
+  async formatFilters(id) {
+    const form = document.getElementById(id);
+    let formProps = null;
 
-            const response = await axios({
-                url: "/links",
-                params: {
-                    ...formProps,
-                    pagination: {
-                        currentPage: params != null ? params.page : 0,
-                        rows:
-                            params != null
-                                ? params.rows
-                                : state.datatable_defaults.rows,
-                    },
-                },
-            });
+    if (form != undefined) {
+      const formData = new FormData(form);
 
-            state.links = response.data;
-            state.total_links = response.data.total;
-            
-            state.datatable_defaults.loading = false;
-            return response;
-        } catch (error) {
-            console.error(error);
-            state.showFormGeneralErrorToast = true;
+      formProps = Object.fromEntries(formData);
+    }
 
-            return error;
-        }
-    },
-    async incrementViews({ state }, id) {
-        try {
-            const response = await axios({
-                method: "post",
-                url: "/links/incremet-views/" + id,
-            });
+    return formProps;
+  },
 
-            return response;
-        } catch (error) {
-            console.error(error);
-            state.showFormGeneralErrorToast = true;
+  // Get registers
+  async getRegisters({ dispatch, state }, params) {
+    console.log(
+      "🚀 ~ file: actions.js ~ line 256 ~ getRegisters ~ params",
+      params
+    );
+    try {
+      state.datatable_defaults.loading = true;
 
-            return error;
-        }
-    },
+      let formProps = await dispatch("formatFilters", "filters");
 
-    // Codes
-    async getCodes({ state }, search) {
-        try {
-            const response = await axios({
-                url: "/codes",
-                params: {
-                    search,
-                },
-            });
+      const response = await axios({
+        url: params.route,
+        params: {
+          ...formProps,
+          pagination: {
+            currentPage: params?.page != null ? params.page : 0,
+            rows:
+              params?.row != null ? params.rows : state.datatable_defaults.rows,
+          },
+        },
+      });
 
-            state.codes = response.data;
+      state.datatable_defaults.loading = false;
+      state[params.state_variable].list = response.data[params.state_variable];
+      state[params.state_variable].list_total = response.data.total;
+    } catch (error) {
+      console.error(error);
+      state.showFormGeneralErrorToast = true;
 
-            return response;
-        } catch (error) {
-            console.error(error);
-            state.showFormGeneralErrorToast = true;
-
-            return error;
-        }
-    },
+      return error;
+    }
+  },
 };
 
 export default actions;

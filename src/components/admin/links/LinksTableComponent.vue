@@ -1,4 +1,4 @@
-<template>
+console.log('');<template>
     <DataTable
         stripedRows
         ref="datatable"

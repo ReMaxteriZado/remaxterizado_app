@@ -41,11 +41,16 @@ import "primevue/resources/primevue.min.css";
 
 import ToastService from "primevue/toastservice";
 import ConfirmationService from "primevue/confirmationservice";
+import Tooltip from "primevue/tooltip";
+import Ripple from "primevue/ripple";
 
 // Fonts
 require("@/assets/fonts/Work_Sans/Work_Sans.css");
 
 const app = createApp(App);
+
+app.directive("tooltip", Tooltip);
+app.directive("ripple", Ripple);
 
 app.use(store);
 app.use(router);

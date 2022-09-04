@@ -12,6 +12,7 @@ import DashboardComponent from "@/components/admin/dashboard/DashboardComponent.
 import CategoriesComponent from "@/components/admin/categories/CategoriesComponent.vue";
 import LinksComponent from "@/components/admin/links/LinksComponent.vue";
 import CodesComponent from "@/components/admin/codes/CodesComponent.vue";
+import Holas from "@/components/admin/holas/HolasComponent.vue";
 
 import axios from "./axios.js";
 import store from "./store";
@@ -56,6 +57,11 @@ const routes = [
             {
                 path: "codes/list",
                 component: CodesComponent,
+                beforeEnter: checkAdminRights,
+            },
+            {
+                path: "holas",
+                component: Holas,
                 beforeEnter: checkAdminRights,
             },
             {
