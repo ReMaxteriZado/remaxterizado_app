@@ -1,17 +1,15 @@
 <template>
-	<div>
+	<div class="d-flex flex-column">
 		<label
 			for="input"
 			class="text-primary text-bold"
 			>{{ label }}</label
 		>
 
-		<Textarea
-			class="w-100"
+		<InputSwitch
 			v-model="model"
 			:disabled="disabled"
 			:placeholder="label"
-			:class="[error != null ? 'p-invalid' : '']"
 		/>
 
 		<div
@@ -24,11 +22,11 @@
 </template>
 
 <script>
-	import Textarea from "primevue/textarea"
+	import InputSwitch from "primevue/inputswitch";
 
 	export default {
 		components: {
-			Textarea,
+			InputSwitch,
 		},
 		props: ["label", "error", "disabled"],
 		data: () => ({
@@ -36,8 +34,8 @@
 		}),
 		watch: {
 			model(newValue) {
-				this.$emit("change-value", newValue)
+				this.$emit("change-value", newValue);
 			},
 		},
-	}
+	};
 </script>

@@ -1,5 +1,4 @@
 import moment from "moment";
-import state from "./store/state";
 
 export const func = {
 	formatFilters(id) {
@@ -14,33 +13,6 @@ export const func = {
 
 		return formProps
 	},
-    checkUserHasPermission(permission) {
-        if (state.userLogged.role.name == "super_admin") {
-            return true;
-        }
-
-        if (permission != "all") {
-            let hasPermission = false;
-            const module = permission.split("-")[0];
-            const action = permission.split("-")[1];
-
-            JSON.parse(localStorage.getItem("user_permissions")).forEach(
-                (user_permission) => {
-                    if (
-                        user_permission.permission.name.toUpperCase() ==
-                            module.toUpperCase() &&
-                        user_permission[action]
-                    ) {
-                        hasPermission = true;
-                    }
-                }
-            );
-
-            return hasPermission;
-        } else {
-            return true;
-        }
-    },
     exportCSV(target) {
         target.exportCSV();
     },

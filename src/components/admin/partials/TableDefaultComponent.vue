@@ -49,32 +49,32 @@
 
 		<Column header="Acciones">
 			<template #body="{ data }">
-				<Button
-					class="text-primary p-button-rounded p-button-text"
-					icon="pi pi-pencil"
-					@click="showRegister(data, 'edit')"
-					v-tooltip.bottom="'Editar registro'"
-				/>
-				<Button
-					class="text-primary p-button-rounded p-button-text"
-					icon="pi pi-trash"
-					@click="deleteRegister(data.id)"
-					v-tooltip.bottom="'Borrar registro'"
-				/>
+				<div class="d-flex align-items-center gap-2">
+					<Button
+						class="text-primary p-button-rounded p-button-text border-primary"
+						icon="pi pi-pencil"
+						@click="showRegister(data, 'edit')"
+					/>
+					<Button
+						class="text-primary p-button-rounded p-button-text border-primary"
+						icon="pi pi-trash"
+						@click="deleteRegister(data.id)"
+					/>
+				</div>
 			</template>
 		</Column>
 	</DataTable>
 </template>
 
 <script>
-	import DataTable from "primevue/datatable"
-	import Column from "primevue/column"
-	import Button from "primevue/button"
+	import DataTable from "primevue/datatable";
+	import Column from "primevue/column";
+	import Button from "primevue/button";
 
-	import LoadingTable from "@/components/partials/LoadingTableComponent.vue"
-	import TableFilters from "@/components/partials/TableFiltersComponent.vue"
+	import LoadingTable from "@/components/partials/LoadingTableComponent.vue";
+	import TableFilters from "@/components/partials/TableFiltersComponent.vue";
 
-	import { mapState, mapActions } from "vuex"
+	import { mapState, mapActions } from "vuex";
 
 	export default {
 		components: {
@@ -106,12 +106,12 @@
 				selecteds_ids: [],
 				timeout: null,
 				lastPageChange: null,
-			}
+			};
 		},
 		methods: {
 			...mapActions(["sendDeleteRequest", "sendDeleteMultipleForm"]),
 			showRegister(e, type) {
-				this.$emit("showRegister", e.data != undefined ? e.data : e, type)
+				this.$emit("showRegister", e.data != undefined ? e.data : e, type);
 			},
 			deleteRegister(id) {
 				this.$confirm.require({
@@ -122,16 +122,16 @@
 						this.sendDeleteRequest({
 							url: `/${this.delete}/${id}`,
 						}).then(() => {
-							this.$emit("getList")
-						})
+							this.$emit("getList");
+						});
 					},
-				})
+				});
 			},
 			deleteCheckedRegisters() {
 				let ids = this.$helper.pushIdsToArray(
 					this.selecteds_ids,
 					this.lastPageChange != null ? this.lastPageChange.rows : this.datatableDefaults.rows
-				)
+				);
 
 				this.$confirm.require({
 					message: "¿Desea borrar los registros seleccionados?",
@@ -142,11 +142,11 @@
 							url: `/${this.delete}-multiple`,
 							params: ids,
 						}).then(() => {
-							this.$emit("getList")
-							this.selecteds_ids = []
-						})
+							this.$emit("getList");
+							this.selecteds_ids = [];
+						});
 					},
-				})
+				});
 			},
 		},
 		computed: {
@@ -155,14 +155,14 @@
 		watch: {
 			filters: {
 				handler() {
-					clearTimeout(this.timeout)
+					clearTimeout(this.timeout);
 
 					this.timeout = setTimeout(() => {
-						this.$emit("getList")
-					}, 250)
+						this.$emit("getList");
+					}, 250);
 				},
 				deep: true,
 			},
 		},
-	}
+	};
 </script>

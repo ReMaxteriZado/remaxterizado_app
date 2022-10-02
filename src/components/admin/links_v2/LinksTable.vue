@@ -15,6 +15,25 @@
 					header="Título"
 					field="title"
 				></Column>
+				<Column header="Categoría">
+					<template #body="{ data }">
+						<span v-if="data.category.parent != null">{{ data.category.parent.name }} /&nbsp;</span
+						>{{ data.category.name }}
+					</template></Column
+				>
+				<Column header="Enlace">
+					<template #body="{ data }">
+						<a
+							:href="data.link"
+							target="_blank"
+							>Enlace</a
+						>
+					</template></Column
+				>
+				<Column
+					header="Visto"
+					field="views"
+				></Column>
 			</template>
 		</TableDefault>
 	</div>

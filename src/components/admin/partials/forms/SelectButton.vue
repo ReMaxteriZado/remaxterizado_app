@@ -1,22 +1,19 @@
 <template>
 	<div>
 		<label
-			for="basic"
+			for="input"
 			class="text-primary text-bold"
 			>{{ label }}</label
 		>
 
-		<Calendar
+		<SelectButton
 			v-model="model"
 			:disabled="disabled"
-			:placeholder="label"
-			:showButtonBar="true"
-			:showTime="showTime"
-			class="w-100"
-			dateFormat="dd/mm/yy"
+			:options="values"
+			optionLabel="label"
+			multiple
 			:class="[error != null ? 'p-invalid' : '']"
-		>
-		</Calendar>
+		/>
 
 		<div
 			v-if="error != null"
@@ -28,25 +25,24 @@
 </template>
 
 <script>
-	import Calendar from "primevue/calendar";
+	import SelectButton from "primevue/selectbutton";
 
 	export default {
 		components: {
-			Calendar,
+			SelectButton,
 		},
-		props: ["label", "error", "displayText", "disabled", "form", "showTime"],
+		props: ["label", "error", "disabled", "values"],
 		data: () => ({
 			model: null,
 		}),
 		watch: {
 			model(newValue) {
-				if (newValue != null) {
-					newValue = this.$helper.formatDate(
-						newValue,
-						this.showTime ? "YYYY-MM-DD HH:mm" : "YYYY-MM-DD"
-					);
-				}
+				// let values = [];
 
+				// if (newValue != null) {
+				// 	values = newValue.map((value) => value.value);
+				// }
+				
 				this.$emit("change-value", newValue);
 			},
 		},

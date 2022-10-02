@@ -15,13 +15,11 @@
 </template>
 
 <script>
-import Card from "primevue/card";
 import Breadcrumb from "primevue/breadcrumb";
 
 export default {
     components: {
         Breadcrumb,
-        Card,
     },
     data: () => ({
         home: {

@@ -1,59 +1,25 @@
-// form {
-//     .p-inputtext,
-//     .p-dropdown {
-//         background-color: darken($primary, 10%);
-//         border: none;
-//         color: white;
-
-//         &::placeholder {
-//             color: white;
-//         }
-
-//         &:focus {
-//             box-shadow: none;
-//             background-color: darken($primary, 20%);
-//         }
-
-//         &:enabled:focus {
-//             box-shadow: none;
-//             background-color: darken($primary, 20%);
-//         }
-
-//         &:not(.p-disabled).p-focus {
-//             box-shadow: none;
-//         }
-
-//         .p-dropdown-label.p-placeholder {
-//             color: white;
-//         }
-
-//         .p-dropdown-trigger {
-//             span {
-//                 color: white;
-//             }
-//         }
-//     }
-
-//     .p-float-label > label {
-//         color: white;
-//     }
-
-//     .p-float-label input:focus ~ label {
-//         left: 0;
-//     }
-
-//     .p-float-label input.p-filled ~ label {
-//         left: 0;
-//     }
-// }
 .p-float-label input:focus ~ label {
-    left: 0;
+	left: 0;
 }
 
 .p-float-label input.p-filled ~ label {
-    left: 0;
+	left: 0;
 }
 
 .p-dropdown-panel {
-    box-shadow: $smooth-box-shadow;
+	box-shadow: $smooth-box-shadow;
+}
+
+.p-selectbutton {
+	.p-button {
+		border: 1px solid lightgray !important;
+	}
+}
+
+.p-button-rounded {
+	border: 1px solid !important;
+
+	&:enabled:hover {
+		background-color: rgba($primary, 0.2) !important;
+	}
 }

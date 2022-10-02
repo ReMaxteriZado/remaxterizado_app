@@ -40,16 +40,16 @@ const mutations = {
 	},
 
 	changeCurrentTablePage(state, n) {
-		state[n.state_variable].currentPage = n
+		state[n.stateVariable].currentPage = n
 	},
 	toggleFormDialog(state, n) {
-		state[n.state_variable].dialog = n.show
+		state[n.stateVariable].dialog = n.show
 	},
 	changeFormDialogMode(state, n) {
-		state[n.state_variable].dialogMode = n
+		state[n.stateVariable].dialogMode = n
 	},
 	changeCurrentRegister(state, n) {
-		state[n.state_variable].register = n
+		state[n.stateVariable].register = n
 	},
 
 	// Links
@@ -64,6 +64,20 @@ const mutations = {
 	},
 	changeCurrentPageLinks(state, n) {
 		state.links.currentPage = n
+	},
+
+	// Categories
+	toggleCategoriesDialog(state, n) {
+		state.categories.dialog = n
+	},
+	changeCategoriesDialogMode(state, n) {
+		state.categories.dialogMode = n
+	},
+	changeCurrentCategory(state, n) {
+		state.categories.register = n
+	},
+	changeCurrentPageCategories(state, n) {
+		state.categories.currentPage = n
 	},
 }
 

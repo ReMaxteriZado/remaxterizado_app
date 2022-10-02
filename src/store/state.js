@@ -17,7 +17,6 @@ const state = {
   editModel: null,
 
   // Categories
-  categories: [],
   categoryTree: "",
 
   // Codes
@@ -55,6 +54,19 @@ const state = {
 
   // Links
   links: {
+    // Table
+    list: [],
+    list_total: 0,
+    currentPage: null,
+
+    // Form
+    register: null,
+    dialog: false,
+    dialogMode: "show",
+  },
+
+  // Categories
+  categories: {
     // Table
     list: [],
     list_total: 0,

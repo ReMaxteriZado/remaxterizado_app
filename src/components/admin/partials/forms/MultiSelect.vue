@@ -6,7 +6,7 @@
 			>{{ label }}</label
 		>
 
-		<Dropdown
+		<MultiSelect
 			v-model="model"
 			:options="options"
 			:optionValue="optionValue"
@@ -21,7 +21,7 @@
 			<template #option="slotProps">
 				{{ formatText(slotProps.option) }}
 			</template>
-		</Dropdown>
+		</MultiSelect>
 
 		<div
 			v-if="error != null"
@@ -33,11 +33,11 @@
 </template>
 
 <script>
-	import Dropdown from "primevue/dropdown";
+	import MultiSelect from "primevue/multiselect";
 
 	export default {
 		components: {
-			Dropdown,
+			MultiSelect,
 		},
 		props: [
 			"label",
@@ -60,17 +60,9 @@
 					let text = "";
 
 					this.displayText.forEach((item, index) => {
-						if (item.includes(".")) {
-							let parts = item.split(".");
+						text += option[item];
 
-							if (option[parts[0]] != null) {
-								text += option[parts[0]][parts[1]];
-							}
-						} else {
-							text += option[item];
-						}
-
-						if (text != "" && index < this.displayText.length - 1) {
+						if (index < this.displayText.length - 1) {
 							text += this.displayTextSeparator;
 						}
 					});

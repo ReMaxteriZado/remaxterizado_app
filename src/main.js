@@ -55,6 +55,11 @@ import DropDown from "@/components/admin/partials/forms/DropDown.vue";
 import Textarea from "@/components/admin/partials/forms/TextArea.vue";
 import DatePicker from "@/components/admin/partials/forms/DatePicker.vue";
 import CheckBox from "@/components/admin/partials/forms/CheckBox.vue";
+import RadioButton from "@/components/admin/partials/forms/RadioButton.vue";
+import MultiSelect from "@/components/admin/partials/forms/MultiSelect.vue";
+import InputSwitch from "@/components/admin/partials/forms/InputSwitch.vue";
+import SelectButton from "@/components/admin/partials/forms/SelectButton.vue";
+import FileUpload from "@/components/admin/partials/forms/FileUpload.vue";
 
 const app = createApp(App);
 
@@ -73,6 +78,11 @@ app.component("DropDown", DropDown);
 app.component("TextArea", Textarea);
 app.component("DatePicker", DatePicker);
 app.component("CheckBox", CheckBox);
+app.component("RadioButton", RadioButton);
+app.component("MultiSelect", MultiSelect);
+app.component("InputSwitch", InputSwitch);
+app.component("SelectButton", SelectButton);
+app.component("FileUpload", FileUpload);
 
 app.config.globalProperties.$http = http;
 app.config.globalProperties.$store = store;

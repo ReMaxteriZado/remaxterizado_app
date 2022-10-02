@@ -13,62 +13,61 @@
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
 
-::-moz-selection {
-    /* Code for Firefox */
-    color: white;
-    background: $primary;
-}
-
 ::selection {
-    color: white;
-    background: $primary;
+	color: white;
+	background: $primary;
 }
 
-/* width */
+// Code for Firefox
+::-moz-selection {
+	color: white;
+	background: $primary;
+}
+
+// Width
 ::-webkit-scrollbar {
-    width: 10px;
+	width: 10px;
 }
 
-/* Track */
+// Track
 ::-webkit-scrollbar-track {
-    background: $dark;
+	background: rgba(#000000, 0.2);
 }
 
-/* Handle */
+// Handle
 ::-webkit-scrollbar-thumb {
-    background: $primary;
-    border-radius: 10px;
+	background: $primary;
 }
 
-/* Handle on hover */
+// Handle on hover
 ::-webkit-scrollbar-thumb:hover {
-    background: darken($primary, 20%);
+	background: darken($primary, 20%);
 }
 
 #app {
-    font-family: Work_Sans, sans-serif;
+	font-family: Work_Sans, sans-serif;
 
-    section {
-        padding-top: 5rem;
-    }
+	section {
+		padding-top: 5rem;
+	}
 
-    footer {
-        margin-top: 5rem;
-    }
+	footer {
+		margin-top: 5rem;
+	}
 
-    .datatable {
-        a {
-            color: $primary;
-            text-decoration: none;
-        }
-    }
+	.datatable {
+		a {
+			color: $primary;
+			text-decoration: none;
+		}
+	}
 
-    .cursor-pointer {
-        cursor: pointer;
-    }
+	hr {
+		height: 2px;
+		background-color: white;
+	}
+}
 
-    hr {
-        height: 2px;
-        background-color: white;
-    }
+.cursor-pointer {
+	cursor: pointer;
 }

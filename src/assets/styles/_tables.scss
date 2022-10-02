@@ -1,54 +1,72 @@
 .p-progressbar {
-    background-color: rgba($primary, 0.2);
-    height: 10px;
-    width: 90vw;
-    max-width: 500px;
+	background-color: rgba($primary, 0.2);
+	height: 10px;
+	width: 90vw;
+	max-width: 500px;
 }
 
 .p-datatable {
-    border-radius: $border-radius;
-    overflow: hidden;
+	border-radius: $border-radius;
+	overflow: hidden;
 
-    .p-datatable-wrapper {
-        box-shadow: $smooth-box-shadow;
-    }
+	&.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+		background-color: rgba($primary, 0.05);
 
-    .p-sortable-column:not(.p-highlight) {
-        transition: $transition;
-    }
+		&:hover {
+			background-color: rgba($primary, 0.1);
+		}
+	}
 
-    .p-datatable-header {
-        background-color: transparent;
-        border: none;
-        padding: 0;
-        padding-bottom: 1rem;
-    }
+	.p-datatable-tbody > tr.p-highlight {
+		background-color: rgba($primary, 0.2) !important;
+	}
 
-    .p-datatable-tbody {
-        tr {
-            transition: $transition;
-            cursor: pointer;
+	.p-sortable-column:not(.p-highlight) {
+		transition: $transition;
+	}
 
-            td {
-                border: none;
-            }
-        }
-    }
+	.p-datatable-header {
+		background-color: #f8f9fa;
+		border: none;
+		padding: 1rem;
+		border-bottom: 1px solid #dee2e6;
+	}
 
-    .p-paginator {
-        border: none;
-    }
+	.p-datatable-tbody {
+		tr {
+			transition: $transition;
+			cursor: pointer;
 
-    a {
-        color: $primary;
-        text-decoration: none;
-    }
+			td {
+				border: none;
+			}
+		}
+	}
+
+	.p-paginator {
+		border: none;
+		background-color: #f8f9fa;
+
+		.p-paginator-pages {
+			.p-paginator-page {
+				&.p-highlight {
+					background-color: rgba($primary, 0.1);
+				}
+			}
+		}
+	}
+
+	a {
+		color: $primary;
+		text-decoration: none;
+	}
 }
 
-.p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
-    background-color: rgba($secondary, 0.1);
+.p-dropdown-panel .p-dropdown-items {
+	border-radius: $border-radius;
+	padding: 0;
 
-    &:hover {
-        background-color: rgba($secondary, 0.2);
-    }
+	.p-dropdown-item.p-highlight {
+		background-color: rgba($primary, 0.1);
+	}
 }

@@ -4,8 +4,6 @@
         class="link d-flex align-items-center py-3 gap-2 p-ripple"
         v-ripple
     >
-        <i v-if="!item.is_fontawesome_icon" class="pi" :class="[item.icon]"></i>
-        <fa-icon v-else :icon="item.icon" />
         <p class="custom-line-heigth mb-0">
             {{ item.label }}
         </p></router-link
@@ -22,7 +20,7 @@ export default {
 .link {
     text-decoration: none;
     transition: $transition;
-    color: $text;
+    color: #666;
     font-weight: bold;
 
     .custom-line-heigth {

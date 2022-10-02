@@ -12,6 +12,7 @@
 			:placeholder="label"
 			type="text"
 			class="w-100"
+			:class="[error != null ? 'p-invalid' : '']"
 		/>
 
 		<div
@@ -24,7 +25,7 @@
 </template>
 
 <script>
-	import InputText from "primevue/inputtext"
+	import InputText from "primevue/inputtext";
 
 	export default {
 		components: {

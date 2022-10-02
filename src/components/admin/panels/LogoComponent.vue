@@ -1,19 +1,32 @@
 <template>
-    <div
-        class="logo h-100 d-flex align-items-center justify-content-center p-3"
-    >
-        <router-link to="/admin/dashboard">
-            <img src="@/assets/images/logo.png" height="50" />
-        </router-link>
-    </div>
+	<div class="logo d-flex align-items-center justify-content-center bg-white p-3">
+		<router-link
+			to="/admin/dashboard"
+			class="d-flex justify-content-center align-items-center"
+		>
+			<img src="@/assets/images/logotipo.jpeg" />
+		</router-link>
+	</div>
 </template>
 
 <script>
-export default {};
+	export default {};
 </script>
 
-<style lang="scss" scoped>
-.logo {
-    background-color: white;
-}
+<style
+	lang="scss"
+	scoped
+>
+	.logo {
+		position: sticky;
+		left: 0;
+		top: 0;
+		z-index: 50;
+
+		img {
+			max-width: 70px;
+			max-height: 70px;
+			border-radius: 100%;
+		}
+	}
 </style>

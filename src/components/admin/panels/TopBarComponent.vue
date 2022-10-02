@@ -1,8 +1,9 @@
 <template>
     <div class="p-4">
-        <Card class="mb-4 no-custom-card">
+        <Card class="no-custom-card">
             <template #content>
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-between">
+                    <Breadcrumb />
                     <CurrentUser />
                 </div>
             </template>
@@ -12,10 +13,12 @@
 
 <script>
 import Card from "primevue/card";
-import CurrentUser from "./CurrentUserComponent.vue";
+import Breadcrumb from "../partials/BreadcrumComponent.vue";
+import CurrentUser from "../partials/CurrentUserComponent.vue";
 
 export default {
     components: {
+        Breadcrumb,
         Card,
         CurrentUser,
     },
@@ -24,7 +27,41 @@ export default {
             icon: "pi pi-home",
             url: "/admin/dashboard",
         },
+        items: [],
     }),
+    mounted() {
+        if (this.$route.name != undefined) {
+            this.$route.name.split("/").forEach((bread) => {
+                this.items.push({ label: bread });
+            });
+        }
+    },
+    watch: {
+        $route(to) {
+            this.items = [];
+
+            if (to.name != undefined) {
+                to.name.split("/").forEach((bread, index) => {
+                    let path = to.path.split("/");
+                    let url = "";
+
+                    for (let i = 0; i <= index + 1; i++) {
+                        url += "/" + path[i + 1];
+                    }
+
+                    this.items.push({ label: bread, url: url });
+                });
+
+                // remove url prop for last items item
+                this.items[this.items.length - 1].url = null;
+
+                // Incluir el ID del elemento editando en el breadcrumb
+                // if (to.params?.id != undefined) {
+                //     this.items.push({ label: to.params?.id });
+                // }
+            }
+        },
+    },
 };
 </script>
 

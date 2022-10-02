@@ -1,19 +1,42 @@
 <template>
 	<div>
-		<div class="d-flex align-items-center gap-2">
+		<div v-if="binary" class="d-flex align-items-center gap-2">
 			<Checkbox
 				v-model="model"
 				:disabled="disabled"
-                :name="name"
-				:value="value"
-				:binary="binary"
+				:binary="true"
 			/>
 			<label
-				class="text-primary text-bold"
+				for="input"
+				class="text-bold"
 				>{{ label }}</label
 			>
 		</div>
 
+		<div v-else>
+			<label
+				for="input"
+				class="text-primary text-bold"
+				>{{ label }}</label
+			>
+			<div
+				v-for="(value, index) in values"
+				:key="index"
+				class="d-flex align-items-center gap-2"
+			>
+				<Checkbox
+					v-model="model"
+					:disabled="disabled"
+					:name="name"
+					:value="value.value"
+				/>
+				<label
+					for="input"
+					class="text-bold"
+					>{{ value.label }}</label
+				>
+			</div>
+		</div>
 		<div
 			v-if="error != null"
 			class="text-danger"
@@ -24,13 +47,13 @@
 </template>
 
 <script>
-	import Checkbox from 'primevue/checkbox';
+	import Checkbox from "primevue/checkbox";
 
 	export default {
 		components: {
 			Checkbox,
 		},
-		props: ["label", "error", "disabled", "name", "value", "binary"],
+		props: ["label", "error", "disabled", "name", "values", "binary"],
 		data: () => ({
 			model: null,
 		}),
