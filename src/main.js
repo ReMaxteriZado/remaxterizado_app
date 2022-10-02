@@ -11,9 +11,11 @@ import http from "./axios";
 // Router
 import router from "./router";
 
-// Bootstrap
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+// Import helpers
+import { func } from "./helpers";
+
+// Import styles
+import "/src/assets/styles/app.scss";
 
 // Font Awesome
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -47,6 +49,13 @@ import Ripple from "primevue/ripple";
 // Fonts
 require("@/assets/fonts/Work_Sans/Work_Sans.css");
 
+// Form fields
+import InputText from "@/components/admin/partials/forms/InputText.vue";
+import DropDown from "@/components/admin/partials/forms/DropDown.vue";
+import Textarea from "@/components/admin/partials/forms/TextArea.vue";
+import DatePicker from "@/components/admin/partials/forms/DatePicker.vue";
+import CheckBox from "@/components/admin/partials/forms/CheckBox.vue";
+
 const app = createApp(App);
 
 app.directive("tooltip", Tooltip);
@@ -59,8 +68,14 @@ app.use(ToastService);
 app.use(ConfirmationService);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
+app.component("InputText", InputText);
+app.component("DropDown", DropDown);
+app.component("TextArea", Textarea);
+app.component("DatePicker", DatePicker);
+app.component("CheckBox", CheckBox);
 
 app.config.globalProperties.$http = http;
 app.config.globalProperties.$store = store;
+app.config.globalProperties.$helper = func;
 
 app.mount("#app");

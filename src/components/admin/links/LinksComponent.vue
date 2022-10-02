@@ -1,20 +1,21 @@
 <template>
-    <div>
-        <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
-            <TitleComponent title="Links" />
-        </div>
-        <Table />
-    </div>
+	<div>
+		<TitleComponent title="Links" />
+		<LinksTable />
+		<NewLink />
+	</div>
 </template>
 
 <script>
-import TitleComponent from "@/components/admin/partials/TitleComponent.vue";
-import Table from "@/components/admin/links/LinksTableComponent.vue";
+	import TitleComponent from "@/components/admin/partials/TitleComponent.vue";
+	import LinksTable from "./LinksTable.vue";
+	import NewLink from "./LinksForm.vue";
 
-export default {
-    components: {
-        TitleComponent,
-        Table,
-    },
-};
+	export default {
+		components: {
+			TitleComponent,
+			LinksTable,
+			NewLink,
+		},
+	};
 </script>

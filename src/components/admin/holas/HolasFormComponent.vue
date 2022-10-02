@@ -3,9 +3,9 @@
         v-model:visible="$store.state.links.dialog"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '30vw' }"
-        :modal="dialog_defaults.modal"
-        :closeOnEscape="dialog_defaults.closeOnEscape"
-        :dismissableMask="dialog_defaults.dismissableMask"
+        :modal="dialogDefaults.modal"
+        :closeOnEscape="dialogDefaults.closeOnEscape"
+        :dismissableMask="dialogDefaults.dismissableMask"
         @after-hide="clearForm()"
         @show="fillForm()"
     >
@@ -52,7 +52,7 @@ import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 
 import Title from "../partials/TitleComponent.vue";
-import InputText from "../partials/forms/InputTextComponent.vue";
+import InputText from "../partials/forms/InputText.vue";
 
 import Form from "vform";
 
@@ -89,7 +89,7 @@ export default {
                 }).then((response) => {
                     if (response.status === 200) {
                         this.toggleLinksModal(false);
-                        this.getLinks(this.links.current_page);
+                        this.getLinks(this.links.currentPage);
                     }
                 });
             } else {
@@ -100,7 +100,7 @@ export default {
                 }).then((response) => {
                     if (response.status === 200) {
                         this.toggleLinksModal(false);
-                        this.getLinks(this.links.current_page);
+                        this.getLinks(this.links.currentPage);
                     }
                 });
             }
@@ -133,7 +133,7 @@ export default {
         },
     },
     computed: {
-        ...mapState(["dialog_defaults", "links"]),
+        ...mapState(["dialogDefaults", "links"]),
     },
 };
 </script>

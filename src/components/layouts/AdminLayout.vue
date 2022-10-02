@@ -1,5 +1,5 @@
 <template>
-    <div id="admin-layout">
+    <!-- <div id="admin-layout">
         <Toast />
         <ConfirmDialog />
         <LoadingComponent />
@@ -23,62 +23,65 @@
                 </transition>
             </router-view>
         </div>
-    </div>
+    </div> -->
+    <LinksComponent />
 </template>
 
 <script>
-import LogoComponent from "../admin/panels/LogoComponent.vue";
-import SidebarComponent from "../admin/panels/SidebarComponent.vue";
-import NewItemComponent from "../admin/panels/NewItemComponent.vue";
-import TopBar from "../admin/panels/TopBarComponent.vue";
-import LoadingComponent from "../admin/partials/LoadingComponent.vue";
+// import LogoComponent from "../admin/panels/LogoComponent.vue";
+// import SidebarComponent from "../admin/panels/SidebarComponent.vue";
+// import NewItemComponent from "../admin/panels/NewItemComponent.vue";
+// import TopBar from "../admin/panels/TopBarComponent.vue";
+// import LoadingComponent from "../admin/partials/LoadingComponent.vue";
 
-import Toast from "primevue/toast";
-import ConfirmDialog from "primevue/confirmdialog";
+// import Toast from "primevue/toast";
+// import ConfirmDialog from "primevue/confirmdialog";
+import LinksComponent from "@/components/admin/links/LinksComponent.vue";
 
-import { mapState, mapActions } from "vuex";
+import {  mapActions } from "vuex";
 
 export default {
     components: {
-        LogoComponent,
-        SidebarComponent,
-        NewItemComponent,
-        LoadingComponent,
-        TopBar,
-        Toast,
-        ConfirmDialog,
+        // LogoComponent,
+        // SidebarComponent,
+        // NewItemComponent,
+        // LoadingComponent,
+        // TopBar,
+        // Toast,
+        // ConfirmDialog,
+        LinksComponent
     },
-    computed: {
-        ...mapState(["showNotLoggedToast", "showFormGeneralErrorToast"]),
-    },
+    // computed: {
+    //     ...mapState(["showNotLoggedToast", "showFormGeneralErrorToast"]),
+    // },
     methods: {
         ...mapActions(["setFormAccessToken"]),
     },
     mounted() {
         this.setFormAccessToken();
     },
-    watch: {
-        showNotLoggedToast(value) {
-            if (value) {
-                this.$toast.add({
-                    severity: "error",
-                    summary: "You are not logged in",
-                    detail: "Please login to continue",
-                    life: 3000,
-                });
-            }
-        },
-        showFormGeneralErrorToast(value) {
-            if (value) {
-                this.$toast.add({
-                    severity: "error",
-                    summary: "An error has appeared",
-                    detail: "Please try again",
-                    life: 3000,
-                });
-            }
-        },
-    },
+    // watch: {
+    //     showNotLoggedToast(value) {
+    //         if (value) {
+    //             this.$toast.add({
+    //                 severity: "error",
+    //                 summary: "You are not logged in",
+    //                 detail: "Please login to continue",
+    //                 life: 3000,
+    //             });
+    //         }
+    //     },
+    //     showFormGeneralErrorToast(value) {
+    //         if (value) {
+    //             this.$toast.add({
+    //                 severity: "error",
+    //                 summary: "An error has appeared",
+    //                 detail: "Please try again",
+    //                 life: 3000,
+    //             });
+    //         }
+    //     },
+    // },
 };
 </script>
 

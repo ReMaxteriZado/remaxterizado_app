@@ -9,9 +9,9 @@
             <div class="col-12 col-md-6 h-auto">
                 <MaxCategories class="h-100" />
             </div>
-            <div class="col-12 mt-4">
+            <!-- <div class="col-12 mt-4">
                 <LinksTable />
-            </div>
+            </div> -->
         </div>
 
         <Listbox :options="tasks" />
@@ -24,7 +24,7 @@ import Listbox from "primevue/listbox";
 import Title from "@/components/admin/partials/TitleComponent.vue";
 import TotalRegisters from "@/components/admin/dashboard/TotalRegistersComponent.vue";
 import MaxCategories from "@/components/admin/dashboard/MaxCategoriesComponent.vue";
-import LinksTable from "@/components/admin/links/LinksTableComponent.vue";
+// import LinksTable from "@/components/admin/links/LinksTableComponent.vue";
 
 import { mapState } from "vuex";
 
@@ -34,7 +34,7 @@ export default {
         Title,
         TotalRegisters,
         MaxCategories,
-        LinksTable,
+        // LinksTable,
     },
     data() {
         return {

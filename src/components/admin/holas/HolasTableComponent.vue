@@ -1,12 +1,12 @@
 <template>
     <DataTable ref="datatable" v-model:selection="selecteds_ids" stripedRows :value="links.list"
-        :totalRecords="links.list_total" :paginator="datatable_defaults.paginator" :rows="datatable_defaults.rows"
-        :rowsPerPageOptions="datatable_defaults.rowsPerPageOptions" :rowHover="datatable_defaults.rowHover"
-        :loading="datatable_defaults.loading" :paginatorTemplate="datatable_defaults.paginatorTemplate"
+        :totalRecords="links.list_total" :paginator="datatableDefaults.paginator" :rows="datatableDefaults.rows"
+        :rowsPerPageOptions="datatableDefaults.rowsPerPageOptions" :rowHover="datatableDefaults.rowHover"
+        :loading="datatableDefaults.loading" :paginatorTemplate="datatableDefaults.paginatorTemplate"
         :currentPageReportTemplate="
-            datatable_defaults.currentPageReportTemplate
-        " :scrollable="datatable_defaults.scrollable" :scrollHeight="datatable_defaults.scrollHeight"
-        :lazy="datatable_defaults.lazy" @page="changeCurrentPage($event)" @row-click="showModel($event)">
+            datatableDefaults.currentPageReportTemplate
+        " :scrollable="datatableDefaults.scrollable" :scrollHeight="datatableDefaults.scrollHeight"
+        :lazy="datatableDefaults.lazy" @page="changeCurrentPage($event)" @row-click="showModel($event)">
         <template #header>
             <div class="d-flex justify-content-between align-items-center">
                 <TableFilters :filters="filters" />
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </template>
-        <template #empty>{{ datatable_defaults.no_results }}</template>
+        <template #empty>{{ datatableDefaults.noResults }}</template>
         <template #loading>
             <LoadingTable />
         </template>
@@ -112,7 +112,7 @@ export default {
                     this.sendDeleteRequest({
                         url: "/links/" + id,
                     }).then(() => {
-                        this.getRegisters(this.links.current_page);
+                        this.getRegisters(this.links.currentPage);
                     });
                 },
             });
@@ -122,7 +122,7 @@ export default {
                 this.selecteds_ids,
                 this.lastPageChange != null
                     ? this.lastPageChange.rows
-                    : this.datatable_defaults.rows
+                    : this.datatableDefaults.rows
             );
 
             this.$confirm.require({
@@ -135,7 +135,7 @@ export default {
                         url: "/links-multiple",
                         params: ids,
                     }).then(() => {
-                        this.getRegisters(this.links.current_page);
+                        this.getRegisters(this.links.currentPage);
                         this.selecteds_ids = [];
                     });
                 },
@@ -146,7 +146,7 @@ export default {
         },
     },
     computed: {
-        ...mapState(["datatable_defaults", "links"]),
+        ...mapState(["datatableDefaults", "links"]),
     },
     mounted() {
         this.getRegisters({

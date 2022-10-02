@@ -26,8 +26,8 @@ const state = {
   viewCode: null,
 
   // Datatable defaults
-  datatable_defaults: {
-    no_results: "No results found",
+  datatableDefaults: {
+    noResults: "No results found",
     lazy: true,
     loading: true,
     paginator: true,
@@ -44,7 +44,7 @@ const state = {
   },
 
   // Dialogs defaults
-  dialog_defaults: {
+  dialogDefaults: {
     modal: true,
     closeOnEscape: true,
     dismissableMask: true,
@@ -58,12 +58,12 @@ const state = {
     // Table
     list: [],
     list_total: 0,
-    current_page: null,
+    currentPage: null,
 
     // Form
     register: null,
     dialog: false,
-    dialog_mode: "show",
+    dialogMode: "show",
   },
 };
 

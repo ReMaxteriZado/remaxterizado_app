@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
+    <div class="text-primary d-flex flex-wrap gap-3 align-items-center">
         <h3>{{ title }}</h3>
     </div>
 </template>
@@ -11,9 +11,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 h3 {
-    color: $primary;
     margin-bottom: 0;
 }
 </style>
