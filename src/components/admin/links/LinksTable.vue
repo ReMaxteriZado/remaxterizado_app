@@ -2,7 +2,7 @@
 	<div>
 		<TableDefault
 			:list="links.list"
-			:total="links.list_total"
+			:total="links.listTotal"
 			:filters="filters"
 			:delete="'links'"
 			@getList="getList"

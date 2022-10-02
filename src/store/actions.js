@@ -10,7 +10,10 @@ const actions = {
 
 			localStorage.removeItem("is_blocked");
 			localStorage.setItem("access_token", response.data.token);
-			localStorage.setItem("user_permissions", JSON.stringify(response.data.user_permissions));
+			localStorage.setItem(
+				"user_permissions",
+				JSON.stringify(response.data.user_permissions)
+			);
 
 			await dispatch("setFormAccessToken");
 
@@ -203,7 +206,7 @@ const actions = {
 			});
 
 			state.links.list = response.data.links;
-			state.links.list_total = response.data.total;
+			state.links.listTotal = response.data.total;
 
 			state.datatableDefaults.loading = false;
 			return response;
@@ -265,14 +268,15 @@ const actions = {
 					...formProps,
 					pagination: {
 						currentPage: params?.page != null ? params.page : 0,
-						rows: params?.rows != null ? params.rows : state.datatableDefaults.rows,
+						rows:
+							params?.rows != null ? params.rows : state.datatableDefaults.rows,
 					},
 				},
 			});
 
 			state.datatableDefaults.loading = false;
 			state[params.stateVariable].list = response.data[params.stateVariable];
-			state[params.stateVariable].list_total = response.data.total;
+			state[params.stateVariable].listTotal = response.data.total;
 		} catch (error) {
 			console.error(error);
 			state.showFormGeneralErrorToast = true;

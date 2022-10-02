@@ -1,82 +1,82 @@
 const state = {
-  // Web
-  layout: "web-layout",
+	// Web
+	layout: "web-layout",
 
-  // Admin
-  baseURL: "http://remaxterizado_api.test/api",
-  // baseURL: "https://api.remaxterizado.es/api",
-  // loading: false,
-  showSidebar: false,
-  showNotLoggedToast: false,
-  userLogged: null,
+	// Admin
+	baseURL: "http://remaxterizado_api.test/api",
+	// baseURL: "https://api.remaxterizado.es/api",
+	// loading: false,
+	showSidebar: false,
+	showNotLoggedToast: false,
+	userLogged: null,
 
-  // Forms
-  showNewItemSidebar: false,
-  showFormGeneralErrorToast: false,
-  formComponent: "",
-  editModel: null,
+	// Forms
+	showNewItemSidebar: false,
+	showFormGeneralErrorToast: false,
+	formComponent: "",
+	editModel: null,
 
-  // Categories
-  categoryTree: "",
+	// Categories
+	categoryTree: "",
 
-  // Codes
-  codes: [],
-  code_languages: ["PHP", "JavaScript", "CSS", "HTML", "SCSS"],
-  viewCode: null,
+	// Codes
+	codes: [],
+	code_languages: ["PHP", "JavaScript", "CSS", "HTML", "SCSS"],
+	viewCode: null,
 
-  // Datatable defaults
-  datatableDefaults: {
-    noResults: "No results found",
-    lazy: true,
-    loading: true,
-    paginator: true,
-    rows: 5,
-    rowsPerPageOptions: [5, 10, 20],
-    rowHover: true,
-    scrollable: true,
-    scrollHeight: "600px",
-    currentPage: 0,
-    paginatorTemplate:
-      "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
-    currentPageReportTemplate:
-      "Showing {first} to {last} of {totalRecords} entries",
-  },
+	// Datatable defaults
+	datatableDefaults: {
+		noResults: "No results found",
+		lazy: true,
+		loading: true,
+		paginator: true,
+		rows: 5,
+		rowsPerPageOptions: [5, 10, 20],
+		rowHover: true,
+		scrollable: true,
+		scrollHeight: "600px",
+		currentPage: 0,
+		paginatorTemplate:
+			"FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
+		currentPageReportTemplate:
+			"Showing {first} to {last} of {totalRecords} entries",
+	},
 
-  // Dialogs defaults
-  dialogDefaults: {
-    modal: true,
-    closeOnEscape: true,
-    dismissableMask: true,
-  },
+	// Dialogs defaults
+	dialogDefaults: {
+		modal: true,
+		closeOnEscape: true,
+		dismissableMask: true,
+	},
 
-  // Dialogs
-  displayCodeDialog: false,
+	// Dialogs
+	displayCodeDialog: false,
 
-  // Links
-  links: {
-    // Table
-    list: [],
-    list_total: 0,
-    currentPage: null,
+	// Links
+	links: {
+		// Table
+		list: [],
+		listTotal: 0,
+		currentPage: null,
 
-    // Form
-    register: null,
-    dialog: false,
-    dialogMode: "show",
-  },
+		// Form
+		register: null,
+		dialog: false,
+		dialogMode: "show",
+	},
 
-  // Categories
-  categories: {
-    // Table
-    list: [],
-    list_total: 0,
-    currentPage: null,
+	// Categories
+	categories: {
+		// Table
+		list: [],
+		listTotal: 0,
+		currentPage: null,
 
-    // Form
-    register: null,
-    dialog: false,
-    dialogMode: "show",
-  },
+		// Form
+		register: null,
+		dialog: false,
+		dialogMode: "show",
+	},
 };
 
 export default state;
