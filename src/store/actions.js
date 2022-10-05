@@ -10,10 +10,7 @@ const actions = {
 
 			localStorage.removeItem("is_blocked");
 			localStorage.setItem("access_token", response.data.token);
-			localStorage.setItem(
-				"user_permissions",
-				JSON.stringify(response.data.user_permissions)
-			);
+			localStorage.setItem("user_permissions", JSON.stringify(response.data.user_permissions));
 
 			await dispatch("setFormAccessToken");
 
@@ -51,33 +48,18 @@ const actions = {
 		}
 	},
 
-	// VForm functions
-	async sendPostForm({ state }, { form, url, errors }) {
+	// Form functions
+	async sendForm({ state }, { method = "post", form, url, errors }) {
 		try {
+			let response;
+
 			state.loading = true;
 
-			const response = await form.post(state.baseURL + url);
-
-			state.loading = false;
-			return response;
-		} catch (error) {
-			console.error(error);
-
-			state.loading = false;
-
-			if (error.response?.data) {
-				for (const key in error.response.data) {
-					errors.set(key, error.response.data[key]);
-				}
+			if (method == "post") {
+				response = await form.post(state.baseURL + url);
+			} else if (method == "put") {
+				response = await form.put(state.baseURL + url);
 			}
-
-			return error.response;
-		}
-	},
-	async sendPutForm({ state }, { form, url, errors }) {
-		try {
-			state.loading = true;
-			const response = await form.put(state.baseURL + url);
 
 			state.loading = false;
 			return response;
@@ -97,13 +79,16 @@ const actions = {
 	},
 
 	// Delete function
-	async sendDeleteRequest({ state }, { url }) {
+	async deleteRegisters({ state }, { url, ids = null }) {
 		try {
 			state.loading = true;
 
 			const response = await axios({
 				method: "delete",
 				url: url,
+				data: {
+					ids,
+				}
 			});
 
 			state.loading = false;
@@ -181,42 +166,6 @@ const actions = {
 	},
 
 	// Links
-	async getLinks({ state }, params) {
-		try {
-			state.datatableDefaults.loading = true;
-
-			const form = document.getElementById("filters");
-			let formProps = null;
-
-			if (form != undefined) {
-				const formData = new FormData(form);
-
-				formProps = Object.fromEntries(formData);
-			}
-
-			const response = await axios({
-				url: "/links",
-				params: {
-					...formProps,
-					pagination: {
-						currentPage: params != null ? params.page : 0,
-						rows: params != null ? params.rows : state.datatableDefaults.rows,
-					},
-				},
-			});
-
-			state.links.list = response.data.links;
-			state.links.listTotal = response.data.total;
-
-			state.datatableDefaults.loading = false;
-			return response;
-		} catch (error) {
-			console.error(error);
-			state.showFormGeneralErrorToast = true;
-
-			return error;
-		}
-	},
 	async incrementViews({ state }, id) {
 		try {
 			const response = await axios({
@@ -257,7 +206,9 @@ const actions = {
 	// Get registers
 	async getRegisters({ state }, params) {
 		try {
-			state.datatableDefaults.loading = true;
+			if (params.showLoading == null || params.showLoading == undefined || params.showLoading) {
+				state.datatableDefaults.loading = true;
+			}
 
 			let formProps = func.formatFilters("filters");
 
@@ -268,8 +219,7 @@ const actions = {
 					...formProps,
 					pagination: {
 						currentPage: params?.page != null ? params.page : 0,
-						rows:
-							params?.rows != null ? params.rows : state.datatableDefaults.rows,
+						rows: params?.rows != null ? params.rows : state.datatableDefaults.rows,
 					},
 				},
 			});

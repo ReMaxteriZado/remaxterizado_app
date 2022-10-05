@@ -14,7 +14,6 @@
 		</template>
 
 		<form
-			class="custom-form"
 			@submit.prevent="save()"
 			@keydown="form.onKeydown($event)"
 		>
@@ -24,7 +23,7 @@
 						ref="title"
 						label="Título"
 						:disabled="disabled"
-						:error="form.errors.has('title') ? form.errors.get('title') : null"
+						:error="form.errors.get('title')"
 						@change-value="(value) => (form.title = value)"
 					/>
 				</div>
@@ -33,7 +32,7 @@
 						ref="link"
 						label="Enlace"
 						:disabled="disabled"
-						:error="form.errors.has('link') ? form.errors.get('link') : null"
+						:error="form.errors.get('link')"
 						@change-value="(value) => (form.link = value)"
 					/>
 				</div>
@@ -47,9 +46,9 @@
 						:filter="true"
 						:showClear="true"
 						:displayText="['parent.name', 'name']"
-						:displayTextSeparator=" ' > '"
+						:displayTextSeparator="' > '"
 						:disabled="disabled"
-						:error="form.errors.has('category_id') ? form.errors.get('category_id') : null"
+						:error="form.errors.get('category_id')"
 						@change-value="(value) => (form.category_id = value)"
 					/>
 				</div>
@@ -84,6 +83,16 @@
 			Title,
 			Button,
 		},
+		props: {
+			route: {
+				type: String,
+				required: true,
+			},
+			stateVariable: {
+				type: String,
+				required: true,
+			},
+		},
 		data: () => ({
 			form: new Form({
 				title: "",
@@ -95,36 +104,28 @@
 			disabled: false,
 		}),
 		methods: {
-			...mapActions(["sendPostForm", "sendPutForm", "getLinks", "getRegisters"]),
+			...mapActions(["sendForm", "getRegisters"]),
 			...mapMutations(["toggleLinksDialog", "changeCurrentLink"]),
 			save() {
-				let url = "/links";
-				let result = null;
+				const update = this.links.register != null;
+				const url = `/links${update ? `/${this.links.register.id}` : ""}`;
 
-				if (this.links.register != null) {
-					url += `/${this.links.register.id}`;
+				this.sendForm({
+					method: update ? "put" : "post",
+					form: this.form,
+					url: url,
+					errors: this.form.errors,
+				}).then((response) => {
+					if (response.status === 200) {
+						this.toggleLinksDialog(false);
 
-					this.sendPutForm({
-						form: this.form,
-						url: url,
-						errors: this.form.errors,
-					}).then((response) => {
-						result = response;
-					});
-				} else {
-					this.sendPostForm({
-						form: this.form,
-						url: url,
-						errors: this.form.errors,
-					}).then((response) => {
-						result = response;
-					});
-				}
-
-				if (result?.status === 200) {
-					this.toggleLinksModal(false);
-					this.getLinks(this.links.currentPage);
-				}
+						this.getRegisters({
+							route: this.route,
+							stateVariable: this.stateVariable,
+							page: this.links.currentPage,
+						});
+					}
+				});
 			},
 			clearForm() {
 				this.form.clear();
@@ -139,6 +140,7 @@
 					route: "/categories",
 					stateVariable: "categories",
 					getAll: true,
+					showLoading: false,
 				});
 
 				if (this.links.register != null) {

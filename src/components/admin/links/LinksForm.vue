@@ -176,6 +176,16 @@
 			Title,
 			Button,
 		},
+		props: {
+			route: {
+				type: String,
+				required: true,
+			},
+			stateVariable: {
+				type: String,
+				required: true,
+			},
+		},
 		data: () => ({
 			form: new Form({
 				title: "",

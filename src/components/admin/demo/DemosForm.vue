@@ -14,7 +14,6 @@
 		</template>
 
 		<form
-			class="custom-form"
 			@submit.prevent="save()"
 			@keydown="form.onKeydown($event)"
 		>
@@ -23,7 +22,7 @@
 					<FileUpload
 						label="Subir archivo"
 						ref="FileUpload"
-						:error="form.errors.has('files_list') ? form.errors.get('files_list') : null"
+						:error="form.errors.get('files_list')"
 						:disabled="disabled"
 					/>
 				</div>
@@ -32,7 +31,7 @@
 						ref="title"
 						label="Título"
 						:disabled="disabled"
-						:error="form.errors.has('title') ? form.errors.get('title') : null"
+						:error="form.errors.get('title')"
 						@change-value="(value) => (form.title = value)"
 					/>
 				</div>
@@ -41,7 +40,7 @@
 						ref="link"
 						label="Enlace"
 						:disabled="disabled"
-						:error="form.errors.has('link') ? form.errors.get('link') : null"
+						:error="form.errors.get('link')"
 						@change-value="(value) => (form.link = value)"
 					/>
 				</div>
@@ -56,7 +55,7 @@
 						:showClear="true"
 						:displayText="'title'"
 						:disabled="disabled"
-						:error="form.errors.has('category_id') ? form.errors.get('category_id') : null"
+						:error="form.errors.get('category_id')"
 						@change-value="(value) => (form.category_id = value)"
 					/>
 				</div>
@@ -65,7 +64,7 @@
 						ref="date"
 						label="Fecha"
 						:disabled="disabled"
-						:error="form.errors.has('date') ? form.errors.get('date') : null"
+						:error="form.errors.get('date')"
 						@change-value="(value) => (form.date = value)"
 						:showTime="false"
 					/>
@@ -82,9 +81,7 @@
 						:displayText="['title', 'link']"
 						displayTextSeparator=" - "
 						:disabled="disabled"
-						:error="
-							form.errors.has('multi_category_id') ? form.errors.get('multi_category_id') : null
-						"
+						:error="form.errors.get('multi_category_id')"
 						@change-value="(value) => (form.multi_category_id = value)"
 					/>
 				</div>
@@ -93,7 +90,7 @@
 						ref="hour"
 						label="Horario"
 						:disabled="disabled"
-						:error="form.errors.has('hour') ? form.errors.get('hour') : null"
+						:error="form.errors.get('hour')"
 						@change-value="(value) => (form.hour = value)"
 						:values="[
 							{ value: 'morning', label: 'mañana' },
@@ -106,7 +103,7 @@
 						ref="description"
 						label="Descripción"
 						:disabled="disabled"
-						:error="form.errors.has('description') ? form.errors.get('description') : null"
+						:error="form.errors.get('description')"
 						@change-value="(value) => (form.description = value)"
 					/>
 				</div>
@@ -115,7 +112,7 @@
 						ref="active"
 						label="Activo"
 						:disabled="disabled"
-						:error="form.errors.has('active') ? form.errors.get('active') : null"
+						:error="form.errors.get('active')"
 						@change-value="(value) => (form.active = value)"
 						:values="[
 							{ value: 'water', label: 'Agua' },
@@ -128,7 +125,7 @@
 						ref="nose"
 						label="Nose"
 						:disabled="disabled"
-						:error="form.errors.has('nose') ? form.errors.get('nose') : null"
+						:error="form.errors.get('nose')"
 						@change-value="(value) => (form.nose = value)"
 						:values="[
 							{ value: 'nose1', label: 'nose1' },
@@ -141,7 +138,7 @@
 						ref="rules"
 						label="Normas"
 						:disabled="disabled"
-						:error="form.errors.has('rules') ? form.errors.get('rules') : null"
+						:error="form.errors.get('rules')"
 						@change-value="(value) => (form.rules = value)"
 					/>
 				</div>
@@ -176,6 +173,17 @@
 			Title,
 			Button,
 		},
+		
+		props: {
+			route: {
+				type: String,
+				required: true,
+			},
+			stateVariable: {
+				type: String,
+				required: true,
+			},
+		},
 		data: () => ({
 			form: new Form({
 				title: "",
@@ -193,38 +201,28 @@
 			disabled: false,
 		}),
 		methods: {
-			...mapActions(["sendPostForm", "sendPutForm", "getLinks"]),
+			...mapActions(["sendForm", "getRegisters"]),
 			...mapMutations(["toggleLinksDialog", "changeCurrentLink"]),
 			save() {
-				let url = "/links";
-				let result = null;
+				const update = this.links.register != null;
+				const url = `/links${update ? `/${this.links.register.id}` : ""}`;
 
-				this.form.files_list = this.$refs.FileUpload.files;
+				this.sendForm({
+					method: update ? "put" : "post",
+					form: this.form,
+					url: url,
+					errors: this.form.errors,
+				}).then((response) => {
+					if (response.status === 200) {
+						this.toggleLinksDialog(false);
 
-				if (this.links.register != null) {
-					url += `/${this.links.register.id}`;
-
-					this.sendPutForm({
-						form: this.form,
-						url: url,
-						errors: this.form.errors,
-					}).then((response) => {
-						result = response;
-					});
-				} else {
-					this.sendPostForm({
-						form: this.form,
-						url: url,
-						errors: this.form.errors,
-					}).then((response) => {
-						result = response;
-					});
-				}
-
-				if (result?.status === 200) {
-					this.toggleLinksModal(false);
-					this.getLinks(this.links.currentPage);
-				}
+						this.getRegisters({
+							route: this.route,
+							stateVariable: this.stateVariable,
+							page: this.links.currentPage,
+						});
+					}
+				});
 			},
 			clearForm() {
 				this.form.clear();

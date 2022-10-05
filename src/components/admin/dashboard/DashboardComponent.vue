@@ -39,7 +39,6 @@ export default {
     data() {
         return {
             tasks: [
-                "cuando se recarga una tabla, que se tenga en cuenta el filtro",
                 "hacer que los codigos sean algo como codepend, donde se puedan añadir varios tipos de bloques de codigo para ajuntar un HTML, JS, CSS o PHP o lo que corresponda al link",
                 "si buscamos una categoria, borramos y volvemos a buscar la misma, borramos y volvemos a buscar la misma se empieza a duplicar la opción infinitamente",
                 "crear CRON para guardar la BBDD automaticamente",
@@ -47,7 +46,6 @@ export default {
                 "Hacer el CRUD del usuario conectado",
                 "añadir botones para desplegar todas las carpetas de las categorías",
                 "si creo una categoria sin padre (nivel 0), aparece como que tiene hijos pero no los tiene",
-                "si hacemos CTRL + INTRO que se envie el formulario",
                 "poder personalizar la posición de una categoría respecto a otra",
                 "validar que si se ha añadido un enlace no se vuelva a poder añadir",
                 "añadir estadísticas al dashboard",
@@ -63,9 +61,3 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-:deep(.p-card) {
-    border-radius: $border-radius;
-    box-shadow: $smooth-box-shadow !important;
-}
-</style>

@@ -68,7 +68,50 @@ app.directive("ripple", Ripple);
 
 app.use(store);
 app.use(router);
-app.use(PrimeVue);
+app.use(PrimeVue, {
+	ripple: true,
+	locale: {
+		dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+		dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+		dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+		monthNames: [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre",
+		],
+		monthNamesShort: [
+			"Ene",
+			"Feb",
+			"Mar",
+			"Abr",
+			"May",
+			"Jun",
+			"Jul",
+			"Ago",
+			"Sep",
+			"Oct",
+			"Nov",
+			"Dic",
+		],
+		today: "Hoy",
+		firstDayOfWeek: 1,
+		accept: "Aceptar",
+		reject: "Rechazar",
+		clear: "Limpiar",
+		weak: "Débil",
+		medium: "Medio",
+		strong: "Fuerte",
+	},
+});
 app.use(ToastService);
 app.use(ConfirmationService);
 

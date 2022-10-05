@@ -109,7 +109,7 @@
 			};
 		},
 		methods: {
-			...mapActions(["sendDeleteRequest", "sendDeleteMultipleForm"]),
+			...mapActions(["deleteRegisters"]),
 			showRegister(e, type) {
 				this.$emit("showRegister", e.data != undefined ? e.data : e, type);
 			},
@@ -119,7 +119,7 @@
 					header: "Borrar registro",
 					icon: "pi pi-exclamation-triangle",
 					accept: () => {
-						this.sendDeleteRequest({
+						this.deleteRegisters({
 							url: `/${this.delete}/${id}`,
 						}).then(() => {
 							this.$emit("getList");
@@ -138,9 +138,9 @@
 					header: "Borrar registros",
 					icon: "pi pi-exclamation-triangle",
 					accept: () => {
-						this.sendDeleteMultipleForm({
+						this.deleteRegisters({
 							url: `/${this.delete}-multiple`,
-							params: ids,
+							ids
 						}).then(() => {
 							this.$emit("getList");
 							this.selecteds_ids = [];

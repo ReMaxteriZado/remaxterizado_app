@@ -51,10 +51,18 @@
 			Column,
 			TableDefault,
 		},
+		props: {
+			route: {
+				type: String,
+				required: true,
+			},
+			stateVariable: {
+				type: String,
+				required: true,
+			},
+		},
 		data() {
 			return {
-				route: "links",
-				stateVariable: "links",
 				filters: [
 					{
 						name: "title",
@@ -82,20 +90,6 @@
 				this.lastPageChange = event;
 			},
 			showRegister(data, type) {
-				// data = {
-				// 	...data,
-				// 	date: new Date(),
-				// 	multi_category_id: [1, 2, 3],
-				// 	description: "Lorem ipsum",
-				// 	hour: [
-				// 		{ label: "mañana", value: "morning" },
-				// 		{ label: "noche", value: "night" },
-				// 	],
-				// 	active: ["water", "fire"],
-				// 	nose: "nose2",
-				// 	rules: true,
-				// };
-
 				this.changeCurrentLink(data);
 				this.changeLinksDialogMode(type);
 				this.toggleLinksDialog(true);

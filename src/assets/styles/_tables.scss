@@ -8,6 +8,7 @@
 .p-datatable {
 	border-radius: $border-radius;
 	overflow: hidden;
+	box-shadow: $smooth-box-shadow;
 
 	&.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
 		background-color: rgba($primary, 0.05);

@@ -26,7 +26,7 @@ const state = {
 
 	// Datatable defaults
 	datatableDefaults: {
-		noResults: "No results found",
+		noResults: "No hay resultados",
 		lazy: true,
 		loading: true,
 		paginator: true,
@@ -39,7 +39,7 @@ const state = {
 		paginatorTemplate:
 			"FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
 		currentPageReportTemplate:
-			"Showing {first} to {last} of {totalRecords} entries",
+			"Mostrando del {first} al {last} de un total de {totalRecords} registros",
 	},
 
 	// Dialogs defaults

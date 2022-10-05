@@ -50,6 +50,7 @@ const routes = [
 			},
 			{
 				path: "links",
+				name: "Enlaces",
 				component: LinksComponent,
 				beforeEnter: checkAdminRights,
 			},

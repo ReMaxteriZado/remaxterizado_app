@@ -1,8 +1,15 @@
 <template>
 	<div>
 		<TitleComponent title="Enlaces" />
-		<DemosTable class="mt-4" />
-		<DemosForm />
+		<DemosTable
+			class="mt-4"
+			:route="route"
+			:stateVariable="stateVariable"
+		/>
+		<DemosForm
+			:route="route"
+			:stateVariable="stateVariable"
+		/>
 	</div>
 </template>
 
@@ -16,6 +23,12 @@
 			TitleComponent,
 			DemosTable,
 			DemosForm,
+		},
+		data() {
+			return {
+				route: "links",
+				stateVariable: "links",
+			};
 		},
 	};
 </script>

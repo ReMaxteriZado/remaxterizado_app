@@ -1,6 +1,6 @@
 <template>
     <form
-        id="filters"
+        :id="id"
         class="d-flex align-items-center gap-3 overflow-auto"
         :class="columns"
     >
@@ -56,6 +56,10 @@ export default {
         Dropdown,
     },
     props: {
+        id: {
+            type: String,
+            default: "filters",
+        },
         filters: {
             type: Array,
             default: () => [],

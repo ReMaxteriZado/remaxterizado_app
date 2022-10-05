@@ -32,10 +32,18 @@
 			Column,
 			TableDefault,
 		},
+		props: {
+			route: {
+				type: String,
+				required: true,
+			},
+			stateVariable: {
+				type: String,
+				required: true,
+			},
+		},
 		data() {
 			return {
-				route: "links",
-				stateVariable: "links",
 				filters: [
 					{
 						name: "title",
