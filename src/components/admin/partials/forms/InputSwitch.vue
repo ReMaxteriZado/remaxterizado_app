@@ -28,7 +28,20 @@
 		components: {
 			InputSwitch,
 		},
-		props: ["label", "error", "disabled"],
+		props: {
+			label: {
+				type: String,
+				required: true,
+			},
+			error: {
+				type: String,
+				default: null,
+			},
+			disabled: {
+				type: Boolean,
+				default: false,
+			},
+		},
 		data: () => ({
 			model: null,
 		}),

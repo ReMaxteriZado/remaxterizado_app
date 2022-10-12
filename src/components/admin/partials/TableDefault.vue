@@ -14,7 +14,7 @@
 		:scrollable="datatableDefaults.scrollable"
 		:scrollHeight="datatableDefaults.scrollHeight"
 		:lazy="datatableDefaults.lazy"
-		@page="$emit('changeCurrentPage', $event)"
+		@page="changeCurrentPage($event)"
 		@row-click="showRegister($event, 'show')"
 	>
 		<template #header>
@@ -72,7 +72,7 @@
 	import Button from "primevue/button";
 
 	import LoadingTable from "@/components/partials/LoadingTableComponent.vue";
-	import TableFilters from "@/components/partials/TableFiltersComponent.vue";
+	import TableFilters from "@/components/admin/partials/TableFilters.vue";
 
 	import { mapState, mapActions } from "vuex";
 
@@ -110,6 +110,10 @@
 		},
 		methods: {
 			...mapActions(["deleteRegisters"]),
+			changeCurrentPage(event) {
+				this.lastPageChange = event;
+				this.$emit("changeCurrentPage", event);
+			},
 			showRegister(e, type) {
 				this.$emit("showRegister", e.data != undefined ? e.data : e, type);
 			},
@@ -122,7 +126,7 @@
 						this.deleteRegisters({
 							url: `/${this.delete}/${id}`,
 						}).then(() => {
-							this.$emit("getList");
+							this.$emit("getList", this.lastPageChange);
 						});
 					},
 				});
@@ -140,9 +144,9 @@
 					accept: () => {
 						this.deleteRegisters({
 							url: `/${this.delete}-multiple`,
-							ids
+							ids,
 						}).then(() => {
-							this.$emit("getList");
+							this.$emit("getList", this.lastPageChange);
 							this.selecteds_ids = [];
 						});
 					},

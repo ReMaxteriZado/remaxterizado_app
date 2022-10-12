@@ -1,6 +1,6 @@
 <template>
     <div>
-        <FormTitleComponentVue title="New category" />
+        <FormTitle title="New category" />
 
         <form @submit.prevent="save()" @keydown="form.onKeydown($event)">
             <span class="p-float-label mt-4">
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import FormTitleComponentVue from "@/components/admin/partials/FormTitleComponent.vue";
+
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import Dropdown from "primevue/dropdown";
@@ -58,7 +58,7 @@ import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
     components: {
-        FormTitleComponentVue,
+        
         InputText,
         Button,
         Dropdown,

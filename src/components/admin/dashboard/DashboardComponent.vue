@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Title :title="'Welcome ' + userLogged?.name" />
+        <FormTitle :title="'Welcome ' + userLogged?.name" />
 
         <div class="row">
             <div class="col-12 col-md-6 col-lg-3 h-auto">
@@ -21,7 +21,6 @@
 <script>
 import Listbox from "primevue/listbox";
 
-import Title from "@/components/admin/partials/TitleComponent.vue";
 import TotalRegisters from "@/components/admin/dashboard/TotalRegistersComponent.vue";
 import MaxCategories from "@/components/admin/dashboard/MaxCategoriesComponent.vue";
 // import LinksTable from "@/components/admin/links/LinksTableComponent.vue";
@@ -31,7 +30,6 @@ import { mapState } from "vuex";
 export default {
     components: {
         Listbox,
-        Title,
         TotalRegisters,
         MaxCategories,
         // LinksTable,

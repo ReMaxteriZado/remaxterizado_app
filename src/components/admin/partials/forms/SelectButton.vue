@@ -31,18 +31,29 @@
 		components: {
 			SelectButton,
 		},
-		props: ["label", "error", "disabled", "values"],
+		props: {
+			label: {
+				type: String,
+				required: true,
+			},
+			error: {
+				type: String,
+				default: null,
+			},
+			disabled: {
+				type: Boolean,
+				default: false,
+			},
+			values: {
+				type: Array,
+				required: true,
+			},
+		},
 		data: () => ({
 			model: null,
 		}),
 		watch: {
 			model(newValue) {
-				// let values = [];
-
-				// if (newValue != null) {
-				// 	values = newValue.map((value) => value.value);
-				// }
-				
 				this.$emit("change-value", newValue);
 			},
 		},

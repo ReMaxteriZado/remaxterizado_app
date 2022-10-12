@@ -1,22 +1,20 @@
 <template>
 	<div>
 		<label
-			for="basic"
+			for="input"
 			class="text-primary text-bold"
 			>{{ label }}</label
 		>
 
-		<Calendar
+		<Password
 			v-model="model"
 			:disabled="disabled"
 			:placeholder="label"
-			:showButtonBar="showButtonBar"
-			:showTime="showTime"
-			:dateFormat="dateFormat"
+			:toggleMask="toggleMask"
+			:feedback="feedback"
 			class="w-100"
 			:class="[error != null ? 'p-invalid' : '']"
-		>
-		</Calendar>
+		/>
 
 		<div
 			v-if="error != null"
@@ -28,11 +26,11 @@
 </template>
 
 <script>
-	import Calendar from "primevue/calendar";
+	import Password from "primevue/password";
 
 	export default {
 		components: {
-			Calendar,
+			Password,
 		},
 		props: {
 			label: {
@@ -47,17 +45,13 @@
 				type: Boolean,
 				default: false,
 			},
-			showTime: {
-				type: Boolean,
-				default: false,
-			},
-			dateFormat: {
-				type: String,
-				default: "dd/mm/yy",
-			},
-			showButtonBar: {
+			toggleMask: {
 				type: Boolean,
 				default: true,
+			},
+			feedback: {
+				type: Boolean,
+				default: false,
 			},
 		},
 		data: () => ({
@@ -65,15 +59,33 @@
 		}),
 		watch: {
 			model(newValue) {
-				if (newValue != null) {
-					newValue = this.$helper.formatDate(
-						newValue,
-						this.showTime ? "YYYY-MM-DD HH:mm" : "YYYY-MM-DD"
-					);
+				let value = null;
+
+				if (this.isNumber && !isNaN(parseInt(newValue))) {
+					value = parseInt(newValue);
+				} else {
+					value = newValue;
 				}
 
-				this.$emit("change-value", newValue);
+				this.$emit("change-value", value);
 			},
 		},
 	};
 </script>
+
+<style
+	lang="scss"
+	scoped
+>
+	:deep(.p-inputtext) {
+		width: 100%;
+	}
+
+	:deep(.pi.pi-eye) {
+		cursor: pointer;
+	}
+
+	:deep(.pi.pi-eye-slash) {
+		cursor: pointer;
+	}
+</style>

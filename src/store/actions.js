@@ -205,6 +205,7 @@ const actions = {
 
 	// Get registers
 	async getRegisters({ state }, params) {
+		// console.log("🚀 ~ file: actions.js ~ line 208 ~ getRegisters ~ params", params)
 		try {
 			if (params.showLoading == null || params.showLoading == undefined || params.showLoading) {
 				state.datatableDefaults.loading = true;

@@ -38,7 +38,28 @@
 		components: {
 			RadioButton,
 		},
-		props: ["label", "error", "disabled", "name", "values"],
+		props: {
+			label: {
+				type: String,
+				required: true,
+			},
+			error: {
+				type: String,
+				default: null,
+			},
+			disabled: {
+				type: Boolean,
+				default: false,
+			},
+			name: {
+				type: String,
+				required: true,
+			},
+			values: {
+				type: Array,
+				required: true,
+			},
+		},
 		data: () => ({
 			model: null,
 		}),

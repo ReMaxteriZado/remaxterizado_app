@@ -28,9 +28,6 @@
 				</transition>
 			</router-view>
 		</div>
-		<div class="bottom-bar-section">
-			<BottomBar />
-		</div>
 		<div class="logout-section">
 			<Logout />
 		</div>
@@ -146,7 +143,7 @@
 		grid-template-areas:
 			"sidebar-section top-bar-section"
 			"sidebar-section content-section"
-			"logout-section bottom-bar-section";
+			"logout-section content-section";
 		background-color: rgb(245, 245, 245);
 
 		.top-bar-section {
@@ -172,11 +169,6 @@
 
 		.logout-section {
 			grid-area: logout-section;
-			z-index: 20;
-		}
-
-		.bottom-bar-section {
-			grid-area: bottom-bar-section;
 			z-index: 20;
 		}
 

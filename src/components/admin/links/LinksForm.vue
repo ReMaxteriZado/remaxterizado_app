@@ -6,42 +6,33 @@
 		:modal="dialogDefaults.modal"
 		:closeOnEscape="dialogDefaults.closeOnEscape"
 		:dismissableMask="dialogDefaults.dismissableMask"
-		@hide="clearForm()"
-		@show="fillForm()"
+		@hide="hide"
+		@show="show"
 	>
 		<template #header>
-			<Title :title="title" />
+			<FormTitle :title="title" />
 		</template>
 
 		<form
-			class="custom-form"
 			@submit.prevent="save()"
 			@keydown="form.onKeydown($event)"
 		>
 			<div class="row">
-				<div class="col-12">
-					<FileUpload
-						label="Subir archivo"
-						ref="FileUpload"
-						:error="form.errors.has('files_list') ? form.errors.get('files_list') : null"
-						:disabled="disabled"
-					/>
-				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<InputText
 						ref="title"
 						label="Título"
 						:disabled="disabled"
-						:error="form.errors.has('title') ? form.errors.get('title') : null"
+						:error="form.errors.get('title')"
 						@change-value="(value) => (form.title = value)"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<InputText
 						ref="link"
 						label="Enlace"
 						:disabled="disabled"
-						:error="form.errors.has('link') ? form.errors.get('link') : null"
+						:error="form.errors.get('link')"
 						@change-value="(value) => (form.link = value)"
 					/>
 				</div>
@@ -49,104 +40,17 @@
 					<DropDown
 						ref="category_id"
 						label="Categoría"
-						:options="links.list"
-						optionValue="id"
-						optionLabel="title"
-						:filter="true"
-						:showClear="true"
-						:displayText="'title'"
+						:options="categories.list"
+						:displayText="['parent.name', 'name']"
+						:displayTextSeparator="' > '"
 						:disabled="disabled"
-						:error="form.errors.has('category_id') ? form.errors.get('category_id') : null"
+						:error="form.errors.get('category_id')"
 						@change-value="(value) => (form.category_id = value)"
-					/>
-				</div>
-				<div class="col-12 col-md-6 mt-4">
-					<DatePicker
-						ref="date"
-						label="Fecha"
-						:disabled="disabled"
-						:error="form.errors.has('date') ? form.errors.get('date') : null"
-						@change-value="(value) => (form.date = value)"
-						:showTime="false"
-					/>
-				</div>
-				<div class="col-12 col-md-6 mt-4">
-					<MultiSelect
-						ref="multi_category_id"
-						label="Categoría"
-						:options="links.list"
-						optionValue="id"
-						optionLabel="title"
-						:filter="true"
-						:showClear="true"
-						:displayText="['title', 'link']"
-						displayTextSeparator=" - "
-						:disabled="disabled"
-						:error="
-							form.errors.has('multi_category_id') ? form.errors.get('multi_category_id') : null
-						"
-						@change-value="(value) => (form.multi_category_id = value)"
-					/>
-				</div>
-				<div class="col-12 col-md-6 mt-4">
-					<SelectButton
-						ref="hour"
-						label="Horario"
-						:disabled="disabled"
-						:error="form.errors.has('hour') ? form.errors.get('hour') : null"
-						@change-value="(value) => (form.hour = value)"
-						:values="[
-							{ value: 'morning', label: 'mañana' },
-							{ value: 'night', label: 'noche' },
-						]"
-					/>
-				</div>
-				<div class="col-12 mt-4">
-					<TextArea
-						ref="description"
-						label="Descripción"
-						:disabled="disabled"
-						:error="form.errors.has('description') ? form.errors.get('description') : null"
-						@change-value="(value) => (form.description = value)"
-					/>
-				</div>
-				<div class="col-12 col-md-6 mt-4">
-					<CheckBox
-						ref="active"
-						label="Activo"
-						:disabled="disabled"
-						:error="form.errors.has('active') ? form.errors.get('active') : null"
-						@change-value="(value) => (form.active = value)"
-						:values="[
-							{ value: 'water', label: 'Agua' },
-							{ value: 'fire', label: 'Fuego' },
-						]"
-					/>
-				</div>
-				<div class="col-12 col-md-6 mt-4">
-					<RadioButton
-						ref="nose"
-						label="Nose"
-						:disabled="disabled"
-						:error="form.errors.has('nose') ? form.errors.get('nose') : null"
-						@change-value="(value) => (form.nose = value)"
-						:values="[
-							{ value: 'nose1', label: 'nose1' },
-							{ value: 'nose2', label: 'nose2' },
-						]"
-					/>
-				</div>
-				<div class="col-12 col-md-6 mt-4">
-					<InputSwitch
-						ref="rules"
-						label="Normas"
-						:disabled="disabled"
-						:error="form.errors.has('rules') ? form.errors.get('rules') : null"
-						@change-value="(value) => (form.rules = value)"
 					/>
 				</div>
 			</div>
 		</form>
+
 		<template
 			#footer
 			v-if="!disabled"
@@ -168,12 +72,9 @@
 	import Form from "vform";
 	import { mapActions, mapMutations, mapState } from "vuex";
 
-	import Title from "../partials/TitleComponent.vue";
-
 	export default {
 		components: {
 			Dialog,
-			Title,
 			Button,
 		},
 		props: {
@@ -188,63 +89,71 @@
 		},
 		data: () => ({
 			form: new Form({
-				title: "",
+				title: null,
 				category_id: null,
-				description: "",
-				date: null,
-				active: null,
-				nose: null,
-				multi_category_id: [],
-				rules: false,
-				hour: null,
+				description: null,
 			}),
 			modelName: "enlace",
 			title: `Añadir enlace`,
 			disabled: false,
 		}),
 		methods: {
-			...mapActions(["sendPostForm", "sendPutForm", "getLinks"]),
-			...mapMutations(["toggleLinksDialog", "changeCurrentLink"]),
+			...mapActions(["sendForm", "getRegisters"]),
+			...mapMutations(["toggleFormDialog", "changeCurrentRegister"]),
 			save() {
-				let url = "/links";
-				let result = null;
+				const update = this.links.register != null;
+				const url = `/links${update ? `/${this.links.register.id}` : ""}`;
 
-				this.form.files_list = this.$refs.FileUpload.files;
+				this.sendForm({
+					method: update ? "put" : "post",
+					form: this.form,
+					url: url,
+					errors: this.form.errors,
+				}).then((response) => {
+					if (response.status === 200) {
+						this.toggleFormDialog({
+							stateVariable: this.stateVariable,
+							value: false,
+						});
 
-				if (this.links.register != null) {
-					url += `/${this.links.register.id}`;
+						this.getRegisters({
+							route: this.route,
+							stateVariable: this.stateVariable,
+							page: this.links.currentPage,
+							rows: this.links.rows,
+						});
+					}
+				});
+			},
+			hide() {
+				this.title = `Añadir ${this.modelName}`;
+				this.disabled = false;
 
-					this.sendPutForm({
-						form: this.form,
-						url: url,
-						errors: this.form.errors,
-					}).then((response) => {
-						result = response;
-					});
-				} else {
-					this.sendPostForm({
-						form: this.form,
-						url: url,
-						errors: this.form.errors,
-					}).then((response) => {
-						result = response;
-					});
-				}
-
-				if (result?.status === 200) {
-					this.toggleLinksModal(false);
-					this.getLinks(this.links.currentPage);
-				}
+				this.changeCurrentRegister({
+					stateVariable: this.stateVariable,
+					register: null,
+				});
 			},
 			clearForm() {
 				this.form.clear();
+				this.form.reset();
 
-				this.changeCurrentLink(null);
-
-				this.title = `Añadir ${this.modelName}`;
-				this.disabled = false;
+				for (const key in this.$refs) {
+					if (Object.hasOwnProperty.call(this.$refs, key)) {
+						this.$refs[key].model = null;
+					}
+				}
 			},
-			fillForm() {
+			show() {
+				this.clearForm();
+
+				this.getRegisters({
+					route: "/categories",
+					stateVariable: "categories",
+					getAll: true,
+					showLoading: false,
+				});
+
 				if (this.links.register != null) {
 					for (const key in this.links.register) {
 						if (Object.hasOwnProperty.call(this.links.register, key)) {
@@ -265,7 +174,7 @@
 			},
 		},
 		computed: {
-			...mapState(["dialogDefaults", "links"]),
+			...mapState(["dialogDefaults", "links", "categories"]),
 		},
 	};
 </script>

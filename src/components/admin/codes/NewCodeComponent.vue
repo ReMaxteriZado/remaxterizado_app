@@ -1,6 +1,6 @@
 <template>
     <div>
-        <FormTitleComponentVue :title="title_component" />
+        <FormTitle :title="title_component" />
 
         <form @submit.prevent="save()" @keydown="form.onKeydown($event)">
             <Dropdown
@@ -78,7 +78,7 @@ import Dropdown from "primevue/dropdown";
 import Button from "primevue/button";
 import Textarea from "primevue/textarea";
 
-import FormTitleComponentVue from "@/components/admin/partials/FormTitleComponent.vue";
+
 import CodeEditor from "@/components/admin/partials/CodeEditorComponent.vue";
 
 import Form from "vform";
@@ -87,7 +87,7 @@ import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
     components: {
-        FormTitleComponentVue,
+        
         Dropdown,
         CodeEditor,
         Button,

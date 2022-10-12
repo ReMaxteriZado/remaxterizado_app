@@ -39,18 +39,48 @@
 		components: {
 			MultiSelect,
 		},
-		props: [
-			"label",
-			"options",
-			"optionValue",
-			"optionLabel",
-			"filter",
-			"showClear",
-			"error",
-			"displayText",
-			"displayTextSeparator",
-			"disabled",
-		],
+		props: {
+			label: {
+				type: String,
+				required: true,
+			},
+			options: {
+				type: Array,
+				required: true,
+			},
+			optionValue: {
+				type: String,
+				default: "id",
+			},
+			optionLabel: {
+				type: String,
+				default: "name",
+			},
+			filter: {
+				type: Boolean,
+				default: true,
+			},
+			showClear: {
+				type: Boolean,
+				default: true,
+			},
+			error: {
+				type: String,
+				default: null,
+			},
+			displayText: {
+				type: [String, Array],
+				required: true,
+			},
+			displayTextSeparator: {
+				type: String,
+				default: " ",
+			},
+			disabled: {
+				type: Boolean,
+				default: false,
+			},
+		},
 		data: () => ({
 			model: null,
 		}),

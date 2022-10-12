@@ -36,17 +36,5 @@ export default {
             opacity: 0;
         }
     }
-
-    &::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        width: 2px;
-        height: 60%;
-        background-color: lightgray;
-        transition: $transition;
-    }
 }
 </style>

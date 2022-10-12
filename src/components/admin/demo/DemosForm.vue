@@ -6,11 +6,11 @@
 		:modal="dialogDefaults.modal"
 		:closeOnEscape="dialogDefaults.closeOnEscape"
 		:dismissableMask="dialogDefaults.dismissableMask"
-		@hide="clearForm()"
-		@show="fillForm()"
+		@hide="hide"
+		@show="show"
 	>
 		<template #header>
-			<Title :title="title" />
+			<FormTitle :title="title" />
 		</template>
 
 		<form
@@ -49,10 +49,7 @@
 						ref="category_id"
 						label="Categoría"
 						:options="links.list"
-						optionValue="id"
 						optionLabel="title"
-						:filter="true"
-						:showClear="true"
 						:displayText="'title'"
 						:disabled="disabled"
 						:error="form.errors.get('category_id')"
@@ -74,10 +71,7 @@
 						ref="multi_category_id"
 						label="Categoría"
 						:options="links.list"
-						optionValue="id"
 						optionLabel="title"
-						:filter="true"
-						:showClear="true"
 						:displayText="['title', 'link']"
 						displayTextSeparator=" - "
 						:disabled="disabled"
@@ -144,6 +138,7 @@
 				</div>
 			</div>
 		</form>
+
 		<template
 			#footer
 			v-if="!disabled"
@@ -165,15 +160,11 @@
 	import Form from "vform";
 	import { mapActions, mapMutations, mapState } from "vuex";
 
-	import Title from "../partials/TitleComponent.vue";
-
 	export default {
 		components: {
 			Dialog,
-			Title,
 			Button,
 		},
-		
 		props: {
 			route: {
 				type: String,
@@ -202,7 +193,7 @@
 		}),
 		methods: {
 			...mapActions(["sendForm", "getRegisters"]),
-			...mapMutations(["toggleLinksDialog", "changeCurrentLink"]),
+			...mapMutations(["toggleFormDialog", "changeCurrentRegister"]),
 			save() {
 				const update = this.links.register != null;
 				const url = `/links${update ? `/${this.links.register.id}` : ""}`;
@@ -214,25 +205,49 @@
 					errors: this.form.errors,
 				}).then((response) => {
 					if (response.status === 200) {
-						this.toggleLinksDialog(false);
+						this.toggleFormDialog({
+							stateVariable: this.stateVariable,
+							value: false,
+						});
 
 						this.getRegisters({
 							route: this.route,
 							stateVariable: this.stateVariable,
 							page: this.links.currentPage,
+							rows: this.links.rows,
 						});
 					}
 				});
 			},
-			clearForm() {
-				this.form.clear();
-
-				this.changeCurrentLink(null);
-
+			hide() {
 				this.title = `Añadir ${this.modelName}`;
 				this.disabled = false;
+
+				this.changeCurrentRegister({
+					stateVariable: this.stateVariable,
+					register: null,
+				});
 			},
-			fillForm() {
+			clearForm() {
+				this.form.clear();
+				this.form.reset();
+
+				for (const key in this.$refs) {
+					if (Object.hasOwnProperty.call(this.$refs, key)) {
+						this.$refs[key].model = null;
+					}
+				}
+			},
+			show() {
+				this.clearForm();
+
+				this.getRegisters({
+					route: "/categories",
+					stateVariable: "categories",
+					getAll: true,
+					showLoading: false,
+				});
+
 				if (this.links.register != null) {
 					for (const key in this.links.register) {
 						if (Object.hasOwnProperty.call(this.links.register, key)) {

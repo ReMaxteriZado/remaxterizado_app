@@ -1,36 +1,35 @@
 <template>
-	<div>
-		<TableDefault
-			:list="links.list"
-			:total="links.listTotal"
-			:filters="filters"
-			:delete="'links'"
-			@getList="getList"
-			@addRegister="addRegister"
-			@showRegister="showRegister"
-			@changeCurrentPage="changeCurrentPage"
-		>
-			<template #columns>
-				<Column
-					header="Título"
-					field="title"
-				></Column>
-			</template>
-		</TableDefault>
-	</div>
+	<TableDefault
+		:list="links.list"
+		:total="links.listTotal"
+		:filters="filters"
+		:delete="'links'"
+		@getList="getList"
+		@addRegister="addRegister"
+		@showRegister="showRegister"
+		@changeCurrentPage="getList"
+	>
+		<template #columns>
+			<Column
+				header="Título"
+				field="title"
+			></Column>
+			<Column header="Columna con formato">
+				<template #body="slotProps">
+					{{ slotProps.data.title }}
+				</template></Column
+			>
+		</template>
+	</TableDefault>
 </template>
 
 <script>
 	import Column from "primevue/column";
-
-	import TableDefault from "@/components/admin/partials/TableDefaultComponent.vue";
-
 	import { mapState, mapActions, mapMutations } from "vuex";
 
 	export default {
 		components: {
 			Column,
-			TableDefault,
 		},
 		props: {
 			route: {
@@ -57,20 +56,18 @@
 		methods: {
 			...mapActions(["getRegisters"]),
 			...mapMutations([
-				"toggleLinksDialog",
-				"changeCurrentLink",
-				"changeLinksDialogMode",
-				"changeCurrentPageLinks",
+				"changeCurrentTablePage",
+				"toggleFormDialog",
+				"changeFormDialogMode",
+				"changeCurrentRegister",
 			]),
 			addRegister() {
-				this.toggleLinksDialog(true);
+				this.toggleFormDialog({
+					stateVariable: this.stateVariable,
+					show: true,
+				});
 			},
-			changeCurrentPage(event) {
-				this.changeCurrentPageLinks(event);
-				this.getList(event);
-				this.lastPageChange = event;
-			},
-			showRegister(data, type) {
+			showRegister(register, dialogMode) {
 				// data = {
 				// 	...data,
 				// 	date: new Date(),
@@ -85,11 +82,29 @@
 				// 	rules: true,
 				// };
 
-				this.changeCurrentLink(data);
-				this.changeLinksDialogMode(type);
-				this.toggleLinksDialog(true);
+				this.changeCurrentRegister({
+					stateVariable: this.stateVariable,
+					register,
+				});
+
+				this.changeFormDialogMode({
+					stateVariable: this.stateVariable,
+					dialogMode,
+				});
+
+				this.toggleFormDialog({
+					stateVariable: this.stateVariable,
+					show: true,
+				});
 			},
 			getList(event = null) {
+				if (event != null) {
+					this.changeCurrentTablePage({
+						stateVariable: this.stateVariable,
+						event,
+					});
+				}
+
 				this.getRegisters({
 					route: this.route,
 					stateVariable: this.stateVariable,

@@ -31,22 +31,39 @@
 		components: {
 			InputText,
 		},
-		props: ["label", "error", "disabled", "isNumber"],
+		props: {
+			label: {
+				type: String,
+				required: true,
+			},
+			error: {
+				type: String,
+				default: null,
+			},
+			disabled: {
+				type: Boolean,
+				default: false,
+			},
+			isNumber: {
+				type: Boolean,
+				default: false,
+			},
+		},
 		data: () => ({
 			model: null,
 		}),
 		watch: {
 			model(newValue) {
-				let value = null
+				let value = null;
 
 				if (this.isNumber && !isNaN(parseInt(newValue))) {
-					value = parseInt(newValue)
+					value = parseInt(newValue);
 				} else {
-					value = newValue
+					value = newValue;
 				}
 
-				this.$emit("change-value", value)
+				this.$emit("change-value", value);
 			},
 		},
-	}
+	};
 </script>

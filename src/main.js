@@ -49,8 +49,13 @@ import Ripple from "primevue/ripple";
 // Fonts
 require("@/assets/fonts/Work_Sans/Work_Sans.css");
 
-// Form fields
+// Table
+import TableDefault from "@/components/admin/partials/TableDefault.vue";
+
+// Form
+import FormTitle from "@/components/admin/partials/FormTitle.vue";
 import InputText from "@/components/admin/partials/forms/InputText.vue";
+import InputPassword from "@/components/admin/partials/forms/InputPassword.vue";
 import DropDown from "@/components/admin/partials/forms/DropDown.vue";
 import Textarea from "@/components/admin/partials/forms/TextArea.vue";
 import DatePicker from "@/components/admin/partials/forms/DatePicker.vue";
@@ -116,7 +121,14 @@ app.use(ToastService);
 app.use(ConfirmationService);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
+
+// Table
+app.component("TableDefault", TableDefault);
+
+// Form
+app.component("FormTitle", FormTitle);
 app.component("InputText", InputText);
+app.component("InputPassword", InputPassword);
 app.component("DropDown", DropDown);
 app.component("TextArea", Textarea);
 app.component("DatePicker", DatePicker);

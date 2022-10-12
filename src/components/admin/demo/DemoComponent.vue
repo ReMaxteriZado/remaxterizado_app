@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<TitleComponent title="Enlaces" />
 		<DemosTable
 			class="mt-4"
 			:route="route"
@@ -14,7 +13,6 @@
 </template>
 
 <script>
-	import TitleComponent from "@/components/admin/partials/TitleComponent.vue";
 	import DemosTable from "./DemosTable.vue";
 	import DemosForm from "./DemosForm.vue";
 

@@ -1,21 +1,30 @@
 <template>
 	<div>
-		<TitleComponent title="Enlaces" />
-		<LinksTable class="mt-4" />
-		<NewLink />
+		<LinksTable
+			:route="route"
+			:stateVariable="stateVariable"
+		/>
+		<LinksForm
+			:route="route"
+			:stateVariable="stateVariable"
+		/>
 	</div>
 </template>
 
 <script>
-	import TitleComponent from "@/components/admin/partials/TitleComponent.vue";
 	import LinksTable from "./LinksTable.vue";
-	import NewLink from "./LinksForm.vue";
+	import LinksForm from "./LinksForm.vue";
 
 	export default {
 		components: {
-			TitleComponent,
 			LinksTable,
-			NewLink,
+			LinksForm,
+		},
+		data() {
+			return {
+				route: "links",
+				stateVariable: "links",
+			};
 		},
 	};
 </script>

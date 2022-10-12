@@ -1,36 +1,51 @@
 <template>
-	<div>
-		<TableDefault
-			:list="links.list"
-			:total="links.listTotal"
-			:filters="filters"
-			:delete="'links'"
-			@getList="getList"
-			@addRegister="addRegister"
-			@showRegister="showRegister"
-			@changeCurrentPage="changeCurrentPage"
-		>
-			<template #columns>
-				<Column
-					header="Título"
-					field="title"
-				></Column>
-			</template>
-		</TableDefault>
-	</div>
+	<TableDefault
+		:list="links.list"
+		:total="links.listTotal"
+		:filters="filters"
+		:delete="'links'"
+		@getList="getList"
+		@addRegister="addRegister"
+		@showRegister="showRegister"
+		@changeCurrentPage="getList"
+	>
+		<template #columns>
+			<Column
+				header="Título"
+				field="title"
+			></Column>
+
+			<Column header="Categoría">
+				<template #body="slotProps">
+					<span v-if="slotProps.data.category.parent != null"
+						>{{ slotProps.data.category.parent.name }} /&nbsp;</span
+					>{{ slotProps.data.category.name }}
+				</template></Column
+			>
+			<Column header="Enlace">
+				<template #body="slotProps">
+					<a
+						:href="slotProps.data.link"
+						target="_blank"
+						>Enlace</a
+					>
+				</template></Column
+			>
+			<Column
+				header="Visto"
+				field="views"
+			></Column>
+		</template>
+	</TableDefault>
 </template>
 
 <script>
 	import Column from "primevue/column";
-
-	import TableDefault from "@/components/admin/partials/TableDefaultComponent.vue";
-
 	import { mapState, mapActions, mapMutations } from "vuex";
 
 	export default {
 		components: {
 			Column,
-			TableDefault,
 		},
 		props: {
 			route: {
@@ -57,39 +72,41 @@
 		methods: {
 			...mapActions(["getRegisters"]),
 			...mapMutations([
-				"toggleLinksDialog",
-				"changeCurrentLink",
-				"changeLinksDialogMode",
-				"changeCurrentPageLinks",
+				"changeCurrentTablePage",
+				"toggleFormDialog",
+				"changeFormDialogMode",
+				"changeCurrentRegister",
 			]),
 			addRegister() {
-				this.toggleLinksDialog(true);
+				this.toggleFormDialog({
+					stateVariable: this.stateVariable,
+					show: true,
+				});
 			},
-			changeCurrentPage(event) {
-				this.changeCurrentPageLinks(event);
-				this.getList(event);
-				this.lastPageChange = event;
-			},
-			showRegister(data, type) {
-				// data = {
-				// 	...data,
-				// 	date: new Date(),
-				// 	multi_category_id: [1, 2, 3],
-				// 	description: "Lorem ipsum",
-				// 	hour: [
-				// 		{ label: "mañana", value: "morning" },
-				// 		{ label: "noche", value: "night" },
-				// 	],
-				// 	active: ["water", "fire"],
-				// 	nose: "nose2",
-				// 	rules: true,
-				// };
+			showRegister(register, dialogMode) {
+				this.changeCurrentRegister({
+					stateVariable: this.stateVariable,
+					register,
+				});
 
-				this.changeCurrentLink(data);
-				this.changeLinksDialogMode(type);
-				this.toggleLinksDialog(true);
+				this.changeFormDialogMode({
+					stateVariable: this.stateVariable,
+					dialogMode,
+				});
+
+				this.toggleFormDialog({
+					stateVariable: this.stateVariable,
+					show: true,
+				});
 			},
 			getList(event = null) {
+				if (event != null) {
+					this.changeCurrentTablePage({
+						stateVariable: this.stateVariable,
+						event,
+					});
+				}
+
 				this.getRegisters({
 					route: this.route,
 					stateVariable: this.stateVariable,

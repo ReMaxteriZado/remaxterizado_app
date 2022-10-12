@@ -57,7 +57,8 @@ const state = {
 		// Table
 		list: [],
 		listTotal: 0,
-		currentPage: null,
+		currentPage: 0,
+		rows: 5,
 
 		// Form
 		register: null,

@@ -4,7 +4,7 @@
             class="d-flex flex-wrap align-items-center justify-content-between mb-3"
         >
             <div class="d-flex flex-wrap gap-3 align-items-center">
-                <TitleComponent title="Categories" />
+                <FormTitle title="Categories" />
                 <Button
                     :label="`Edit ${category_selected.label} category`"
                     icon="pi pi-pencil"
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import TitleComponent from "@/components/admin/partials/TitleComponent.vue";
 import PanelMenu from "primevue/panelmenu";
 import Button from "primevue/button";
 
@@ -38,7 +37,6 @@ import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
     components: {
-        TitleComponent,
         PanelMenu,
         Button,
     },
