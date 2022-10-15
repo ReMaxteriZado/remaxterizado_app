@@ -12,9 +12,16 @@ import CodesComponent from "@/components/admin/codes/CodesComponent.vue";
 
 const routes = [
 	{
+		path: "/login",
+		component: LoginLayout,
+	},
+	{
 		path: "/",
 		component: LoginLayout,
 		children: [
+			{
+				path: "/login",
+			},
 			{
 				path: "/:pathMatch(.*)*",
 				beforeEnter(to, from, next) {

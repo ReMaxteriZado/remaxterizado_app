@@ -34,7 +34,6 @@
 		props: {
 			label: {
 				type: String,
-				required: true,
 			},
 			error: {
 				type: String,

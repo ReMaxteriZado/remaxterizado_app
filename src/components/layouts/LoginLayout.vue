@@ -2,8 +2,7 @@
 	<div id="login" class="d-flex">
 		<div class="left-side d-flex justify-content-center align-items-center h-100">
 			<form
-				@submit.prevent="save()"
-				@keydown="form.onKeydown($event)"
+				@keydown="$event.key === 'Enter' ? save() : null"
 			>
 				<div class="row w-50 mx-auto">
 					<div class="col-12">

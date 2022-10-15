@@ -14,8 +14,7 @@
 		</template>
 
 		<form
-			@submit.prevent="save()"
-			@keydown="form.onKeydown($event)"
+			@keydown="$event.key === 'Enter' ? save() : null"
 		>
 			<div class="row">
 				<div class="col-12">
@@ -176,17 +175,7 @@
 			},
 		},
 		data: () => ({
-			form: new Form({
-				title: "",
-				category_id: null,
-				description: "",
-				date: null,
-				active: null,
-				nose: null,
-				multi_category_id: [],
-				rules: false,
-				hour: null,
-			}),
+			form: new Form(),
 			modelName: "enlace",
 			title: `Añadir enlace`,
 			disabled: false,

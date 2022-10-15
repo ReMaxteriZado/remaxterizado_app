@@ -49,7 +49,10 @@ import Ripple from "primevue/ripple";
 // Fonts
 require("@/assets/fonts/Work_Sans/Work_Sans.css");
 
-// Table
+// Auto animate
+import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
+
+// Defaults
 import TableDefault from "@/components/admin/partials/TableDefault.vue";
 
 // Form
@@ -73,6 +76,10 @@ app.directive("ripple", Ripple);
 
 app.use(store);
 app.use(router);
+app.use(ToastService);
+app.use(ConfirmationService);
+app.use(autoAnimatePlugin);
+
 app.use(PrimeVue, {
 	ripple: true,
 	locale: {
@@ -117,12 +124,10 @@ app.use(PrimeVue, {
 		strong: "Fuerte",
 	},
 });
-app.use(ToastService);
-app.use(ConfirmationService);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 
-// Table
+// Defaults
 app.component("TableDefault", TableDefault);
 
 // Form

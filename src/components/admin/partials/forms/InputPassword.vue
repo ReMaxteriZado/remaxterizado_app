@@ -59,15 +59,7 @@
 		}),
 		watch: {
 			model(newValue) {
-				let value = null;
-
-				if (this.isNumber && !isNaN(parseInt(newValue))) {
-					value = parseInt(newValue);
-				} else {
-					value = newValue;
-				}
-
-				this.$emit("change-value", value);
+				this.$emit("change-value", newValue);
 			},
 		},
 	};

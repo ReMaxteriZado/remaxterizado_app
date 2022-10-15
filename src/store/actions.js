@@ -1,10 +1,10 @@
-import router from "/src/router";
+// import router from "../router";
 import Form from "vform";
-import axios from "../axios";
+import http from "../axios";
 import { func } from "../helpers";
 
 const actions = {
-	async login({ dispatch, state }, { form, errors }) {
+	async login({ state }, { form, errors }) {
 		try {
 			const response = await form.post(state.baseURL + "/login");
 
@@ -12,9 +12,7 @@ const actions = {
 			localStorage.setItem("access_token", response.data.token);
 			localStorage.setItem("user_permissions", JSON.stringify(response.data.user_permissions));
 
-			await dispatch("setFormAccessToken");
-
-			router.push("/admin/dashboard");
+			window.location.href  = "/admin/dashboard";
 			state.layout = "AdminLayout";
 		} catch (error) {
 			if (error.response?.data?.message) {
@@ -22,8 +20,8 @@ const actions = {
 			}
 		}
 	},
-	async setFormAccessToken() {
-		const instance = axios.create({
+	setFormAccessToken() {
+		const instance = http.create({
 			headers: {
 				Authorization: "Bearer " + localStorage.getItem("access_token"),
 			},
@@ -37,7 +35,7 @@ const actions = {
 		}
 
 		localStorage.removeItem("access_token");
-		window.location.href = "/logout";
+		window.location.href = "/login";
 	},
 	copyToClipboard({ state }, data) {
 		try {
@@ -83,12 +81,12 @@ const actions = {
 		try {
 			state.loading = true;
 
-			const response = await axios({
+			const response = await http({
 				method: "delete",
 				url: url,
 				data: {
 					ids,
-				}
+				},
 			});
 
 			state.loading = false;
@@ -107,7 +105,7 @@ const actions = {
 	// Dashboard
 	async getStats({ state }) {
 		try {
-			const response = await axios({
+			const response = await http({
 				url: "/stats",
 			});
 
@@ -123,7 +121,7 @@ const actions = {
 	// Categories
 	async getCategories({ dispatch, state }, search) {
 		try {
-			const response = await axios({
+			const response = await http({
 				url: "/categories",
 				params: {
 					search,
@@ -168,7 +166,7 @@ const actions = {
 	// Links
 	async incrementViews({ state }, id) {
 		try {
-			const response = await axios({
+			const response = await http({
 				method: "post",
 				url: "/links/incremet-views/" + id,
 			});
@@ -185,7 +183,7 @@ const actions = {
 	// Codes
 	async getCodes({ state }, search) {
 		try {
-			const response = await axios({
+			const response = await http({
 				url: "/codes",
 				params: {
 					search,
@@ -213,7 +211,7 @@ const actions = {
 
 			let formProps = func.formatFilters("filters");
 
-			const response = await axios({
+			const response = await http({
 				url: params.route,
 				params: {
 					getAll: params.getAll != undefined ? params.getAll : false,

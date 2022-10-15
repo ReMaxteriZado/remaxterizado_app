@@ -45,7 +45,7 @@
 	import Toast from "primevue/toast";
 	import ConfirmDialog from "primevue/confirmdialog";
 
-	import { mapState, mapMutations } from "vuex";
+	import { mapState, mapMutations, mapActions } from "vuex";
 
 	export default {
 		components: {
@@ -67,6 +67,7 @@
 			...mapState(["showNotLoggedToast", "errorToast", "successToast", "warningToast"]),
 		},
 		methods: {
+			...mapActions(["setFormAccessToken"]),
 			...mapMutations(["changeSuccessToast", "changeErrorToast", "changeWarningToast"]),
 			storageListener() {
 				const interval = setInterval(() => {
@@ -78,6 +79,7 @@
 			},
 		},
 		mounted() {
+			this.setFormAccessToken();
 			document.addEventListener("storage", this.storageListener());
 		},
 		watch: {

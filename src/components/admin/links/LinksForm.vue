@@ -13,10 +13,7 @@
 			<FormTitle :title="title" />
 		</template>
 
-		<form
-			@submit.prevent="save()"
-			@keydown="form.onKeydown($event)"
-		>
+		<form @keydown="$event.key === 'Enter' ? save() : null">
 			<div class="row">
 				<div class="col-12 col-md-6">
 					<InputText
@@ -48,6 +45,46 @@
 						@change-value="(value) => (form.category_id = value)"
 					/>
 				</div>
+
+				<div class="col-12">
+					<Button
+						label="Añadir nombre"
+						@click="totalNames++"
+					/>
+					<div
+						v-if="form.errors.get(`new_form`) != null"
+						class="text-danger"
+					>
+						{{ form.errors.get(`new_form`) }}
+					</div>
+				</div>
+
+				<div v-auto-animate>
+					<div
+						v-for="n in totalNames"
+						:key="n"
+					>
+						<InputText
+							:ref="`${n - 1}.id`"
+							class="d-none"
+							@change-value="(value) => (form[`${n - 1}.id`] = value)"
+						/>
+						<InputText
+							:ref="`${n - 1}.name`"
+							label="Nombre"
+							:disabled="disabled"
+							:error="form.errors.get(`new_form.${n - 1}.name`)"
+							@change-value="(value) => (form[`${n - 1}.name`] = value)"
+						/>
+						<InputText
+							:ref="`${n - 1}.lastname`"
+							label="Apellidos"
+							:disabled="disabled"
+							:error="form.errors.get(`new_form.${n - 1}.lastname`)"
+							@change-value="(value) => (form[`${n - 1}.lastname`] = value)"
+						/>
+					</div>
+				</div>
 			</div>
 		</form>
 
@@ -67,8 +104,8 @@
 </template>
 
 <script>
-	import Button from "primevue/button";
 	import Dialog from "primevue/dialog";
+	import Button from "primevue/button";
 	import Form from "vform";
 	import { mapActions, mapMutations, mapState } from "vuex";
 
@@ -88,14 +125,11 @@
 			},
 		},
 		data: () => ({
-			form: new Form({
-				title: null,
-				category_id: null,
-				description: null,
-			}),
+			form: new Form(),
 			modelName: "enlace",
 			title: `Añadir enlace`,
 			disabled: false,
+			totalNames: 1,
 		}),
 		methods: {
 			...mapActions(["sendForm", "getRegisters"]),
@@ -103,6 +137,16 @@
 			save() {
 				const update = this.links.register != null;
 				const url = `/links${update ? `/${this.links.register.id}` : ""}`;
+
+				this.form.new_form = [];
+
+				for (let index = 0; index < this.totalNames; index++) {
+					this.form.new_form.push({
+						id: this.form[`${index}.id`],
+						name: this.form[`${index}.name`],
+						lastname: this.form[`${index}.lastname`],
+					});
+				}
 
 				this.sendForm({
 					method: update ? "put" : "post",
@@ -143,6 +187,8 @@
 						this.$refs[key].model = null;
 					}
 				}
+
+				this.totalNames = 0;
 			},
 			show() {
 				this.clearForm();
@@ -155,12 +201,30 @@
 				});
 
 				if (this.links.register != null) {
-					for (const key in this.links.register) {
-						if (Object.hasOwnProperty.call(this.links.register, key)) {
+					const register = this.links.register;
+
+					for (const key in register) {
+						if (Object.hasOwnProperty.call(register, key)) {
 							if (this.$refs[key] != undefined) {
-								this.$refs[key].model = this.links.register[key];
+								this.$refs[key].model = register[key];
 							}
 						}
+					}
+
+					if (register.names != null) {
+						register.names.forEach((name, index) => {
+							this.totalNames++;
+
+							this.$nextTick(() => {
+								for (const key in name) {
+									if (Object.hasOwnProperty.call(name, key)) {
+										if (this.$refs[`${index}.${key}`] != undefined) {
+											this.$refs[`${index}.${key}`][0].model = name[key];
+										}
+									}
+								}
+							});
+						});
 					}
 
 					if (this.links.dialogMode == "edit") {
