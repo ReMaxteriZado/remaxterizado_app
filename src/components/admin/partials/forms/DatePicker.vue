@@ -7,7 +7,7 @@
 		>
 
 		<Calendar
-			v-model="model"
+			v-model="formattedDate"
 			:disabled="disabled"
 			:placeholder="label"
 			:showButtonBar="showButtonBar"
@@ -15,6 +15,7 @@
 			:dateFormat="dateFormat"
 			class="w-100"
 			:class="[error != null ? 'p-invalid' : '']"
+			@date-select="onDateSelect($event)"
 		>
 		</Calendar>
 
@@ -62,10 +63,27 @@
 		},
 		data: () => ({
 			model: null,
+			formattedDate: null,
+			control: false,
 		}),
+		methods: {
+			onDateSelect(event) {
+				if (event != null) {
+					this.control = true;
+					this.model = event;
+				}
+			},
+		},
 		watch: {
 			model(newValue) {
 				if (newValue != null) {
+					if (!this.control) {
+						this.formattedDate = this.$helper.formatDate(
+							newValue,
+							this.showTime ? "DD/MM/YYYY HH:mm" : "DD/MM/YYYY"
+						);
+					}
+
 					newValue = this.$helper.formatDate(
 						newValue,
 						this.showTime ? "YYYY-MM-DD HH:mm" : "YYYY-MM-DD"
@@ -74,6 +92,11 @@
 
 				this.$emit("change-value", newValue);
 			},
+		},
+		beforeUnmount() {
+			this.model = null;
+			this.formattedDate = null;
+			this.control = false;
 		},
 	};
 </script>

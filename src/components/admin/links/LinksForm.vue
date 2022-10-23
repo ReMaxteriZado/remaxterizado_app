@@ -14,7 +14,7 @@
 		</template>
 
 		<form @keydown="$event.key === 'Enter' ? save() : null">
-			<div class="row">
+			<div class="row gy-3">
 				<div class="col-12 col-md-6">
 					<InputText
 						ref="title"
@@ -33,7 +33,7 @@
 						@change-value="(value) => (form.link = value)"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<DropDown
 						ref="category_id"
 						label="Categoría"
@@ -43,6 +43,15 @@
 						:disabled="disabled"
 						:error="form.errors.get('category_id')"
 						@change-value="(value) => (form.category_id = value)"
+					/>
+				</div>
+				<div class="col-12 col-md-6">
+					<DatePicker
+						ref="date"
+						label="Fecha"
+						:disabled="disabled"
+						:error="form.errors.get('date')"
+						@change-value="(value) => (form.date = value)"
 					/>
 				</div>
 
@@ -63,26 +72,36 @@
 					<div
 						v-for="n in totalNames"
 						:key="n"
+						class="row mb-3"
 					>
-						<InputText
+						<SubForm
+							:ref="'SubForm' + n"
+							:index="n"
+							:disabled="disabled"
+						/>
+						<!-- <InputText
 							:ref="`${n - 1}.id`"
 							class="d-none"
 							@change-value="(value) => (form[`${n - 1}.id`] = value)"
 						/>
-						<InputText
-							:ref="`${n - 1}.name`"
-							label="Nombre"
-							:disabled="disabled"
-							:error="form.errors.get(`new_form.${n - 1}.name`)"
-							@change-value="(value) => (form[`${n - 1}.name`] = value)"
-						/>
-						<InputText
-							:ref="`${n - 1}.lastname`"
-							label="Apellidos"
-							:disabled="disabled"
-							:error="form.errors.get(`new_form.${n - 1}.lastname`)"
-							@change-value="(value) => (form[`${n - 1}.lastname`] = value)"
-						/>
+						<div class="col-12 col-md-6">
+							<InputText
+								:ref="`${n - 1}.name`"
+								label="Nombre"
+								:disabled="disabled"
+								:error="form.errors.get(`new_form.${n - 1}.name`)"
+								@change-value="(value) => (form[`${n - 1}.name`] = value)"
+							/>
+						</div>
+						<div class="col-12 col-md-6">
+							<InputText
+								:ref="`${n - 1}.lastname`"
+								label="Apellidos"
+								:disabled="disabled"
+								:error="form.errors.get(`new_form.${n - 1}.lastname`)"
+								@change-value="(value) => (form[`${n - 1}.lastname`] = value)"
+							/>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -109,10 +128,13 @@
 	import Form from "vform";
 	import { mapActions, mapMutations, mapState } from "vuex";
 
+	import SubForm from "./SubForm.vue";
+
 	export default {
 		components: {
 			Dialog,
 			Button,
+			SubForm,
 		},
 		props: {
 			route: {
@@ -141,11 +163,13 @@
 				this.form.new_form = [];
 
 				for (let index = 0; index < this.totalNames; index++) {
-					this.form.new_form.push({
-						id: this.form[`${index}.id`],
-						name: this.form[`${index}.name`],
-						lastname: this.form[`${index}.lastname`],
-					});
+					// this.form.new_form.push({
+					// 	id: this.form[`${index}.id`],
+					// 	name: this.form[`${index}.name`],
+					// 	lastname: this.form[`${index}.lastname`],
+					// });
+
+					this.form.new_form.push(this.$refs[`SubForm${index + 1}`][0].returnForm());
 				}
 
 				this.sendForm({
@@ -166,6 +190,16 @@
 							page: this.links.currentPage,
 							rows: this.links.rows,
 						});
+					} else {
+						if (response?.data) {
+							for (let index = 0; index < this.totalNames; index++) {
+								this.$refs[`SubForm${index + 1}`][0].form.errors.clear();
+								
+								for (const key in response.data) {
+									this.$refs[`SubForm${index + 1}`][0].form.errors.set(key, response.data[key]);
+								}
+							}
+						}
 					}
 				});
 			},
@@ -216,14 +250,18 @@
 							this.totalNames++;
 
 							this.$nextTick(() => {
-								for (const key in name) {
-									if (Object.hasOwnProperty.call(name, key)) {
-										if (this.$refs[`${index}.${key}`] != undefined) {
-											this.$refs[`${index}.${key}`][0].model = name[key];
-										}
-									}
-								}
+								this.$refs[`SubForm${index + 1}`][0].setValues(name);
 							});
+
+							// this.$nextTick(() => {
+							// 	for (const key in name) {
+							// 		if (Object.hasOwnProperty.call(name, key)) {
+							// 			// if (this.$refs[`${index}.${key}`] != undefined) {
+							// 			// 	this.$refs[`${index}.${key}`][0].model = name[key];
+							// 			// }
+							// 		}
+							// 	}
+							// });
 						});
 					}
 

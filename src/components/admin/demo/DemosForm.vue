@@ -13,10 +13,8 @@
 			<FormTitle :title="title" />
 		</template>
 
-		<form
-			@keydown="$event.key === 'Enter' ? save() : null"
-		>
-			<div class="row">
+		<form @keydown="$event.key === 'Enter' ? save() : null">
+			<div class="row gy-3">
 				<div class="col-12">
 					<FileUpload
 						label="Subir archivo"
@@ -25,7 +23,7 @@
 						:disabled="disabled"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<InputText
 						ref="title"
 						label="Título"
@@ -34,7 +32,7 @@
 						@change-value="(value) => (form.title = value)"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<InputText
 						ref="link"
 						label="Enlace"
@@ -43,7 +41,7 @@
 						@change-value="(value) => (form.link = value)"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<DropDown
 						ref="category_id"
 						label="Categoría"
@@ -55,7 +53,7 @@
 						@change-value="(value) => (form.category_id = value)"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<DatePicker
 						ref="date"
 						label="Fecha"
@@ -65,7 +63,7 @@
 						:showTime="false"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<MultiSelect
 						ref="multi_category_id"
 						label="Categoría"
@@ -78,7 +76,7 @@
 						@change-value="(value) => (form.multi_category_id = value)"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<SelectButton
 						ref="hour"
 						label="Horario"
@@ -91,7 +89,7 @@
 						]"
 					/>
 				</div>
-				<div class="col-12 mt-4">
+				<div class="col-12">
 					<TextArea
 						ref="description"
 						label="Descripción"
@@ -100,7 +98,7 @@
 						@change-value="(value) => (form.description = value)"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<CheckBox
 						ref="active"
 						label="Activo"
@@ -113,7 +111,7 @@
 						]"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<RadioButton
 						ref="nose"
 						label="Nose"
@@ -126,7 +124,7 @@
 						]"
 					/>
 				</div>
-				<div class="col-12 col-md-6 mt-4">
+				<div class="col-12 col-md-6">
 					<InputSwitch
 						ref="rules"
 						label="Normas"
@@ -134,6 +132,48 @@
 						:error="form.errors.get('rules')"
 						@change-value="(value) => (form.rules = value)"
 					/>
+				</div>
+
+				<div v-auto-animate>
+					<div
+						v-for="n in totalNames"
+						:key="n"
+						class="row mb-3"
+					>
+						<!-- Large subform -->
+						<SubForm
+							:ref="'SubForm' + n"
+							:index="n"
+							:disabled="disabled"
+						/>
+						<!-- End large subform -->
+
+						<!-- Small subform -->
+						<InputText
+							:ref="`${n - 1}.id`"
+							class="d-none"
+							@change-value="(value) => (form[`${n - 1}.id`] = value)"
+						/>
+						<div class="col-12 col-md-6">
+							<InputText
+								:ref="`${n - 1}.name`"
+								label="Nombre"
+								:disabled="disabled"
+								:error="form.errors.get(`new_form.${n - 1}.name`)"
+								@change-value="(value) => (form[`${n - 1}.name`] = value)"
+							/>
+						</div>
+						<div class="col-12 col-md-6">
+							<InputText
+								:ref="`${n - 1}.lastname`"
+								label="Apellidos"
+								:disabled="disabled"
+								:error="form.errors.get(`new_form.${n - 1}.lastname`)"
+								@change-value="(value) => (form[`${n - 1}.lastname`] = value)"
+							/>
+						</div>
+						<!-- End small subform -->
+					</div>
 				</div>
 			</div>
 		</form>
@@ -159,10 +199,13 @@
 	import Form from "vform";
 	import { mapActions, mapMutations, mapState } from "vuex";
 
+	import SubForm from "./SubForm.vue";
+
 	export default {
 		components: {
 			Dialog,
 			Button,
+			SubForm,
 		},
 		props: {
 			route: {
@@ -179,6 +222,7 @@
 			modelName: "enlace",
 			title: `Añadir enlace`,
 			disabled: false,
+			totalNames: 1,
 		}),
 		methods: {
 			...mapActions(["sendForm", "getRegisters"]),
@@ -186,6 +230,22 @@
 			save() {
 				const update = this.links.register != null;
 				const url = `/links${update ? `/${this.links.register.id}` : ""}`;
+
+				this.form.new_form = [];
+
+				for (let index = 0; index < this.totalNames; index++) {
+					// ----------------- Small subform -----------------
+					this.form.new_form.push({
+						id: this.form[`${index}.id`],
+						name: this.form[`${index}.name`],
+						lastname: this.form[`${index}.lastname`],
+					});
+					// ----------------- End small subform -----------------
+
+					// ----------------- Large subform -----------------
+					this.form.new_form.push(this.$refs[`SubForm${index + 1}`][0].returnForm());
+					// ----------------- End large subform -----------------
+				}
 
 				this.sendForm({
 					method: update ? "put" : "post",
@@ -205,6 +265,18 @@
 							page: this.links.currentPage,
 							rows: this.links.rows,
 						});
+					} else {
+						// ----------------- Large subform -----------------
+						if (response?.data) {
+							for (let index = 0; index < this.totalNames; index++) {
+								this.$refs[`SubForm${index + 1}`][0].form.errors.clear();
+
+								for (const key in response.data) {
+									this.$refs[`SubForm${index + 1}`][0].form.errors.set(key, response.data[key]);
+								}
+							}
+						}
+						// ----------------- End large subform -----------------
 					}
 				});
 			},
@@ -226,6 +298,8 @@
 						this.$refs[key].model = null;
 					}
 				}
+
+				this.totalNames = 0;
 			},
 			show() {
 				this.clearForm();
@@ -238,12 +312,38 @@
 				});
 
 				if (this.links.register != null) {
-					for (const key in this.links.register) {
-						if (Object.hasOwnProperty.call(this.links.register, key)) {
+					const register = this.links.register;
+
+					for (const key in register) {
+						if (Object.hasOwnProperty.call(register, key)) {
 							if (this.$refs[key] != undefined) {
-								this.$refs[key].model = this.links.register[key];
+								this.$refs[key].model = register[key];
 							}
 						}
+					}
+
+					if (register.names != null) {
+						register.names.forEach((name, index) => {
+							this.totalNames++;
+
+							// ----------------- Small subform -----------------
+							this.$nextTick(() => {
+								for (const key in name) {
+									if (Object.hasOwnProperty.call(name, key)) {
+										if (this.$refs[`${index}.${key}`] != undefined) {
+											this.$refs[`${index}.${key}`][0].model = name[key];
+										}
+									}
+								}
+							});
+							// ----------------- End small subform -----------------
+
+							// ----------------- Large subform -----------------
+							this.$nextTick(() => {
+								this.$refs[`SubForm${index + 1}`][0].setValues(name);
+							});
+							// ----------------- End large subform -----------------
+						});
 					}
 
 					if (this.links.dialogMode == "edit") {

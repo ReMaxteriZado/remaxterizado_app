@@ -13,21 +13,10 @@ export const func = {
 
 		return formProps
 	},
-    exportCSV(target) {
-        target.exportCSV();
-    },
     formatDate(date, format = "DD/MM/YYYY HH:mm:ss") {
         moment.locale("es");
 
         if (typeof date === "string") {
-            if (date.includes("/")) {
-                return moment(date, "DD/MM/YYYY").format(format);
-            }
-
-            if (date.includes(":")) {
-                return moment(date, "HH:mm:ss").format(format);
-            }
-
             date = new Date(date);
         }
 
@@ -50,44 +39,6 @@ export const func = {
     },
     currentTimeZone() {
         return Intl.DateTimeFormat().resolvedOptions().timeZone;
-    },
-    dayOfTheYear(date) {
-        if (typeof date === "string") {
-            date = new Date(date);
-        }
-
-        const start = new Date(date.getFullYear(), 0, 0);
-        const diff = date - start;
-        const oneDay = 1000 * 60 * 60 * 24;
-        const day = Math.floor(diff / oneDay);
-
-        return day;
-    },
-    differenceBetweenDates(date1, date2) {
-        if (typeof date1 === "string") {
-            date1 = new Date(date1);
-        }
-
-        if (typeof date2 === "string") {
-            date2 = new Date(date2);
-        }
-
-        const diffTime = Math.abs(date2 - date1);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        return diffDays;
-    },
-    addOneDay(date) {
-        if (typeof date === "string") {
-            date = new Date(date);
-        }
-
-        let date_edited = date.setHours(0, 0, 0, 0);
-        date_edited = new Date(date_edited);
-
-        date_edited.setDate(date_edited.getDate() + 1);
-
-        return date_edited;
     },
     pushIdsToArray(array, rows) {
         let ids = [];
