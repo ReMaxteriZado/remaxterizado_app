@@ -23,8 +23,8 @@
         "gsap": "^3.10.4",
         "moment": "^2.29.4",
         "moment-timezone": "^0.5.34",
-        "primeicons": "^5.0.0",
-        "primevue": "^3.12.4",
+        "primeicons": "^6.0.0",
+        "primevue": "^3.18.0",
         "prismjs": "^1.28.0",
         "vform": "^2.1.2",
         "vue": "^3.2.13",
@@ -57,7 +57,9 @@
         "parserOptions": {
             "parser": "@babel/eslint-parser"
         },
-        "rules": {}
+        "rules": {
+            "vue/multi-word-component-names": "off"
+        }
     },
     "browserslist": [
         "> 1%",

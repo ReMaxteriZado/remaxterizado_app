@@ -68,11 +68,11 @@
 			},
 			name: {
 				type: String,
-				required: true,
+				required: false,
 			},
 			values: {
 				type: Array,
-				required: true,
+				required: false,
 			},
 			binary: {
 				type: Boolean,

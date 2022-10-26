@@ -77,6 +77,10 @@
 						label: "Códigos",
 						href: "/admin/codes",
 					},
+					{
+						label: "Demo",
+						href: "/admin/demo",
+					},
 				],
 			};
 		},

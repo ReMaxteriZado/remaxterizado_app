@@ -9,6 +9,7 @@ import DashboardComponent from "@/components/admin/dashboard/DashboardComponent.
 import CategoriesComponent from "@/components/admin/categories/CategoriesComponent.vue";
 import LinksComponent from "@/components/admin/links/LinksComponent.vue";
 import CodesComponent from "@/components/admin/codes/CodesComponent.vue";
+import DemoComponent from "@/components/admin/demo/DemoComponent.vue";
 
 const routes = [
 	{
@@ -50,6 +51,10 @@ const routes = [
 			{
 				path: "codes",
 				component: CodesComponent,
+			},
+			{
+				path: "demo",
+				component: DemoComponent,
 			},
 			{
 				path: "/admin/:pathMatch(.*)*",

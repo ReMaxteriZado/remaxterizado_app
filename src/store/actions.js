@@ -46,6 +46,63 @@ const actions = {
 		}
 	},
 
+	// Download file
+	async downloadFile({ state }, params) {
+		try {
+			const response = await http({
+				method: "post",
+				url: params.downloadRoute,
+				params: {
+					folder: params.folder,
+					fileName: params.fileName,
+					databaseFileColumn: params.databaseFileColumn,
+					databaseFileNameColumn: params.databaseFileNameColumn,
+				},
+				responseType: !params.isFromDatabase ? "blob" : "",
+			});
+
+			let link = null;
+
+			if (params.isFromDatabase) {
+				link = document.createElement("a");
+				link.href = response.data.fileData;
+
+				link.setAttribute("download", response.data.fileName);
+
+				document.body.appendChild(link);
+				link.click();
+			} else {
+				const fileName =
+					response.headers["content-disposition"].split(
+						"filename="
+					)[1];
+
+				const url = window.URL.createObjectURL(
+					new Blob([response.data])
+				);
+
+				link = document.createElement("a");
+				link.href = url;
+
+				link.setAttribute("download", fileName);
+
+				document.body.appendChild(link);
+				link.click();
+			}
+
+			state.successToast = "Archivo descargado correctamente";
+
+			if (link != null) {
+				link.parentNode.removeChild(link);
+			}
+		} catch (error) {
+			console.error(error);
+			state.errorToast = true;
+
+			return error;
+		}
+	},
+
 	// Form functions
 	async sendForm({ state }, { method = "post", form, url, errors }) {
 		try {

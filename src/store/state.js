@@ -40,6 +40,8 @@ const state = {
 			"FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
 		currentPageReportTemplate:
 			"Mostrando del {first} al {last} de un total de {totalRecords} registros",
+		responsiveLayout: "stack",
+		breakpoint: "960px",
 	},
 
 	// Dialogs defaults

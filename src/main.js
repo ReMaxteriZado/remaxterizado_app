@@ -45,6 +45,8 @@ import ToastService from "primevue/toastservice";
 import ConfirmationService from "primevue/confirmationservice";
 import Tooltip from "primevue/tooltip";
 import Ripple from "primevue/ripple";
+import Button from "primevue/button";
+import Badge from 'primevue/badge';
 
 // Fonts
 require("@/assets/fonts/Work_Sans/Work_Sans.css");
@@ -122,6 +124,7 @@ app.use(PrimeVue, {
 		weak: "Débil",
 		medium: "Medio",
 		strong: "Fuerte",
+		pending: "Pendiente",
 	},
 });
 
@@ -143,6 +146,8 @@ app.component("MultiSelect", MultiSelect);
 app.component("InputSwitch", InputSwitch);
 app.component("SelectButton", SelectButton);
 app.component("FileUpload", FileUpload);
+app.component("Button", Button);
+app.component("Badge", Badge);
 
 app.config.globalProperties.$http = http;
 app.config.globalProperties.$store = store;
