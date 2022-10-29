@@ -12,10 +12,8 @@ const state = {
 	userLogged: null,
 
 	// Forms
-	showNewItemSidebar: false,
 	showFormGeneralErrorToast: false,
 	formComponent: "",
-	editModel: null,
 
 	// Categories
 	categoryTree: "",

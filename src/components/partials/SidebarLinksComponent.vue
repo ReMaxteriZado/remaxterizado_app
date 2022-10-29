@@ -2,7 +2,7 @@
 	<div class="w-100 d-flex flex-column">
 		<div v-for="(item, index) in items" :key="index">
 			<div v-if="!item.items">
-				<Link class="px-3" :item="item" />
+				<Link class="px-3" :item="item" @click="toggleSidebar(false)" />
 			</div>
 			<div v-else>
 				<Accordion @click="item.right_down = !item.right_down">
@@ -35,7 +35,11 @@
 						</template>
 						<div class="d-flex flex-column">
 							<div v-for="(subItem, subIndex) in item.items" :key="subIndex">
-								<Link class="ps-5" :item="subItem" />
+								<Link
+									class="ps-5"
+									:item="subItem"
+									@click="toggleSidebar(false)"
+								/>
 							</div>
 						</div>
 					</AccordionTab>
@@ -50,6 +54,7 @@ import Accordion from "primevue/accordion";
 import AccordionTab from "primevue/accordiontab";
 
 import Link from "./LinkComponent.vue";
+import { mapMutations } from 'vuex';
 
 export default {
 	components: {
@@ -82,6 +87,9 @@ export default {
 				},
 			],
 		};
+	},
+	methods: {
+		...mapMutations(["toggleSidebar"]),
 	},
 };
 </script>

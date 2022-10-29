@@ -1,5 +1,5 @@
 <template>
-	<div class="p-4">
+	<div class="p-2 p-md-4">
 		<Card class="no-custom-card">
 			<template #content>
 				<div class="d-flex justify-content-between">

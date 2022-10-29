@@ -1,24 +1,10 @@
 const mutations = {
+	// General
 	changeUserLogged(state, n) {
 		state.userLogged = n;
 	},
 	toggleSidebar(state, n) {
 		state.showSidebar = n;
-	},
-	setCategories(state, n) {
-		state.categories = n;
-	},
-	toggleCodeDialog(state, n) {
-		if (!n) {
-			state.viewCode = null;
-		}
-		state.displayCodeDialog = n;
-	},
-	changeViewCode(state, n) {
-		state.viewCode = n;
-	},
-	changeNewLinkCategorySelected(state, n) {
-		state.newLinkCategorySelected = n;
 	},
 
 	// Defaults
@@ -34,6 +20,22 @@ const mutations = {
 	},
 	changeCurrentRegister(state, n) {
 		state[n.stateVariable].register = n.register;
+	},
+
+	setCategories(state, n) {
+		state.categories = n;
+	},
+	toggleCodeDialog(state, n) {
+		if (!n) {
+			state.viewCode = null;
+		}
+		state.displayCodeDialog = n;
+	},
+	changeViewCode(state, n) {
+		state.viewCode = n;
+	},
+	changeNewLinkCategorySelected(state, n) {
+		state.newLinkCategorySelected = n;
 	},
 
 	// Categories

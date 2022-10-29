@@ -8,9 +8,11 @@ const actions = {
 		try {
 			const response = await form.post(state.baseURL + "/login");
 
-			localStorage.removeItem("is_blocked");
-			localStorage.setItem("access_token", response.data.token);
-			localStorage.setItem("user_permissions", JSON.stringify(response.data.user_permissions));
+			localStorage.removeItem("isBlocked");
+			localStorage.setItem("accessToken", response.data.token);
+			console.log("🚀 ~ file: actions.js ~ line 13 ~ login ~ response.data", response.data)
+			localStorage.setItem("userPermissions", JSON.stringify(response.data.userPermissions));
+			localStorage.setItem("userLogged", JSON.stringify(response.data.user));
 
 			window.location.href = "/dashboard";
 		} catch (error) {
@@ -22,7 +24,7 @@ const actions = {
 	setFormAccessToken() {
 		const instance = http.create({
 			headers: {
-				Authorization: "Bearer " + localStorage.getItem("access_token"),
+				Authorization: "Bearer " + localStorage.getItem("accessToken"),
 			},
 		});
 
@@ -30,10 +32,10 @@ const actions = {
 	},
 	logout(params) {
 		if (params?.isBlocked) {
-			localStorage.setItem("is_blocked", true);
+			localStorage.setItem("isBlocked", true);
 		}
 
-		localStorage.removeItem("access_token");
+		localStorage.removeItem("accessToken");
 		window.location.href = "/login";
 	},
 	copyToClipboard({ state }, data) {

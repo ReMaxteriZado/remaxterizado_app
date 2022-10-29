@@ -4,7 +4,7 @@ import state from "./store/state";
 const http = axios.create({
     baseURL: state.baseURL,
     headers: {
-        Authorization: "Bearer " + localStorage.getItem("access_token"),
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
     },
 });
 

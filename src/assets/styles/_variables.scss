@@ -8,3 +8,31 @@ $smooth-box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
     0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
     0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
     0 100px 80px rgba(0, 0, 0, 0.12);
+    
+// Mobiles
+$mobile-min-width: 280px;
+$mobile-max-width: 500px;
+
+// Small mobiles
+$small-mobile-min-width: 280px;
+$small-mobile-max-width: 339px;
+
+// Large mobiles
+$large-mobile-min-width: 340px;
+$large-mobile-max-width: 500px;
+
+// Tablets
+$tablet-min-width: 550px;
+$tablet-max-width: 1024px;
+
+// Small tablets
+$small-tablet-min-width: 550px;
+$small-tablet-max-width: 960px;
+
+// Large tablets
+$large-tablet-min-width: 1025px;
+$large-tablet-max-width: 1400px;
+
+// Laptops
+$laptop-min-width: 1080px;
+$laptop-max-width: 1440px;

@@ -4,26 +4,38 @@
 		<ConfirmDialog />
 		<LoadingComponent />
 
-		<div class="sidebar-section" v-if="show_sidebar">
-			<LogoComponent />
-			<SidebarComponent />
+		<div
+			class="sidebar-section d-flex flex-column justify-content-between"
+			:class="[showSidebar ? 'sidebar-open' : '']"
+		>
+			<div>
+				<LogoComponent />
+				<SidebarComponent />
+			</div>
+			<Logout class="d-md-none" />
 		</div>
 
 		<div class="top-bar-section">
 			<TopBar />
 		</div>
-		
-		<div class="content-section px-4">
+
+		<div class="content-section px-2 px-md-4">
 			<router-view v-slot="{ Component }">
 				<transition name="slide" mode="out-in">
 					<component :is="Component" :key="$route.path" />
 				</transition>
 			</router-view>
 		</div>
-		
-		<div class="logout-section">
+
+		<div class="logout-section d-none d-md-block">
 			<Logout />
 		</div>
+
+		<div
+			class="sidebar-overlay d-block d-md-none"
+			:class="[showSidebar ? 'sidebar-open' : '']"
+			@click="toggleSidebar(false)"
+		></div>
 	</div>
 </template>
 
@@ -52,9 +64,7 @@ export default {
 		Logout,
 	},
 	data() {
-		return {
-			show_sidebar: false,
-		};
+		return {};
 	},
 	computed: {
 		...mapState([
@@ -62,6 +72,7 @@ export default {
 			"errorToast",
 			"successToast",
 			"warningToast",
+			"showSidebar",
 		]),
 	},
 	methods: {
@@ -70,17 +81,19 @@ export default {
 			"changeSuccessToast",
 			"changeErrorToast",
 			"changeWarningToast",
+			"toggleSidebar",
+			"changeUserLogged",
 		]),
 		storageListener() {
 			const interval = setInterval(() => {
-				if (localStorage.getItem("user_permissions") != null) {
-					this.show_sidebar = true;
+				if (localStorage.getItem("userPermissions") != null) {
 					clearInterval(interval);
 				}
 			}, 50);
 		},
 	},
 	mounted() {
+		this.changeUserLogged(JSON.parse(localStorage.getItem("userLogged")));
 		this.setFormAccessToken();
 		document.addEventListener("storage", this.storageListener());
 	},
@@ -189,6 +202,49 @@ export default {
 	.slide-leave-to {
 		transform: translateX(30%);
 		opacity: 0;
+	}
+
+	// Mobiles
+	@media only screen and (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+		grid-template-columns: 100%;
+		grid-template-rows: fit-content(10rem) auto;
+		grid-template-areas:
+			"top-bar-section"
+			"content-section";
+
+		.sidebar-section {
+			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			z-index: 90;
+			transform: translateX(-100%);
+			transition: $transition;
+			width: 80vw;
+
+			&.sidebar-open {
+				transform: translateX(0);
+			}
+		}
+
+		.sidebar-overlay {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			opacity: 0;
+			transition: $transition;
+			visibility: hidden;
+			z-index: 80;
+
+			&.sidebar-open {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
 	}
 }
 </style>

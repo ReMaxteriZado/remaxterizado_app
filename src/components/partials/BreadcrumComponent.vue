@@ -1,5 +1,5 @@
 <template>
-	<Breadcrumb :home="home" :model="items">
+	<Breadcrumb :home="home" :model="items" class="d-none d-md-block">
 		<template #item="{ item }">
 			<router-link v-if="item.url" :to="item.url" class="link text-primary">
 				<i v-if="item.icon" :class="item.icon"></i>
