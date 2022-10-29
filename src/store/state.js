@@ -1,6 +1,7 @@
+const defaults = ["links", "categories"];
+
 const state = {
-	// Web
-	layout: "web-layout",
+	env: "local",
 
 	// Admin
 	baseURL: "http://remaxterizado_api.test/api",
@@ -53,9 +54,10 @@ const state = {
 
 	// Dialogs
 	displayCodeDialog: false,
+};
 
-	// Links
-	links: {
+for (const item of defaults) {
+	state[item] = {
 		// Table
 		list: [],
 		listTotal: 0,
@@ -66,20 +68,7 @@ const state = {
 		register: null,
 		dialog: false,
 		dialogMode: "show",
-	},
-
-	// Categories
-	categories: {
-		// Table
-		list: [],
-		listTotal: 0,
-		currentPage: null,
-
-		// Form
-		register: null,
-		dialog: false,
-		dialogMode: "show",
-	},
-};
+	}
+}
 
 export default state;

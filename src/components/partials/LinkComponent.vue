@@ -1,56 +1,45 @@
 <template>
-    <div class="a-container">
-        <router-link v-if="!isSection" @mouseover="mouseOver" @mouseleave="mouseLeave" :to="href">{{text}}</router-link>
-        <a v-else @mouseover="mouseOver" @mouseleave="mouseLeave" :href="href">{{text}}</a>
-        <div class="underline" :class="{show: showUnderline}"></div>
-    </div>
+    <router-link
+        :to="item.href"
+        class="link d-flex align-items-center py-3 gap-2 p-ripple"
+        v-ripple
+    >
+        <p class="custom-line-heigth mb-0">
+            {{ item.label }}
+        </p></router-link
+    >
 </template>
 
 <script>
-
 export default {
-    props: {
-        href: String,
-        isSection: Boolean,
-        text: String
-    },
-    data() {
-        return {
-            showUnderline: false
-        }
-    },
-    methods: {
-        mouseOver() {
-            this.showUnderline = true
-        },
-        mouseLeave() {
-            this.showUnderline = false
-        }
-    }
-}
+    props: ["item"],
+};
 </script>
 
 <style lang="scss" scoped>
-    .a-container {
-        position: relative;
-        
-        a {
-            color: $primary;
-            text-decoration: none;
-        }
+.link {
+    text-decoration: none;
+    transition: $transition;
+    color: #666;
+    font-weight: bold;
 
-        .underline {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: $primary;
-            transition: all .3s ease;
-
-            &.show {
-                width: 100%;
-            }
-        }
+    .custom-line-heigth {
+        line-height: 24px;
     }
+
+    i {
+        line-height: 24px;
+        transform: translateY(-1px);
+    }
+
+    &.router-link-active {
+        background-color: $secondary;
+        color: white;
+    }
+
+    &:hover {
+        background-color: rgba($secondary, 0.7);
+        color: white;
+    }
+}
 </style>

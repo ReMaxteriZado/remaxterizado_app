@@ -55,21 +55,21 @@ require("@/assets/fonts/Work_Sans/Work_Sans.css");
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 
 // Defaults
-import TableDefault from "@/components/admin/partials/TableDefault.vue";
+import TableDefault from "@/components/partials/TableDefault.vue";
 
 // Form
-import FormTitle from "@/components/admin/partials/FormTitle.vue";
-import InputText from "@/components/admin/partials/forms/InputText.vue";
-import InputPassword from "@/components/admin/partials/forms/InputPassword.vue";
-import DropDown from "@/components/admin/partials/forms/DropDown.vue";
-import Textarea from "@/components/admin/partials/forms/TextArea.vue";
-import DatePicker from "@/components/admin/partials/forms/DatePicker.vue";
-import CheckBox from "@/components/admin/partials/forms/CheckBox.vue";
-import RadioButton from "@/components/admin/partials/forms/RadioButton.vue";
-import MultiSelect from "@/components/admin/partials/forms/MultiSelect.vue";
-import InputSwitch from "@/components/admin/partials/forms/InputSwitch.vue";
-import SelectButton from "@/components/admin/partials/forms/SelectButton.vue";
-import FileUpload from "@/components/admin/partials/forms/FileUpload.vue";
+import FormTitle from "@/components/partials/FormTitle.vue";
+import InputText from "@/components/partials/forms/InputText.vue";
+import InputPassword from "@/components/partials/forms/InputPassword.vue";
+import DropDown from "@/components/partials/forms/DropDown.vue";
+import Textarea from "@/components/partials/forms/TextArea.vue";
+import DatePicker from "@/components/partials/forms/DatePicker.vue";
+import CheckBox from "@/components/partials/forms/CheckBox.vue";
+import RadioButton from "@/components/partials/forms/RadioButton.vue";
+import MultiSelect from "@/components/partials/forms/MultiSelect.vue";
+import InputSwitch from "@/components/partials/forms/InputSwitch.vue";
+import SelectButton from "@/components/partials/forms/SelectButton.vue";
+import FileUpload from "@/components/partials/forms/FileUpload.vue";
 
 const app = createApp(App);
 

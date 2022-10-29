@@ -66,23 +66,19 @@ $width: 10rem;
 	padding-left: 2.5rem;
 }
 
-:deep(.p-dropdown .p-dropdown-label) {
-	padding-left: 2.5rem;
+:deep(.p-dropdown) {
+	width: $width;
+
+	.p-dropdown-label {
+		padding-left: 2.5rem;
+	}
 }
 
 .filter {
 	width: $width;
 }
 
-:deep(.p-dropdown) {
-	width: $width;
-}
-
 :deep(input) {
 	width: $width;
-}
-
-::-webkit-scrollbar {
-	height: 12px;
 }
 </style>

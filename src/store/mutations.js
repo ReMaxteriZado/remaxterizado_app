@@ -2,26 +2,8 @@ const mutations = {
 	changeUserLogged(state, n) {
 		state.userLogged = n;
 	},
-	changeLayout(state, n) {
-		state.layout = n;
-	},
 	toggleSidebar(state, n) {
 		state.showSidebar = n;
-	},
-	toggleLoading(state, n) {
-		state.loading = n;
-	},
-	toggleNewItemSidebar(state, n) {
-		state.showNewItemSidebar = n;
-	},
-	changeUserLoggedBearerToken(state, n) {
-		state.user_logged_bearer_token = n;
-	},
-	changeFormComponent(state, n) {
-		state.formComponent = n;
-	},
-	changeEditModel(state, n) {
-		state.editModel = n;
 	},
 	setCategories(state, n) {
 		state.categories = n;
@@ -39,6 +21,7 @@ const mutations = {
 		state.newLinkCategorySelected = n;
 	},
 
+	// Defaults
 	changeCurrentTablePage(state, n) {
 		state[n.stateVariable].currentPage = n.event.page;
 		state[n.stateVariable].rows = n.event.rows;
@@ -52,21 +35,6 @@ const mutations = {
 	changeCurrentRegister(state, n) {
 		state[n.stateVariable].register = n.register;
 	},
-
-	// Links
-	// toggleLinksDialog(state, n) {
-	// 	state.links.dialog = n;
-	// },
-	// changeLinksDialogMode(state, n) {
-	// 	state.links.dialogMode = n;
-	// },
-	// changeCurrentLink(state, n) {
-	// 	state.links.register = n;
-	// },
-	// changeCurrentPageLinks(state, n) {
-	// 	state.links.currentPage = n.page;
-	// 	state.links.rows = n.rows;
-	// },
 
 	// Categories
 	toggleCategoriesDialog(state, n) {

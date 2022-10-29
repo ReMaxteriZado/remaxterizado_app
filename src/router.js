@@ -5,11 +5,11 @@ import LoginLayout from "@/components/layouts/LoginLayout.vue";
 import AdminLayout from "@/components/layouts/AdminLayout.vue";
 
 // Admin
-import DashboardComponent from "@/components/admin/dashboard/DashboardComponent.vue";
-import CategoriesComponent from "@/components/admin/categories/CategoriesComponent.vue";
-import LinksComponent from "@/components/admin/links/LinksComponent.vue";
-import CodesComponent from "@/components/admin/codes/CodesComponent.vue";
-import DemoComponent from "@/components/admin/demo/DemoComponent.vue";
+import DashboardComponent from "@/components/dashboard/DashboardComponent.vue";
+import CategoriesComponent from "@/components/categories/CategoriesComponent.vue";
+import LinksComponent from "@/components/links/LinksComponent.vue";
+import CodesComponent from "@/components/codes/CodesComponent.vue";
+import DemoComponent from "@/components/demo/DemoComponent.vue";
 
 const routes = [
 	{
@@ -32,7 +32,7 @@ const routes = [
 		],
 	},
 	{
-		path: "/admin",
+		path: "",
 		component: AdminLayout,
 		children: [
 			{
@@ -57,9 +57,9 @@ const routes = [
 				component: DemoComponent,
 			},
 			{
-				path: "/admin/:pathMatch(.*)*",
+				path: "/:pathMatch(.*)*",
 				beforeEnter(to, from, next) {
-					next({ path: "/admin/dashboard" });
+					next({ path: "/dashboard" });
 				},
 			},
 		],

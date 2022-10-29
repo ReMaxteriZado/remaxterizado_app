@@ -12,8 +12,7 @@ const actions = {
 			localStorage.setItem("access_token", response.data.token);
 			localStorage.setItem("user_permissions", JSON.stringify(response.data.user_permissions));
 
-			window.location.href  = "/admin/dashboard";
-			state.layout = "AdminLayout";
+			window.location.href = "/dashboard";
 		} catch (error) {
 			if (error.response?.data?.message) {
 				errors.set("email", error.response.data.message);

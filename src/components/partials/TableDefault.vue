@@ -40,26 +40,39 @@
 				</div>
 			</div>
 		</template>
+
 		<template #empty>{{ datatableDefaults.noResults }}</template>
+
 		<template #loading>
 			<LoadingTable />
 		</template>
+
 		<Column selectionMode="multiple" headerStyle="width: 3em"></Column>
 
 		<slot name="columns"></slot>
 
 		<Column header="Acciones">
-			<template #body="{ data }">
+			<template #body="slotProps">
 				<div class="d-flex align-items-center gap-2">
 					<Button
-						class="text-primary p-button-rounded p-button-text border-primary"
+						class="
+							p-button-rounded p-button-text
+							border-primary
+							bg-primary
+							text-white
+						"
 						icon="pi pi-pencil"
-						@click="showRegister(data, 'edit')"
+						@click="showRegister(slotProps.data, 'edit')"
 					/>
 					<Button
-						class="text-primary p-button-rounded p-button-text border-primary"
+						class="
+							p-button-rounded p-button-text
+							border-primary
+							bg-primary
+							text-white
+						"
 						icon="pi pi-trash"
-						@click="deleteRegister(data.id)"
+						@click="deleteRegister(slotProps.data.id)"
 					/>
 				</div>
 			</template>
@@ -73,7 +86,7 @@ import Column from "primevue/column";
 import Button from "primevue/button";
 
 import LoadingTable from "@/components/partials/LoadingTableComponent.vue";
-import TableFilters from "@/components/admin/partials/TableFilters.vue";
+import TableFilters from "@/components/partials/TableFilters.vue";
 
 import { mapState, mapActions } from "vuex";
 
