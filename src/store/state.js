@@ -1,11 +1,8 @@
 const defaults = ["links", "codes", "categories"];
 
 const state = {
-	env: "local",
-
-	// Admin
-	baseURL: "http://remaxterizado_api.test/api",
-	// baseURL: "https://api.remaxterizado.es/api",
+	// baseURL: "http://remaxterizado_api.test/api",
+	baseURL: "https://api.remaxterizado.es/api",
 	// loading: false,
 	showSidebar: false,
 	showNotLoggedToast: false,
