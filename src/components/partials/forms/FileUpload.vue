@@ -202,6 +202,10 @@ export default {
 	margin-bottom: 0;
 }
 
+:deep(.p-fileupload-buttonbar) {
+	gap: 1rem;
+}
+
 :deep(.p-fileupload-buttonbar .p-button:last-child) {
 	background-color: #131313 !important;
 }

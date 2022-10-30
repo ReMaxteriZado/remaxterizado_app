@@ -23,7 +23,16 @@
 					<TableFilters :filters="filters" />
 				</div>
 				<div class="col-12 col-md-6">
-					<div class="d-flex align-items-center justify-content-end gap-3">
+					<div
+						class="
+							action-buttons
+							d-flex
+							gap-3
+							align-items-center
+							justify-content-md-end
+							pb-1
+						"
+					>
 						<Button
 							:label="'Añadir registro'"
 							class="bg-primary border-0 text-white"
@@ -47,7 +56,11 @@
 			<LoadingTable />
 		</template>
 
-		<Column selectionMode="multiple" headerStyle="width: 3em"></Column>
+		<Column
+			class="d-none d-md-block"
+			selectionMode="multiple"
+			headerStyle="width: 3em"
+		></Column>
 
 		<slot name="columns"></slot>
 
@@ -186,3 +199,22 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+.action-buttons {
+	button {
+		min-width: fit-content;
+	}
+}
+
+// Mobiles
+@media only screen and (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+	:deep(.p-paginator-current) {
+		text-align: center;
+	}
+
+	.action-buttons {
+		overflow-x: auto;
+	}
+}
+</style>

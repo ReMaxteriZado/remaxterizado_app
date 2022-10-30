@@ -93,6 +93,9 @@ export default {
 		},
 	},
 	mounted() {
+		let vh = window.innerHeight * 0.01;
+		document.documentElement.style.setProperty("--vh", `${vh}px`);
+		
 		this.changeUserLogged(JSON.parse(localStorage.getItem("userLogged")));
 		this.setFormAccessToken();
 		document.addEventListener("storage", this.storageListener());
@@ -158,6 +161,7 @@ export default {
 <style lang="scss" scoped>
 #admin-layout {
 	height: 100vh;
+	height: calc(var(--vh, 1vh) * 100);
 	display: grid;
 	grid-template-columns: 15.5% 1fr;
 	grid-template-rows: fit-content(10rem) auto 3rem;

@@ -1,13 +1,17 @@
-$padding: 1.5rem;
+$padding: 1rem;
 
 .p-dialog {
 	border-radius: $border-radius;
 
+	.p-dialog-header {
+		padding: $padding;
+	}
+
 	.p-dialog-content {
-		padding: 0 $padding $padding $padding;
+		padding: 0 $padding;
 	}
 
 	.p-dialog-footer {
-		padding: 0 $padding $padding $padding;
+		padding: $padding;
 	}
 }
