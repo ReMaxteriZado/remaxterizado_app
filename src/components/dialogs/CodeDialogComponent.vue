@@ -33,7 +33,7 @@
 import Dialog from "primevue/dialog";
 import Textarea from "primevue/textarea";
 
-import CodeEditor from "@/components/partials/CodeEditorComponent.vue";
+import CodeEditor from "@/components/partials/forms/CodeEditor.vue";
 
 import { mapState, mapMutations } from "vuex";
 

@@ -1,32 +1,37 @@
 <template>
-	<TableDefault
-		:list="links.list"
-		:total="links.listTotal"
-		:filters="filters"
-		:delete="'links'"
-		@getList="getList"
-		@addRegister="addRegister"
-		@showRegister="showRegister"
-		@changeCurrentPage="getList"
-	>
-		<template #columns>
-			<Column header="Título" field="title"></Column>
-
-			<Column header="Categoría">
-				<template #body="slotProps">
-					<span v-if="slotProps.data.category.parent != null"
-						>{{ slotProps.data.category.parent.name }} /&nbsp;</span
-					>{{ slotProps.data.category.name }}
-				</template></Column
-			>
-			<Column header="Enlace">
-				<template #body="slotProps">
-					<a :href="slotProps.data.link" target="_blank">Enlace</a>
-				</template></Column
-			>
-			<Column header="Visto" field="views"></Column>
-		</template>
-	</TableDefault>
+	<div class="card">
+		<TableDefault
+			:list="codes.list"
+			:total="codes.listTotal"
+			:filters="filters"
+			:delete="'codes'"
+			@getList="getList"
+			@addRegister="addRegister"
+			@showRegister="showRegister"
+			@changeCurrentPage="getList"
+		>
+			<template #columns>
+				<Column header="Enlace">
+					<template #body="slotProps">
+						{{ slotProps.data.link.title }}
+					</template>
+				</Column>
+				<Column header="URL">
+					<template #body="slotProps">
+						<a :href="slotProps.data.link.link" target="_blank">{{
+							slotProps.data.link.link
+						}}</a>
+					</template>
+				</Column>
+				<Column header="Categoría">
+					<template #body="slotProps">
+						{{ slotProps.data.link.category.name }}
+					</template>
+				</Column>
+				<Column header="Lenguage" field="language"> </Column>
+			</template>
+		</TableDefault>
+	</div>
 </template>
 
 <script>
@@ -54,7 +59,13 @@ export default {
 					name: "title",
 					value: null,
 					type: "string",
-					placeholder: "Título",
+					placeholder: "Enlace",
+				},
+				{
+					name: "link",
+					value: null,
+					type: "string",
+					placeholder: "URL",
 				},
 				{
 					name: "category",
@@ -63,22 +74,17 @@ export default {
 					placeholder: "Categoría",
 				},
 				{
-					name: "link",
+					name: "language",
 					value: null,
-					type: "string",
-					placeholder: "Enlace",
-				},
-				{
-					name: "tags",
-					value: null,
-					type: "string",
-					placeholder: "Tags",
+					type: "dropdown",
+					placeholder: "Lenguage",
+					options: [],
 				},
 			],
 		};
 	},
 	methods: {
-		...mapActions(["getRegisters", "incrementViews"]),
+		...mapActions(["getRegisters"]),
 		...mapMutations([
 			"changeCurrentTablePage",
 			"toggleFormDialog",
@@ -92,10 +98,6 @@ export default {
 			});
 		},
 		showRegister(register, dialogMode) {
-			this.incrementViews({
-				id: register.id,
-			});
-
 			this.changeCurrentRegister({
 				stateVariable: this.stateVariable,
 				register,
@@ -128,10 +130,12 @@ export default {
 		},
 	},
 	computed: {
-		...mapState(["links"]),
+		...mapState(["codes", "codeLanguages"]),
 	},
 	mounted() {
 		this.getList();
+
+		this.filters[3].options = this.codeLanguages;
 	},
 };
 </script>

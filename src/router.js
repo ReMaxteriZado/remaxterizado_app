@@ -13,7 +13,7 @@ import DashboardComponent from "@/components/dashboard/DashboardComponent.vue";
 import CategoriesComponent from "@/components/categories/CategoriesComponent.vue";
 import LinksComponent from "@/components/links/LinksComponent.vue";
 import CodesComponent from "@/components/codes/CodesComponent.vue";
-import DemoComponent from "@/components/demo/DemoComponent.vue";
+import DemoComponent from "@/components/demo/DemosComponent.vue";
 
 const routes = [
 	{

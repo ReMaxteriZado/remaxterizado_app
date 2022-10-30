@@ -1,22 +1,31 @@
 <template>
 	<div>
-		<div class="d-flex flex-wrap gap-3 align-items-center mb-3">
-			<FormTitle title="Codes" />
-		</div>
-		<Table />
-
-		<CodeDialog />
+		<CodesTable
+			class="mt-4"
+			:route="route"
+			:stateVariable="stateVariable"
+		/>
+		<CodesForm
+			:route="route"
+			:stateVariable="stateVariable"
+		/>
 	</div>
 </template>
 
 <script>
-import Table from "@/components/codes/CodesTableComponent.vue";
-import CodeDialog from "@/components/dialogs/CodeDialogComponent.vue";
+	import CodesTable from "./CodesTable.vue";
+	import CodesForm from "./CodesForm.vue";
 
-export default {
-	components: {
-		Table,
-		CodeDialog,
-	},
-};
+	export default {
+		components: {
+			CodesTable,
+			CodesForm,
+		},
+		data() {
+			return {
+				route: "codes",
+				stateVariable: "codes",
+			};
+		},
+	};
 </script>

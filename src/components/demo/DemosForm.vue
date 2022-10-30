@@ -313,9 +313,9 @@ export default {
 				showLoading: false,
 			});
 
-			if (this.links.register != null) {
-				const register = this.links.register;
+			const register = this.links.register;
 
+			if (register != null) {
 				for (const key in register) {
 					if (Object.hasOwnProperty.call(register, key)) {
 						if (this.$refs[key] != undefined) {

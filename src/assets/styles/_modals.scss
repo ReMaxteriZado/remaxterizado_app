@@ -9,9 +9,11 @@ $padding: 1rem;
 
 	.p-dialog-content {
 		padding: 0 $padding;
+		padding-bottom: $padding;
 	}
 
 	.p-dialog-footer {
 		padding: $padding;
+		padding-top: 0;
 	}
 }

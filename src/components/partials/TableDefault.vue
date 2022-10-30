@@ -57,7 +57,7 @@
 		</template>
 
 		<Column
-			class="d-none d-md-block"
+			class="select-multiple"
 			selectionMode="multiple"
 			headerStyle="width: 3em"
 		></Column>
@@ -211,6 +211,10 @@ export default {
 @media only screen and (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
 	:deep(.p-paginator-current) {
 		text-align: center;
+	}
+
+	:deep(.select-multiple) {
+		display: none !important;
 	}
 
 	.action-buttons {

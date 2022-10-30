@@ -1,4 +1,4 @@
-const defaults = ["links", "categories"];
+const defaults = ["links", "codes", "categories"];
 
 const state = {
 	env: "local",
@@ -19,9 +19,28 @@ const state = {
 	categoryTree: "",
 
 	// Codes
-	codes: [],
-	code_languages: ["PHP", "JavaScript", "CSS", "HTML", "SCSS"],
-	viewCode: null,
+	codeLanguages: [
+		{
+			label: "PHP",
+			value: "PHP",
+		},
+		{
+			label: "JavaScript",
+			value: "JavaScript",
+		},
+		{
+			label: "CSS",
+			value: "CSS",
+		},
+		{
+			label: "HTML",
+			value: "HTML",
+		},
+		{
+			label: "SCSS",
+			value: "SCSS",
+		},
+	],
 
 	// Datatable defaults
 	datatableDefaults: {
@@ -49,9 +68,6 @@ const state = {
 		closeOnEscape: true,
 		dismissableMask: true,
 	},
-
-	// Dialogs
-	displayCodeDialog: false,
 };
 
 for (const item of defaults) {

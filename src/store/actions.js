@@ -217,11 +217,11 @@ const actions = {
 	},
 
 	// Links
-	async incrementViews({ state }, id) {
+	async incrementViews({ state }, params) {
 		try {
 			const response = await http({
 				method: "post",
-				url: "/links/incremet-views/" + id,
+				url: "/links/incremet-views/" + params.id,
 			});
 
 			return response;
