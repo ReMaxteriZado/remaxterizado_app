@@ -36,7 +36,7 @@
 						<Button
 							:label="'Añadir registro'"
 							class="bg-primary border-0 text-white"
-							@click="$emit('addRegister')"
+							@click="addRegister()"
 						/>
 						<Button
 							v-if="selectedIds.length > 0"
@@ -101,7 +101,7 @@ import Button from "primevue/button";
 import LoadingTable from "@/components/partials/LoadingTableComponent.vue";
 import TableFilters from "@/components/partials/TableFilters.vue";
 
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
 	components: {
@@ -112,6 +112,14 @@ export default {
 		LoadingTable,
 	},
 	props: {
+		route: {
+			type: String,
+			required: true,
+		},
+		stateVariable: {
+			type: String,
+			required: true,
+		},
 		list: {
 			type: Array,
 			default: () => [],
@@ -136,13 +144,67 @@ export default {
 		};
 	},
 	methods: {
-		...mapActions(["deleteRegisters"]),
+		...mapActions(["getRegisters", "deleteRegisters"]),
+		...mapMutations([
+			"changeCurrentTablePage",
+			"toggleFormDialog",
+			"changeFormDialogMode",
+			"changeCurrentRegister",
+		]),
+		getList(event = null) {
+			this.getRegisters({
+				route: this.route,
+				stateVariable: this.stateVariable,
+				page: event?.page,
+				rows: event?.rows,
+			});
+		},
 		changeCurrentPage(event) {
 			this.lastPageChange = event;
+
+			if (event != null) {
+				this.changeCurrentTablePage({
+					stateVariable: this.stateVariable,
+					event,
+				});
+			}
+
+			this.getRegisters({
+				route: this.route,
+				stateVariable: this.stateVariable,
+				page: event?.page,
+				rows: event?.rows,
+			});
+
 			this.$emit("changeCurrentPage", event);
 		},
+		addRegister() {
+			this.toggleFormDialog({
+				stateVariable: this.stateVariable,
+				show: true,
+			});
+
+			this.$emit("addRegister");
+		},
 		showRegister(e, type) {
-			this.$emit("showRegister", e.data != undefined ? e.data : e, type);
+			const register = e.data != undefined ? e.data : e;
+
+			this.changeCurrentRegister({
+				stateVariable: this.stateVariable,
+				register,
+			});
+
+			this.changeFormDialogMode({
+				stateVariable: this.stateVariable,
+				dialogMode: type,
+			});
+
+			this.toggleFormDialog({
+				stateVariable: this.stateVariable,
+				show: true,
+			});
+
+			this.$emit("showRegister", register, type);
 		},
 		deleteRegister(id) {
 			this.$confirm.require({
@@ -153,6 +215,7 @@ export default {
 					this.deleteRegisters({
 						url: `/${this.delete}/${id}`,
 					}).then(() => {
+						this.getList(this.lastPageChange);
 						this.$emit("getList", this.lastPageChange);
 					});
 				},
@@ -175,6 +238,8 @@ export default {
 						url: `/${this.delete}-multiple`,
 						ids,
 					}).then(() => {
+						this.getList(this.lastPageChange);
+
 						this.$emit("getList", this.lastPageChange);
 						this.selectedIds = [];
 					});
@@ -196,6 +261,9 @@ export default {
 			},
 			deep: true,
 		},
+	},
+	mounted() {
+		this.getList();
 	},
 };
 </script>

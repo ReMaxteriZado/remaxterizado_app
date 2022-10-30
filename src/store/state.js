@@ -15,33 +15,6 @@ const state = {
 	showFormGeneralErrorToast: false,
 	formComponent: "",
 
-	// Categories
-	categoryTree: "",
-
-	// Codes
-	codeLanguages: [
-		{
-			label: "PHP",
-			value: "PHP",
-		},
-		{
-			label: "JavaScript",
-			value: "JavaScript",
-		},
-		{
-			label: "CSS",
-			value: "CSS",
-		},
-		{
-			label: "HTML",
-			value: "HTML",
-		},
-		{
-			label: "SCSS",
-			value: "SCSS",
-		},
-	],
-
 	// Datatable defaults
 	datatableDefaults: {
 		noResults: "No hay resultados",
@@ -68,6 +41,33 @@ const state = {
 		closeOnEscape: true,
 		dismissableMask: true,
 	},
+
+	// Categories
+	categoryTree: "",
+
+	// Codes
+	codeLanguages: [
+		{
+			label: "PHP",
+			value: "PHP",
+		},
+		{
+			label: "JavaScript",
+			value: "JavaScript",
+		},
+		{
+			label: "CSS",
+			value: "CSS",
+		},
+		{
+			label: "HTML",
+			value: "HTML",
+		},
+		{
+			label: "SCSS",
+			value: "SCSS",
+		},
+	],
 };
 
 for (const item of defaults) {
@@ -84,5 +84,7 @@ for (const item of defaults) {
 		dialogMode: "show",
 	}
 }
+
+state.categories.customList = null
 
 export default state;

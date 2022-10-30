@@ -28,10 +28,12 @@ const routes = [
 		children: [
 			{
 				path: "dashboard",
+				name: "Dashboard",
 				component: DashboardComponent,
 			},
 			{
 				path: "categories",
+				name: "Categorías",
 				component: CategoriesComponent,
 			},
 			{
@@ -41,10 +43,12 @@ const routes = [
 			},
 			{
 				path: "codes",
+				name: "Códigos",
 				component: CodesComponent,
 			},
 			{
 				path: "demo",
+				name: "Demo",
 				component: DemoComponent,
 			},
 		],

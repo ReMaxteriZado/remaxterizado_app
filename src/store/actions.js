@@ -181,9 +181,9 @@ const actions = {
 				},
 			});
 
-			state.categories = response.data;
+			state.categories.customList = response.data.categories;
 
-			state.categories.forEach((category) => {
+			state.categories.customList.forEach((category) => {
 				category.categoryTree = "";
 				state.categoryTree = "";
 
@@ -204,7 +204,7 @@ const actions = {
 		}
 	},
 	formatParentCategories({ dispatch, state }, category) {
-		state.categories.forEach((category_2) => {
+		state.categories.customList.forEach((category_2) => {
 			if (category.parent_id == category_2.id) {
 				state.categoryTree += category_2.name;
 
@@ -256,7 +256,6 @@ const actions = {
 
 	// Get registers
 	async getRegisters({ state }, params) {
-		// console.log("🚀 ~ file: actions.js ~ line 208 ~ getRegisters ~ params", params)
 		try {
 			if (params.showLoading == null || params.showLoading == undefined || params.showLoading) {
 				state.datatableDefaults.loading = true;

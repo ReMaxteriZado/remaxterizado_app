@@ -1,13 +1,12 @@
 <template>
 	<TableDefault
+		:route="route"
+		:stateVariable="stateVariable"
 		:list="links.list"
 		:total="links.listTotal"
 		:filters="filters"
 		:delete="'links'"
-		@getList="getList"
-		@addRegister="addRegister"
 		@showRegister="showRegister"
-		@changeCurrentPage="getList"
 	>
 		<template #columns>
 			<Column header="Título" field="title"></Column>
@@ -31,7 +30,7 @@
 
 <script>
 import Column from "primevue/column";
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
 	components: {
@@ -78,60 +77,15 @@ export default {
 		};
 	},
 	methods: {
-		...mapActions(["getRegisters", "incrementViews"]),
-		...mapMutations([
-			"changeCurrentTablePage",
-			"toggleFormDialog",
-			"changeFormDialogMode",
-			"changeCurrentRegister",
-		]),
-		addRegister() {
-			this.toggleFormDialog({
-				stateVariable: this.stateVariable,
-				show: true,
-			});
-		},
-		showRegister(register, dialogMode) {
+		...mapActions(["incrementViews"]),
+		showRegister(register) {
 			this.incrementViews({
 				id: register.id,
-			});
-
-			this.changeCurrentRegister({
-				stateVariable: this.stateVariable,
-				register,
-			});
-
-			this.changeFormDialogMode({
-				stateVariable: this.stateVariable,
-				dialogMode,
-			});
-
-			this.toggleFormDialog({
-				stateVariable: this.stateVariable,
-				show: true,
-			});
-		},
-		getList(event = null) {
-			if (event != null) {
-				this.changeCurrentTablePage({
-					stateVariable: this.stateVariable,
-					event,
-				});
-			}
-
-			this.getRegisters({
-				route: this.route,
-				stateVariable: this.stateVariable,
-				page: event?.page,
-				rows: event?.rows,
 			});
 		},
 	},
 	computed: {
 		...mapState(["links"]),
-	},
-	mounted() {
-		this.getList();
 	},
 };
 </script>

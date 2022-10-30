@@ -22,34 +22,9 @@ const mutations = {
 		state[n.stateVariable].register = n.register;
 	},
 
-	setCategories(state, n) {
-		state.categories = n;
-	},
-	toggleCodeDialog(state, n) {
-		if (!n) {
-			state.viewCode = null;
-		}
-		state.displayCodeDialog = n;
-	},
-	changeViewCode(state, n) {
-		state.viewCode = n;
-	},
+	// Categories
 	changeNewLinkCategorySelected(state, n) {
 		state.newLinkCategorySelected = n;
-	},
-
-	// Categories
-	toggleCategoriesDialog(state, n) {
-		state.categories.dialog = n;
-	},
-	changeCategoriesDialogMode(state, n) {
-		state.categories.dialogMode = n;
-	},
-	changeCurrentCategory(state, n) {
-		state.categories.register = n;
-	},
-	changeCurrentPageCategories(state, n) {
-		state.categories.currentPage = n;
 	},
 };
 

@@ -2,7 +2,7 @@
 	<Dialog
 		v-model:visible="$store.state.codes.dialog"
 		:breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-		:style="{ width: '30vw' }"
+		:style="{ width: '50vw' }"
 		:modal="dialogDefaults.modal"
 		:closeOnEscape="dialogDefaults.closeOnEscape"
 		:dismissableMask="dialogDefaults.dismissableMask"

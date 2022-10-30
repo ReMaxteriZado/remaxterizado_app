@@ -1,6 +1,6 @@
 <template>
 	<Dialog
-		v-model:visible="$store.state.links.dialog"
+		v-model:visible="$store.state.categories.dialog"
 		:breakpoints="{ '960px': '75vw', '640px': '90vw' }"
 		:style="{ width: '30vw' }"
 		:modal="dialogDefaults.modal"
@@ -17,20 +17,11 @@
 			<div class="row gy-3">
 				<div class="col-12 col-md-6">
 					<InputText
-						ref="title"
-						label="Título"
+						ref="name"
+						label="Nombre"
 						:disabled="disabled"
-						:error="form.errors.get('title')"
-						@change-value="(value) => (form.title = value)"
-					/>
-				</div>
-				<div class="col-12 col-md-6">
-					<InputText
-						ref="link"
-						label="Enlace"
-						:disabled="disabled"
-						:error="form.errors.get('link')"
-						@change-value="(value) => (form.link = value)"
+						:error="form.errors.get('name')"
+						@change-value="(value) => (form.name = value)"
 					/>
 				</div>
 				<div class="col-12 col-md-6">
@@ -44,20 +35,6 @@
 						:error="form.errors.get('category_id')"
 						@change-value="(value) => (form.category_id = value)"
 					/>
-				</div>
-				<div class="col-12 col-md-6">
-					<label for="input" class="text-primary text-bold w-100">Tags</label>
-					<Chips
-						ref="tags"
-						v-model="form.tags"
-						class="w-100"
-						:allowDuplicate="false"
-						:placeholder="'Tags'"
-						:disabled="disabled"
-					/>
-					<div v-if="form.errors.get('tags')" class="text-danger">
-						{{ form.errors.get("tags") }}
-					</div>
 				</div>
 			</div>
 		</form>
@@ -73,7 +50,6 @@
 <script>
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
-import Chips from "primevue/chips";
 import Form from "vform";
 import { mapActions, mapMutations, mapState } from "vuex";
 
@@ -81,7 +57,6 @@ export default {
 	components: {
 		Dialog,
 		Button,
-		Chips,
 	},
 	props: {
 		route: {
@@ -95,8 +70,8 @@ export default {
 	},
 	data: () => ({
 		form: new Form(),
-		modelName: "enlace",
-		title: `Añadir enlace`,
+		modelName: "categoría",
+		title: `Añadir categoría`,
 		disabled: false,
 		tags: [],
 	}),
@@ -104,8 +79,8 @@ export default {
 		...mapActions(["sendForm", "getRegisters"]),
 		...mapMutations(["toggleFormDialog", "changeCurrentRegister"]),
 		save() {
-			const update = this.links.register != null;
-			const url = `/links${update ? `/${this.links.register.id}` : ""}`;
+			const update = this.categories.register != null;
+			const url = `/categories${update ? `/${this.categories.register.id}` : ""}`;
 
 			this.sendForm({
 				method: update ? "put" : "post",
@@ -122,8 +97,8 @@ export default {
 					this.getRegisters({
 						route: this.route,
 						stateVariable: this.stateVariable,
-						page: this.links.currentPage,
-						rows: this.links.rows,
+						page: this.categories.currentPage,
+						rows: this.categories.rows,
 					});
 				}
 			});
@@ -157,7 +132,7 @@ export default {
 				showLoading: false,
 			});
 
-			const register = this.links.register;
+			const register = this.categories.register;
 
 			if (register != null) {
 				for (const key in register) {
@@ -170,7 +145,7 @@ export default {
 					this.form.tags = JSON.parse(register.tags);
 				}
 
-				if (this.links.dialogMode == "edit") {
+				if (this.categories.dialogMode == "edit") {
 					this.title = `Editar ${this.modelName}`;
 					this.disabled = false;
 				} else {
@@ -181,7 +156,7 @@ export default {
 		},
 	},
 	computed: {
-		...mapState(["dialogDefaults", "links", "categories"]),
+		...mapState(["dialogDefaults", "categories", "categories"]),
 	},
 };
 </script>
