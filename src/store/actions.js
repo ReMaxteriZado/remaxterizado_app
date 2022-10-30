@@ -8,13 +8,10 @@ const actions = {
 		try {
 			const response = await form.post(state.baseURL + "/login");
 
-			localStorage.removeItem("isBlocked");
 			localStorage.setItem("accessToken", response.data.token);
-			console.log("🚀 ~ file: actions.js ~ line 13 ~ login ~ response.data", response.data)
-			localStorage.setItem("userPermissions", JSON.stringify(response.data.userPermissions));
 			localStorage.setItem("userLogged", JSON.stringify(response.data.user));
 
-			window.location.href = "/dashboard";
+			window.location.href = "/admin/dashboard";
 		} catch (error) {
 			if (error.response?.data?.message) {
 				errors.set("email", error.response.data.message);
@@ -30,12 +27,10 @@ const actions = {
 
 		Form.axios = instance;
 	},
-	logout(params) {
-		if (params?.isBlocked) {
-			localStorage.setItem("isBlocked", true);
-		}
-
+	logout() {
 		localStorage.removeItem("accessToken");
+		localStorage.removeItem("userLogged");
+
 		window.location.href = "/login";
 	},
 	copyToClipboard({ state }, data) {

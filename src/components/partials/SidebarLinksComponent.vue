@@ -67,23 +67,23 @@ export default {
 			items: [
 				{
 					label: "Dashboard",
-					href: "/dashboard",
+					href: "/admin/dashboard",
 				},
 				{
 					label: "Categorías",
-					href: "/categories",
+					href: "/admin/categories",
 				},
 				{
 					label: "Enlaces",
-					href: "/links",
+					href: "/admin/links",
 				},
 				{
 					label: "Códigos",
-					href: "/codes",
+					href: "/admin/codes",
 				},
 				{
 					label: "Demo",
-					href: "/demo",
+					href: "/admin/demo",
 				},
 			],
 		};
