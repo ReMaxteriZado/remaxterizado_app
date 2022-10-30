@@ -1,14 +1,12 @@
 <template>
 	<div class="card">
 		<TableDefault
+			:route="route"
+			:stateVariable="stateVariable"
 			:list="codes.list"
 			:total="codes.listTotal"
 			:filters="filters"
 			:delete="'codes'"
-			@getList="getList"
-			@addRegister="addRegister"
-			@showRegister="showRegister"
-			@changeCurrentPage="getList"
 		>
 			<template #columns>
 				<Column header="Enlace">
@@ -36,7 +34,7 @@
 
 <script>
 import Column from "primevue/column";
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState } from "vuex";
 
 export default {
 	components: {
@@ -83,58 +81,10 @@ export default {
 			],
 		};
 	},
-	methods: {
-		...mapActions(["getRegisters"]),
-		...mapMutations([
-			"changeCurrentTablePage",
-			"toggleFormDialog",
-			"changeFormDialogMode",
-			"changeCurrentRegister",
-		]),
-		addRegister() {
-			this.toggleFormDialog({
-				stateVariable: this.stateVariable,
-				show: true,
-			});
-		},
-		showRegister(register, dialogMode) {
-			this.changeCurrentRegister({
-				stateVariable: this.stateVariable,
-				register,
-			});
-
-			this.changeFormDialogMode({
-				stateVariable: this.stateVariable,
-				dialogMode,
-			});
-
-			this.toggleFormDialog({
-				stateVariable: this.stateVariable,
-				show: true,
-			});
-		},
-		getList(event = null) {
-			if (event != null) {
-				this.changeCurrentTablePage({
-					stateVariable: this.stateVariable,
-					event,
-				});
-			}
-
-			this.getRegisters({
-				route: this.route,
-				stateVariable: this.stateVariable,
-				page: event?.page,
-				rows: event?.rows,
-			});
-		},
-	},
 	computed: {
 		...mapState(["codes", "codeLanguages"]),
 	},
 	mounted() {
-		this.getList();
-
 		this.filters[3].options = this.codeLanguages;
 	},
 };

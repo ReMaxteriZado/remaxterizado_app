@@ -3,7 +3,7 @@
 		class="logo d-flex align-items-center justify-content-center bg-white p-3"
 	>
 		<router-link
-			to="/dashboard"
+			to="/admin/dashboard"
 			class="d-flex justify-content-center align-items-center"
 		>
 			<img src="@/assets/images/logotipo.jpeg" />

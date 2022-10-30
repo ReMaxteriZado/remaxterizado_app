@@ -19,7 +19,7 @@
 			<TopBar />
 		</div>
 
-		<div class="content-section px-2 px-md-4">
+		<div class="content-section px-2 px-md-4 pb-2 pb-md-4">
 			<router-view v-slot="{ Component }">
 				<transition name="slide" mode="out-in">
 					<component :is="Component" :key="$route.path" />
@@ -95,7 +95,7 @@ export default {
 	mounted() {
 		let vh = window.innerHeight * 0.01;
 		document.documentElement.style.setProperty("--vh", `${vh}px`);
-		
+
 		this.changeUserLogged(JSON.parse(localStorage.getItem("userLogged")));
 		this.setFormAccessToken();
 		document.addEventListener("storage", this.storageListener());
@@ -170,6 +170,7 @@ export default {
 		"sidebar-section content-section"
 		"logout-section content-section";
 	background-color: rgb(245, 245, 245);
+	overflow: hidden;
 
 	.top-bar-section {
 		grid-area: top-bar-section;
@@ -188,7 +189,7 @@ export default {
 	.content-section {
 		grid-area: content-section;
 		z-index: 50;
-		overflow: auto;
+		overflow-y: auto;
 		overflow-x: hidden;
 	}
 

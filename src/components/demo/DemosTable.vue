@@ -1,6 +1,8 @@
 <template>
 	<div class="card">
 		<TableDefault
+			:route="route"
+			:stateVariable="stateVariable"
 			:list="links.list"
 			:total="links.listTotal"
 			:filters="filters"

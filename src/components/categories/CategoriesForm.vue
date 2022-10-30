@@ -26,14 +26,14 @@
 				</div>
 				<div class="col-12 col-md-6">
 					<DropDown
-						ref="category_id"
+						ref="parent_id"
 						label="Categoría"
 						:options="categories.list"
 						:displayText="['parent.name', 'name']"
 						:displayTextSeparator="' > '"
 						:disabled="disabled"
-						:error="form.errors.get('category_id')"
-						@change-value="(value) => (form.category_id = value)"
+						:error="form.errors.get('parent_id')"
+						@change-value="(value) => (form.parent_id = value)"
 					/>
 				</div>
 			</div>
@@ -76,11 +76,13 @@ export default {
 		tags: [],
 	}),
 	methods: {
-		...mapActions(["sendForm", "getRegisters"]),
+		...mapActions(["getCategories", "sendForm", "getRegisters"]),
 		...mapMutations(["toggleFormDialog", "changeCurrentRegister"]),
 		save() {
 			const update = this.categories.register != null;
-			const url = `/categories${update ? `/${this.categories.register.id}` : ""}`;
+			const url = `/categories${
+				update ? `/${this.categories.register.id}` : ""
+			}`;
 
 			this.sendForm({
 				method: update ? "put" : "post",
@@ -94,12 +96,7 @@ export default {
 						value: false,
 					});
 
-					this.getRegisters({
-						route: this.route,
-						stateVariable: this.stateVariable,
-						page: this.categories.currentPage,
-						rows: this.categories.rows,
-					});
+					this.getCategories();
 				}
 			});
 		},
@@ -132,7 +129,7 @@ export default {
 				showLoading: false,
 			});
 
-			const register = this.categories.register;
+			const register = this.categories.register?.category;
 
 			if (register != null) {
 				for (const key in register) {
@@ -141,8 +138,6 @@ export default {
 							this.$refs[key].model = register[key];
 						}
 					}
-
-					this.form.tags = JSON.parse(register.tags);
 				}
 
 				if (this.categories.dialogMode == "edit") {
@@ -156,7 +151,7 @@ export default {
 		},
 	},
 	computed: {
-		...mapState(["dialogDefaults", "categories", "categories"]),
+		...mapState(["dialogDefaults", "categories"]),
 	},
 };
 </script>

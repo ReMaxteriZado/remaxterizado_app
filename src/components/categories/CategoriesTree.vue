@@ -5,7 +5,7 @@
 				v-if="category_selected != null"
 				:label="`Editar la categoría '${category_selected.label}'`"
 				icon="pi pi-pencil"
-				@click="edit()"
+				@click="edit(category_selected)"
 			/>
 			<Button
 				v-if="category_selected != null"
@@ -29,6 +29,16 @@ export default {
 		PanelMenu,
 		Button,
 	},
+	props: {
+		route: {
+			type: String,
+			required: true,
+		},
+		stateVariable: {
+			type: String,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			items: [],
@@ -39,13 +49,29 @@ export default {
 	methods: {
 		...mapActions(["getCategories", "deleteRegisters"]),
 		...mapMutations([
-			"toggleNewItemSidebar",
-			"changeFormComponent",
-			"changeEditModel",
+			"changeCurrentRegister",
+			"changeFormDialogMode",
+			"toggleFormDialog",
 		]),
 		addLink() {
 			this.changeFormComponent("NewLinkComponent");
 			this.toggleNewItemSidebar(true);
+		},
+		edit(register) {
+			this.changeCurrentRegister({
+				stateVariable: this.stateVariable,
+				register,
+			});
+
+			this.changeFormDialogMode({
+				stateVariable: this.stateVariable,
+				dialogMode: "edit",
+			});
+
+			this.toggleFormDialog({
+				stateVariable: this.stateVariable,
+				show: true,
+			});
 		},
 		deleteCategory(id) {
 			this.$confirm.require({
@@ -163,11 +189,6 @@ export default {
 			});
 
 			return links;
-		},
-		edit() {
-			this.changeEditModel(this.category_selected);
-			this.changeFormComponent("NewCategoryComponent");
-			this.toggleNewItemSidebar(true);
 		},
 	},
 	computed: {

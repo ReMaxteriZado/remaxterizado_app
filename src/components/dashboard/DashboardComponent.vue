@@ -1,38 +1,39 @@
 <template>
 	<div>
-		<FormTitle :title="'Welcome ' + userLogged?.name" />
-
-		<div class="row">
-			<div class="col-12 col-md-6 col-lg-3 h-auto">
-				<TotalRegisters class="h-100" />
+		<div class="row gy-4">
+			<div class="col-12 col-md-6 col-lg-3">
+				<TotalRegisters />
 			</div>
-			<div class="col-12 col-md-6 h-auto">
-				<MaxCategories class="h-100" />
+			<div class="col-12 col-md-6">
+				<MaxCategories />
 			</div>
-			<!-- <div class="col-12 mt-4">
-                <LinksTable />
-            </div> -->
+			<div class="col-12">
+				<Card>
+					<template #content>
+						<FormTitle :title="'Tareas'" />
+						<Listbox :options="tasks" class="mt-2" />
+					</template>
+				</Card>
+			</div>
 		</div>
-
-		<Listbox :options="tasks" />
 	</div>
 </template>
 
 <script>
+import Card from "primevue/card";
 import Listbox from "primevue/listbox";
 
 import TotalRegisters from "@/components/dashboard/TotalRegistersComponent.vue";
 import MaxCategories from "@/components/dashboard/MaxCategoriesComponent.vue";
-// import LinksTable from "@/components/links/LinksTableComponent.vue";
 
 import { mapState } from "vuex";
 
 export default {
 	components: {
+		Card,
 		Listbox,
 		TotalRegisters,
 		MaxCategories,
-		// LinksTable,
 	},
 	data() {
 		return {
@@ -59,3 +60,11 @@ export default {
 };
 </script>
 
+
+<style lang="scss" scoped>
+:deep(.p-listbox) {
+	.p-listbox-list {
+		padding: 0;
+	}
+}
+</style>
