@@ -1,6 +1,6 @@
 <template>
     <Card>
-        <template #title> Categories with more links </template>
+        <template #title> Categorías con más enlaces </template>
         <template #content>
             <Chart type="bar" :data="basicData" :options="basicOptions" />
         </template>
@@ -49,7 +49,7 @@ export default {
         this.getStats().then((response) => {
             let values = [];
 
-            response.data.categories_more_links.forEach((category) => {
+            response.data.categoriesMoreLinks.forEach((category) => {
                 values.push(category.links_count);
                 this.basicData.labels.push(category.name);
             });
