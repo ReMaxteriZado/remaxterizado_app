@@ -67,13 +67,7 @@ export default {
 		return {};
 	},
 	computed: {
-		...mapState([
-			"showNotLoggedToast",
-			"errorToast",
-			"successToast",
-			"warningToast",
-			"showSidebar",
-		]),
+		...mapState(["errorToast", "successToast", "warningToast", "showSidebar"]),
 	},
 	methods: {
 		...mapActions(["setFormAccessToken"]),
@@ -84,33 +78,15 @@ export default {
 			"toggleSidebar",
 			"changeUserLogged",
 		]),
-		storageListener() {
-			const interval = setInterval(() => {
-				if (localStorage.getItem("userPermissions") != null) {
-					clearInterval(interval);
-				}
-			}, 50);
-		},
 	},
 	mounted() {
-		let vh = window.innerHeight * 0.01;
+		const vh = window.innerHeight * 0.01;
 		document.documentElement.style.setProperty("--vh", `${vh}px`);
 
 		this.changeUserLogged(JSON.parse(localStorage.getItem("userLogged")));
 		this.setFormAccessToken();
-		document.addEventListener("storage", this.storageListener());
 	},
 	watch: {
-		showNotLoggedToast(value) {
-			if (value) {
-				this.$toast.add({
-					severity: "error",
-					summary: "No has iniciado sesión",
-					detail: "Por favor incia sesión para continuar",
-					life: 3000,
-				});
-			}
-		},
 		successToast() {
 			if (this.successToast != null) {
 				this.$toast.add({

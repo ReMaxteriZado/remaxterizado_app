@@ -7,6 +7,17 @@ const mutations = {
 		state.showSidebar = n;
 	},
 
+	// Toasts
+	changeSuccessToast(state, n) {
+		state.successToast = n;
+	},
+	changeErrorToast(state, n) {
+		state.errorToast = n;
+	},
+	changeWarningToast(state, n) {
+		state.warningToast = n;
+	},
+
 	// Defaults
 	changeCurrentTablePage(state, n) {
 		state[n.stateVariable].currentPage = n.event.page;

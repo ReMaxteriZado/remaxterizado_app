@@ -71,16 +71,12 @@
 </template>
 
 <script>
-import Dialog from "primevue/dialog";
-import Button from "primevue/button";
 import Chips from "primevue/chips";
 import Form from "vform";
 import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
 	components: {
-		Dialog,
-		Button,
 		Chips,
 	},
 	props: {

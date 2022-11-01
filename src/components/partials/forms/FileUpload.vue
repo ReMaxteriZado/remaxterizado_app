@@ -76,13 +76,11 @@
 
 <script>
 import FileUpload from "primevue/fileupload";
-import Button from "primevue/button";
 
 import { mapActions } from "vuex";
 
 export default {
 	components: {
-		Button,
 		FileUpload,
 	},
 	data: () => ({

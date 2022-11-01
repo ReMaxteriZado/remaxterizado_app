@@ -4,6 +4,7 @@ import http from "../axios";
 import { func } from "../helpers";
 
 const actions = {
+	// Auth actions
 	async login({ state }, { form, errors }) {
 		try {
 			const response = await form.post(state.baseURL + "/login");
@@ -33,6 +34,8 @@ const actions = {
 
 		window.location.href = "/login";
 	},
+
+	// Helper actions
 	copyToClipboard({ state }, data) {
 		try {
 			navigator.clipboard.writeText(data);
@@ -41,8 +44,6 @@ const actions = {
 			state.errorToast = "Error al copiar al portapapeles";
 		}
 	},
-
-	// Download file
 	async downloadFile({ state }, params) {
 		try {
 			const response = await http({
@@ -99,7 +100,7 @@ const actions = {
 		}
 	},
 
-	// Form functions
+	// Registers functions
 	async sendForm({ state }, { method = "post", form, url, errors }) {
 		try {
 			let response;
@@ -112,6 +113,7 @@ const actions = {
 				response = await form.put(state.baseURL + url);
 			}
 
+			state.successToast = "Registro guardado correctamente";
 			state.loading = false;
 			return response;
 		} catch (error) {
@@ -128,8 +130,6 @@ const actions = {
 			return error.response;
 		}
 	},
-
-	// Delete function
 	async deleteRegisters({ state }, { url, ids = null }) {
 		try {
 			state.loading = true;
@@ -148,7 +148,34 @@ const actions = {
 		} catch (error) {
 			console.error(error);
 
-			state.loading = false;
+			return error;
+		}
+	},
+	async getRegisters({ state }, params) {
+		try {
+			if (params.showLoading == null || params.showLoading == undefined || params.showLoading) {
+				state.datatableDefaults.loading = true;
+			}
+
+			let formProps = func.formatFilters("filters");
+
+			const response = await http({
+				url: params.route,
+				params: {
+					getAll: params.getAll != undefined ? params.getAll : false,
+					...formProps,
+					pagination: {
+						currentPage: params?.page != null ? params.page : 0,
+						rows: params?.rows != null ? params.rows : state.datatableDefaults.rows,
+					},
+				},
+			});
+
+			state.datatableDefaults.loading = false;
+			state[params.stateVariable].list = response.data[params.stateVariable];
+			state[params.stateVariable].listTotal = response.data.total;
+		} catch (error) {
+			console.error(error);
 			state.showFormGeneralErrorToast = true;
 
 			return error;
@@ -156,7 +183,7 @@ const actions = {
 	},
 
 	// Dashboard
-	async getStats({ state }) {
+	async getStats() {
 		try {
 			const response = await http({
 				url: "/stats",
@@ -165,7 +192,6 @@ const actions = {
 			return response;
 		} catch (error) {
 			console.error(error);
-			state.showFormGeneralErrorToast = true;
 
 			return error;
 		}
@@ -198,7 +224,6 @@ const actions = {
 			return response;
 		} catch (error) {
 			console.error(error);
-			state.showFormGeneralErrorToast = true;
 
 			return error;
 		}
@@ -217,7 +242,7 @@ const actions = {
 	},
 
 	// Links
-	async incrementViews({ state }, params) {
+	async incrementViews(context, params) {
 		try {
 			const response = await http({
 				method: "post",
@@ -227,60 +252,6 @@ const actions = {
 			return response;
 		} catch (error) {
 			console.error(error);
-			state.showFormGeneralErrorToast = true;
-
-			return error;
-		}
-	},
-
-	// Codes
-	async getCodes({ state }, search) {
-		try {
-			const response = await http({
-				url: "/codes",
-				params: {
-					search,
-				},
-			});
-
-			state.codes = response.data;
-
-			return response;
-		} catch (error) {
-			console.error(error);
-			state.showFormGeneralErrorToast = true;
-
-			return error;
-		}
-	},
-
-	// Get registers
-	async getRegisters({ state }, params) {
-		try {
-			if (params.showLoading == null || params.showLoading == undefined || params.showLoading) {
-				state.datatableDefaults.loading = true;
-			}
-
-			let formProps = func.formatFilters("filters");
-
-			const response = await http({
-				url: params.route,
-				params: {
-					getAll: params.getAll != undefined ? params.getAll : false,
-					...formProps,
-					pagination: {
-						currentPage: params?.page != null ? params.page : 0,
-						rows: params?.rows != null ? params.rows : state.datatableDefaults.rows,
-					},
-				},
-			});
-
-			state.datatableDefaults.loading = false;
-			state[params.stateVariable].list = response.data[params.stateVariable];
-			state[params.stateVariable].listTotal = response.data.total;
-		} catch (error) {
-			console.error(error);
-			state.showFormGeneralErrorToast = true;
 
 			return error;
 		}

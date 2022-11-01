@@ -96,7 +96,6 @@
 <script>
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import Button from "primevue/button";
 
 import LoadingTable from "@/components/partials/LoadingTableComponent.vue";
 import TableFilters from "@/components/partials/TableFilters.vue";
@@ -108,7 +107,6 @@ export default {
 		TableFilters,
 		DataTable,
 		Column,
-		Button,
 		LoadingTable,
 	},
 	props: {
@@ -256,6 +254,8 @@ export default {
 				clearTimeout(this.timeout);
 
 				this.timeout = setTimeout(() => {
+					this.getList();
+					
 					this.$emit("getList");
 				}, 250);
 			},

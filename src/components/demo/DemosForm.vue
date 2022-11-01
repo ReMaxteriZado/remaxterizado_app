@@ -189,7 +189,6 @@
 </template>
 
 <script>
-import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import Form from "vform";
 import { mapActions, mapMutations, mapState } from "vuex";
@@ -199,7 +198,6 @@ import SubForm from "./SubForm.vue";
 export default {
 	components: {
 		Dialog,
-		Button,
 		SubForm,
 	},
 	props: {

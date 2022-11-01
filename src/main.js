@@ -47,6 +47,7 @@ import Tooltip from "primevue/tooltip";
 import Ripple from "primevue/ripple";
 import Button from "primevue/button";
 import Badge from 'primevue/badge';
+import Dialog from "primevue/dialog";
 
 // Fonts
 require("@/assets/fonts/Work_Sans/Work_Sans.css");
@@ -148,6 +149,7 @@ app.component("SelectButton", SelectButton);
 app.component("FileUpload", FileUpload);
 app.component("Button", Button);
 app.component("Badge", Badge);
+app.component("Dialog", Dialog);
 
 app.config.globalProperties.$http = http;
 app.config.globalProperties.$store = store;

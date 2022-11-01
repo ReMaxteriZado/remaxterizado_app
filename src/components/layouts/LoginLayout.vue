@@ -46,14 +46,10 @@
 </template>
 
 <script>
-import Button from "primevue/button";
 import Form from "vform";
 import { mapActions } from "vuex";
 
 export default {
-	components: {
-		Button,
-	},
 	data: () => ({
 		form: new Form({
 			email: null,

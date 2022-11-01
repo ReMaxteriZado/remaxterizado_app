@@ -20,14 +20,12 @@
 
 <script>
 import PanelMenu from "primevue/panelmenu";
-import Button from "primevue/button";
 
 import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
 	components: {
 		PanelMenu,
-		Button,
 	},
 	props: {
 		route: {
@@ -53,10 +51,6 @@ export default {
 			"changeFormDialogMode",
 			"toggleFormDialog",
 		]),
-		addLink() {
-			this.changeFormComponent("NewLinkComponent");
-			this.toggleNewItemSidebar(true);
-		},
 		edit(register) {
 			this.changeCurrentRegister({
 				stateVariable: this.stateVariable,
@@ -208,3 +202,11 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+:deep(.p-panelmenu) {
+	box-shadow: $smooth-box-shadow;
+	border-radius: $border-radius;
+	overflow: hidden;
+}
+</style>

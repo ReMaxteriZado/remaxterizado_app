@@ -49,14 +49,13 @@
 
 <script>
 import Dialog from "primevue/dialog";
-import Button from "primevue/button";
+
 import Form from "vform";
 import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
 	components: {
 		Dialog,
-		Button,
 	},
 	props: {
 		route: {

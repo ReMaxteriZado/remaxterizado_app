@@ -6,7 +6,6 @@
 		:total="links.listTotal"
 		:filters="filters"
 		:delete="'links'"
-		@showRegister="showRegister"
 	>
 		<template #columns>
 			<Column header="Título" field="title"></Column>
@@ -20,7 +19,12 @@
 			>
 			<Column header="Enlace">
 				<template #body="slotProps">
-					<a :href="slotProps.data.link" target="_blank">Enlace</a>
+					<a
+						:href="slotProps.data.link"
+						target="_blank"
+						@click="incrementViews({ id: slotProps.data.id })"
+						>Enlace</a
+					>
 				</template></Column
 			>
 			<Column header="Visto" field="views"></Column>
@@ -78,11 +82,6 @@ export default {
 	},
 	methods: {
 		...mapActions(["incrementViews"]),
-		showRegister(register) {
-			this.incrementViews({
-				id: register.id,
-			});
-		},
 	},
 	computed: {
 		...mapState(["links"]),

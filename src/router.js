@@ -19,7 +19,8 @@ const routes = [
 	{
 		path: "/login",
 		component: LoginLayout,
-		beforeEnter: checkUserLogged,
+		beforeEnter: checkLogin,
+		name: "login",
 	},
 	{
 		path: "/admin",
@@ -59,8 +60,24 @@ const routes = [
 	},
 ];
 
+function checkLogin(to, from, next) {
+	if (localStorage.getItem("userLogged") != null) {
+		next({ path: "/admin/dashboard" });
+	} else {
+		next();
+	}
+
+	return;
+}
+
 function checkUserLogged(to, from, next) {
 	axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+
+	if (localStorage.getItem("userLogged") == null) {
+		next({ path: "/login" });
+
+		return;
+	}
 
 	axios
 		.post("/check-user-logged")
@@ -83,13 +100,12 @@ function checkUserLogged(to, from, next) {
 			if (error.response.data.message == "User not found"
 				|| error.response.data.message == "Unauthorized"
 				|| error.response.data.message == "Unauthenticated.") {
-				if (to.path !== "/login") {
-					next("/login");
-				} else {
-					next();
-				}
+				window.localStorage.clear();
+				next({ path: "/login" });
 			}
 		});
+
+	return;
 }
 
 const router = new createRouter({

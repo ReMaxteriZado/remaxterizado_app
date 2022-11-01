@@ -1,16 +1,10 @@
 const defaults = ["links", "codes", "categories"];
 
 const state = {
-	// baseURL: "http://remaxterizado_api.test/api",
-	baseURL: "https://api.remaxterizado.es/api",
-	// loading: false,
+	baseURL: "http://remaxterizado_api.test/api",
+	// baseURL: "https://api.remaxterizado.es/api",
 	showSidebar: false,
-	showNotLoggedToast: false,
 	userLogged: null,
-
-	// Forms
-	showFormGeneralErrorToast: false,
-	formComponent: "",
 
 	// Datatable defaults
 	datatableDefaults: {

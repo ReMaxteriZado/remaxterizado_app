@@ -5,7 +5,7 @@
 <script>
 export default {
 	beforeCreate() {
-		window.location.href = "/login";
+		this.$router.push({ path: "/login" });
 	},
 };
 </script>
