@@ -222,7 +222,7 @@ export default {
 		...mapMutations(["toggleFormDialog", "changeCurrentRegister"]),
 		save() {
 			const update = this.links.register != null;
-			const url = `/links${update ? `/${this.links.register.id}` : ""}`;
+			const url = `/${this.route}${update ? `/${this.links.register.id}` : ""}`;
 
 			this.form.new_form = [];
 

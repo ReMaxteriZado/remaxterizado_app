@@ -15,6 +15,10 @@ import LinksComponent from "@/components/links/LinksComponent.vue";
 import CodesComponent from "@/components/codes/CodesComponent.vue";
 import DemoComponent from "@/components/demo/DemosComponent.vue";
 
+// Sergio
+import SergioCategoriesComponent from "@/components/sergio/categories/CategoriesComponent.vue";
+
+
 const routes = [
 	{
 		path: "/login",
@@ -46,6 +50,11 @@ const routes = [
 				path: "codes",
 				name: "Códigos",
 				component: CodesComponent,
+			},
+			{
+				path: "sergio-categories",
+				name: "Sergio - Categorías",
+				component: SergioCategoriesComponent,
 			},
 			{
 				path: "demo",

@@ -10,7 +10,7 @@
 	overflow: hidden;
 	box-shadow: $smooth-box-shadow;
 
-	&.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+	&.p-datatable-striped .p-datatable-tbody>tr:nth-child(even) {
 		background-color: rgba($primary, 0.05);
 
 		&:hover {
@@ -18,7 +18,7 @@
 		}
 	}
 
-	.p-datatable-tbody > tr.p-highlight {
+	.p-datatable-tbody>tr.p-highlight {
 		background-color: rgba($primary, 0.2) !important;
 	}
 
@@ -47,6 +47,8 @@
 	.p-paginator {
 		border: none;
 		background-color: #f8f9fa;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
 
 		.p-paginator-pages {
 			.p-paginator-page {

@@ -85,6 +85,10 @@ export default {
 					label: "Demo",
 					href: "/admin/demo",
 				},
+				{
+					label: "Sergio - Categorías",
+					href: "/admin/sergio-categories",
+				},
 			],
 		};
 	},
