@@ -17,6 +17,7 @@ import DemoComponent from "@/components/demo/DemosComponent.vue";
 
 // Sergio
 import SergioCategoriesComponent from "@/components/sergio/categories/CategoriesComponent.vue";
+import SergioSubCategoriesComponent from "@/components/sergio/subcategories/SubCategoriesComponent.vue";
 
 
 const routes = [
@@ -55,6 +56,11 @@ const routes = [
 				path: "sergio-categories",
 				name: "Sergio - Categorías",
 				component: SergioCategoriesComponent,
+			},
+			{
+				path: "sergio-subcategories",
+				name: "Sergio - Subcategorías",
+				component: SergioSubCategoriesComponent,
 			},
 			{
 				path: "demo",

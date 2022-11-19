@@ -1,6 +1,6 @@
 <template>
 	<Dialog
-		v-model:visible="$store.state.categories.dialog"
+		v-model:visible="$store.state.sergioSubCategories.dialog"
 		:breakpoints="{ '960px': '75vw', '640px': '90vw' }"
 		:style="{ width: '30vw' }"
 		:modal="dialogDefaults.modal"
@@ -15,6 +15,27 @@
 
 		<form @keydown="$event.key === 'Enter' ? save() : null">
 			<div class="row gy-3">
+				<div class="col-12">
+					<FileUpload
+						label="Imagen"
+						ref="FileUpload"
+						:error="form.errors.get('image')"
+						:disabled="disabled"
+						:accept="'image/*'"
+					/>
+				</div>
+				<div class="col-12 col-md-6">
+					<DropDown
+						ref="category_id"
+						label="Categoría"
+						:options="sergioCategories.list"
+						optionLabel="name"
+						:displayText="'name'"
+						:disabled="disabled"
+						:error="form.errors.get('category_id')"
+						@change-value="(value) => (form.category_id = value)"
+					/>
+				</div>
 				<div class="col-12 col-md-6">
 					<InputText
 						ref="name"
@@ -22,18 +43,6 @@
 						:disabled="disabled"
 						:error="form.errors.get('name')"
 						@change-value="(value) => (form.name = value)"
-					/>
-				</div>
-				<div class="col-12 col-md-6">
-					<DropDown
-						ref="parent_id"
-						label="Categoría"
-						:options="categories.list"
-						:displayText="['parent.name', 'name']"
-						:displayTextSeparator="' > '"
-						:disabled="disabled"
-						:error="form.errors.get('parent_id')"
-						@change-value="(value) => (form.parent_id = value)"
 					/>
 				</div>
 			</div>
@@ -48,15 +57,10 @@
 </template>
 
 <script>
-import Dialog from "primevue/dialog";
-
 import Form from "vform";
 import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
-	components: {
-		Dialog,
-	},
 	props: {
 		route: {
 			type: String,
@@ -70,18 +74,20 @@ export default {
 	data: () => ({
 		form: new Form(),
 		modelName: "categoría",
-		title: `Añadir categoría`,
+		title: `Añadir subcategoría`,
 		disabled: false,
 		tags: [],
 	}),
 	methods: {
-		...mapActions(["getCategories", "sendForm", "getRegisters"]),
+		...mapActions(["sendForm", "getRegisters"]),
 		...mapMutations(["toggleFormDialog", "changeCurrentRegister"]),
 		save() {
-			const update = this.categories.register != null;
-			const url = `/categories${
-				update ? `/${this.categories.register.id}` : ""
+			const update = this.sergioSubCategories.register != null;
+			const url = `/${this.route}${
+				update ? `/${this.sergioSubCategories.register.id}` : ""
 			}`;
+
+			this.form.image = this.$refs.FileUpload.files;
 
 			this.sendForm({
 				method: update ? "put" : "post",
@@ -95,7 +101,12 @@ export default {
 						value: false,
 					});
 
-					this.getCategories();
+					this.getRegisters({
+						route: this.route,
+						stateVariable: this.stateVariable,
+						page: this.sergioSubCategories.currentPage,
+						rows: this.sergioSubCategories.rows,
+					});
 				}
 			});
 		},
@@ -122,13 +133,13 @@ export default {
 			this.clearForm();
 
 			this.getRegisters({
-				route: "/categories",
-				stateVariable: "categories",
+				route: "/sergio-categories",
+				stateVariable: "sergioCategories",
 				getAll: true,
 				showLoading: false,
 			});
 
-			const register = this.categories.register?.category;
+			const register = this.sergioSubCategories.register;
 
 			if (register != null) {
 				for (const key in register) {
@@ -139,7 +150,7 @@ export default {
 					}
 				}
 
-				if (this.categories.dialogMode == "edit") {
+				if (this.sergioSubCategories.dialogMode == "edit") {
 					this.title = `Editar ${this.modelName}`;
 					this.disabled = false;
 				} else {
@@ -150,7 +161,7 @@ export default {
 		},
 	},
 	computed: {
-		...mapState(["dialogDefaults", "categories"]),
+		...mapState(["dialogDefaults", "sergioSubCategories", "sergioCategories"]),
 	},
 };
 </script>

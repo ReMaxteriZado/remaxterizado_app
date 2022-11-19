@@ -13,7 +13,7 @@
 			<FormTitle :title="title" />
 		</template>
 
-		<form>
+		<form @keydown="$event.key === 'Enter' ? save() : null">
 			<div class="row gy-3">
 				<div class="col-12 col-md-6">
 					<InputText

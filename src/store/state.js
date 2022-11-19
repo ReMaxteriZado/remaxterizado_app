@@ -1,4 +1,4 @@
-const defaults = ["links", "codes", "categories", "sergioCategories", "sergioSubcategories", "sergioBooks", "sergioBooksPages"];
+const defaults = ["links", "codes", "categories", "sergioCategories", "sergioSubCategories", "sergioBooks", "sergioBooksPages"];
 
 const state = {
 	baseURL: "http://remaxterizado_api.test/api",

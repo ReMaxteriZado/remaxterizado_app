@@ -13,7 +13,7 @@
 			<FormTitle :title="title" />
 		</template>
 
-		<form>
+		<form @keydown="$event.key === 'Enter' ? save() : null">
 			<div class="row gy-3">
 				<div class="col-12">
 					<FileUpload
@@ -142,7 +142,7 @@ export default {
 		},
 	},
 	computed: {
-		...mapState(["dialogDefaults", "sergioCategories", "categories"]),
+		...mapState(["dialogDefaults", "sergioCategories"]),
 	},
 };
 </script>

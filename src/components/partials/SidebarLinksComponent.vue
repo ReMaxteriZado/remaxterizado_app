@@ -89,6 +89,10 @@ export default {
 					label: "Sergio - Categorías",
 					href: "/admin/sergio-categories",
 				},
+				{
+					label: "Sergio - Subcategorías",
+					href: "/admin/sergio-subcategories",
+				},
 			],
 		};
 	},
