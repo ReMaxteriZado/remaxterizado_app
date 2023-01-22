@@ -15,13 +15,11 @@
 			class="p-button-rounded bg-primary d-md-none"
 		/>
 		<div class="today d-none d-md-block">
-			<span class="text-muted">Hoy&nbsp;</span
-			><span class="text-primary text-bold">{{ currentDate }}</span>
+			<span class="text-primary text-bold">{{ currentDate }}</span>
 		</div>
 		<div v-if="userLogged != null" class="vertical-line d-none d-md-block"></div>
 		<div v-if="userLogged != null" class="name d-flex align-items-center">
-			<span class="text-muted">Hola,&nbsp;</span
-			><span class="text-primary text-bold"
+			<span class="text-primary text-bold"
 				><b>{{ userLogged.name }}</b></span
 			>
 			<Avatar :label="firstLetter" class="ms-2 d-none d-md-flex" />

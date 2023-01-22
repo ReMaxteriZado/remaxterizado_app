@@ -4,258 +4,266 @@ import http from "../axios";
 import { func } from "../helpers";
 
 const actions = {
-	// Auth actions
-	async login({ state }, { form, errors }) {
-		try {
-			const response = await form.post(state.baseURL + "/login");
+  // Auth actions
+  async login({ state }, { form, errors }) {
+    try {
+      const response = await form.post(state.baseURL + "/login");
 
-			localStorage.setItem("accessToken", response.data.token);
-			localStorage.setItem("userLogged", JSON.stringify(response.data.user));
+      localStorage.setItem("accessToken", response.data.token);
+      localStorage.setItem("userLogged", JSON.stringify(response.data.user));
 
-			window.location.href = "/admin/dashboard";
-		} catch (error) {
-			if (error.response?.data?.message) {
-				errors.set("email", error.response.data.message);
-			}
-		}
-	},
-	setFormAccessToken() {
-		const instance = http.create({
-			headers: {
-				Authorization: "Bearer " + localStorage.getItem("accessToken"),
-			},
-		});
+      window.location.href = "/admin/dashboard";
+    } catch (error) {
+      if (error.response?.data?.message) {
+        errors.set("email", error.response.data.message);
+      }
+    }
+  },
+  setFormAccessToken() {
+    const instance = http.create({
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    });
 
-		Form.axios = instance;
-	},
-	logout() {
-		localStorage.removeItem("accessToken");
-		localStorage.removeItem("userLogged");
+    Form.axios = instance;
+  },
+  logout() {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userLogged");
 
-		window.location.href = "/login";
-	},
+    window.location.href = "/login";
+  },
 
-	// Helper actions
-	copyToClipboard({ state }, data) {
-		try {
-			navigator.clipboard.writeText(data);
-			state.successToast = "Texto copiado al portapapeles";
-		} catch (error) {
-			state.errorToast = "Error al copiar al portapapeles";
-		}
-	},
-	async downloadFile({ state }, params) {
-		try {
-			const response = await http({
-				method: "post",
-				url: params.downloadRoute,
-				params: {
-					folder: params.folder,
-					fileName: params.fileName,
-					databaseFileColumn: params.databaseFileColumn,
-					databaseFileNameColumn: params.databaseFileNameColumn,
-				},
-				responseType: !params.isFromDatabase ? "blob" : "",
-			});
+  // Helper actions
+  copyToClipboard({ state }, data) {
+    try {
+      navigator.clipboard.writeText(data);
+      state.successToast = "Texto copiado al portapapeles";
+    } catch (error) {
+      state.errorToast = "Error al copiar al portapapeles";
+    }
+  },
+  async downloadFile({ state }, params) {
+    try {
+      const response = await http({
+        method: "post",
+        url: params.downloadRoute,
+        params: {
+          folder: params.folder,
+          fileName: params.fileName,
+          databaseFileColumn: params.databaseFileColumn,
+          databaseFileNameColumn: params.databaseFileNameColumn,
+        },
+        responseType: !params.isFromDatabase ? "blob" : "",
+      });
 
-			let link = null;
+      let link = null;
 
-			if (params.isFromDatabase) {
-				link = document.createElement("a");
-				link.href = response.data.fileData;
+      if (params.isFromDatabase) {
+        link = document.createElement("a");
+        link.href = response.data.fileData;
 
-				link.setAttribute("download", response.data.fileName);
+        link.setAttribute("download", response.data.fileName);
 
-				document.body.appendChild(link);
-				link.click();
-			} else {
-				const fileName =
-					response.headers["content-disposition"].split(
-						"filename="
-					)[1];
+        document.body.appendChild(link);
+        link.click();
+      } else {
+        const fileName =
+          response.headers["content-disposition"].split("filename=")[1];
 
-				const url = window.URL.createObjectURL(
-					new Blob([response.data])
-				);
+        const url = window.URL.createObjectURL(new Blob([response.data]));
 
-				link = document.createElement("a");
-				link.href = url;
+        link = document.createElement("a");
+        link.href = url;
 
-				link.setAttribute("download", fileName);
+        link.setAttribute("download", fileName);
 
-				document.body.appendChild(link);
-				link.click();
-			}
+        document.body.appendChild(link);
+        link.click();
+      }
 
-			state.successToast = "Archivo descargado correctamente";
+      state.successToast = "Archivo descargado correctamente";
 
-			if (link != null) {
-				link.parentNode.removeChild(link);
-			}
-		} catch (error) {
-			console.error(error);
-			state.errorToast = true;
+      if (link != null) {
+        link.parentNode.removeChild(link);
+      }
+    } catch (error) {
+      console.error(error);
+      state.errorToast = true;
 
-			return error;
-		}
-	},
+      return error;
+    }
+  },
 
-	// Registers functions
-	async sendForm({ state }, { method = "post", form, url, errors }) {
-		try {
-			let response;
+  // Registers functions
+  async sendForm({ state }, { method = "post", form, url, errors }) {
+    try {
+      let response;
 
-			state.loading = true;
+      state.loading = true;
 
-			if (method == "post") {
-				response = await form.post(state.baseURL + url);
-			} else if (method == "put") {
-				response = await form.put(state.baseURL + url);
-			}
+      if (method == "post") {
+        response = await form.post(state.baseURL + url);
+      } else if (method == "put") {
+        response = await form.put(state.baseURL + url);
+      }
 
-			state.successToast = "Registro guardado correctamente";
-			state.loading = false;
-			return response;
-		} catch (error) {
-			console.error(error);
+      state.successToast = "Registro guardado correctamente";
+      state.loading = false;
+      return response;
+    } catch (error) {
+      console.error(error);
 
-			state.loading = false;
+      state.loading = false;
 
-			if (error.response?.data) {
-				for (const key in error.response.data) {
-					errors.set(key, error.response.data[key]);
-				}
-			}
+      if (error.response?.data) {
+        for (const key in error.response.data) {
+          errors.set(key, error.response.data[key]);
+        }
+      }
 
-			return error.response;
-		}
-	},
-	async deleteRegisters({ state }, { url, ids = null }) {
-		try {
-			state.loading = true;
+      return error.response;
+    }
+  },
+  async deleteRegisters({ state }, { url, ids = null }) {
+    try {
+      state.loading = true;
 
-			const response = await http({
-				method: "delete",
-				url: url,
-				data: {
-					ids,
-				},
-			});
+      const response = await http({
+        method: "delete",
+        url: url,
+        data: {
+          ids,
+        },
+      });
 
-			state.loading = false;
+      state.loading = false;
 
-			return response;
-		} catch (error) {
-			console.error(error);
+      return response;
+    } catch (error) {
+      console.error(error);
 
-			return error;
-		}
-	},
-	async getRegisters({ state }, params) {
-		try {
-			if (params.showLoading == null || params.showLoading == undefined || params.showLoading) {
-				state.datatableDefaults.loading = true;
-			}
+      return error;
+    }
+  },
+  async getRegisters({ state }, params) {
+    try {
+      if (
+        params.showLoading == null ||
+        params.showLoading == undefined ||
+        params.showLoading
+      ) {
+        state.datatableDefaults.loading = true;
+      }
 
-			let formProps = func.formatFilters("filters");
+      let formProps = func.formatFilters("filters");
 
-			const response = await http({
-				url: params.route,
-				params: {
-					getAll: params.getAll != undefined ? params.getAll : false,
-					...formProps,
-					pagination: {
-						currentPage: params?.page != null ? params.page : 0,
-						rows: params?.rows != null ? params.rows : state.datatableDefaults.rows,
-					},
-				},
-			});
+      let httpParams = {
+        ...formProps,
+      };
 
-			state.datatableDefaults.loading = false;
-			state[params.stateVariable].list = response.data[params.stateVariable];
-			state[params.stateVariable].listTotal = response.data.total;
-		} catch (error) {
-			console.error(error);
-			state.showFormGeneralErrorToast = true;
+      if (
+        params.getAll == undefined ||
+        (params.getAll != undefined && !params.getAll)
+      ) {
+        httpParams.pagination = {
+          currentPage: params?.page != null ? params.page : 0,
+          rows:
+            params?.rows != null ? params.rows : state.datatableDefaults.rows,
+        };
+      }
 
-			return error;
-		}
-	},
+      const response = await http({
+        url: params.route,
+        params: httpParams,
+      });
 
-	// Dashboard
-	async getStats() {
-		try {
-			const response = await http({
-				url: "/stats",
-			});
+      state.datatableDefaults.loading = false;
+      state[params.stateVariable].list = response.data[params.stateVariable];
+      state[params.stateVariable].listTotal = response.data.total;
+    } catch (error) {
+      console.error(error);
+      state.showFormGeneralErrorToast = true;
 
-			return response;
-		} catch (error) {
-			console.error(error);
+      return error;
+    }
+  },
 
-			return error;
-		}
-	},
+  // Dashboard
+  async getStats() {
+    try {
+      const response = await http({
+        url: "/stats",
+      });
 
-	// Categories
-	async getCategories({ dispatch, state }, search) {
-		try {
-			const response = await http({
-				url: "/categories",
-				params: {
-					search,
-				},
-			});
+      return response;
+    } catch (error) {
+      console.error(error);
 
-			state.categories.customList = response.data.categories;
+      return error;
+    }
+  },
 
-			state.categories.customList.forEach((category) => {
-				category.categoryTree = "";
-				state.categoryTree = "";
+  // Categories
+  async getCategories({ dispatch, state }, search) {
+    try {
+      const response = await http({
+        url: "/categories",
+        params: {
+          search,
+        },
+      });
 
-				if (category.parent_id != null) {
-					dispatch("formatParentCategories", category);
-					category.categoryTree = state.categoryTree + " > ";
-				}
+      state.categories.customList = response.data.categories;
 
-				category.categoryTree += category.name;
-			});
+      state.categories.customList.forEach((category) => {
+        category.categoryTree = "";
+        state.categoryTree = "";
 
-			return response;
-		} catch (error) {
-			console.error(error);
+        if (category.parent_id != null) {
+          dispatch("formatParentCategories", category);
+          category.categoryTree = state.categoryTree + " > ";
+        }
 
-			return error;
-		}
-	},
-	formatParentCategories({ dispatch, state }, category) {
-		state.categories.customList.forEach((category_2) => {
-			if (category.parent_id == category_2.id) {
-				state.categoryTree += category_2.name;
+        category.categoryTree += category.name;
+      });
 
-				if (category_2.parent_id != null) {
-					state.categoryTree += " > ";
-					dispatch("formatParentCategories", category_2);
-				}
-			}
-		});
-	},
+      return response;
+    } catch (error) {
+      console.error(error);
 
-	// Links
-	async incrementViews(context, params) {
-		try {
-			const response = await http({
-				method: "post",
-				url: "/links/incremet-views/" + params.id,
-			});
+      return error;
+    }
+  },
+  formatParentCategories({ dispatch, state }, category) {
+    state.categories.customList.forEach((category_2) => {
+      if (category.parent_id == category_2.id) {
+        state.categoryTree += category_2.name;
 
-			return response;
-		} catch (error) {
-			console.error(error);
+        if (category_2.parent_id != null) {
+          state.categoryTree += " > ";
+          dispatch("formatParentCategories", category_2);
+        }
+      }
+    });
+  },
 
-			return error;
-		}
-	},
+  // Links
+  async incrementViews(context, params) {
+    try {
+      const response = await http({
+        method: "post",
+        url: "/links/incremet-views/" + params.id,
+      });
+
+      return response;
+    } catch (error) {
+      console.error(error);
+
+      return error;
+    }
+  },
 };
 
 export default actions;
