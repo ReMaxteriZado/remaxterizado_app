@@ -39,11 +39,7 @@ export default {
     return {
       tasks: [
         "hacer que los codigos sean algo como codepend, donde se puedan añadir varios tipos de bloques de codigo para ajuntar un HTML, JS, CSS o PHP o lo que corresponda al link",
-        "si buscamos una categoria, borramos y volvemos a buscar la misma, borramos y volvemos a buscar la misma se empieza a duplicar la opción infinitamente",
-        "crear CRON para guardar la BBDD automaticamente",
-        "Si un link se queda sin categoria por haberla borrado, que se muestre una alerta en el dashboard con la cantidad de links pendientes, además de poder filtrarlos en la tabla de links",
         "Hacer el CRUD del usuario conectado",
-        "añadir botones para desplegar todas las carpetas de las categorías",
         "si creo una categoria sin padre (nivel 0), aparece como que tiene hijos pero no los tiene",
         "poder personalizar la posición de una categoría respecto a otra",
         "validar que si se ha añadido un enlace no se vuelva a poder añadir",

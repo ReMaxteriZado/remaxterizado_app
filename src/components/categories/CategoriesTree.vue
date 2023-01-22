@@ -1,11 +1,7 @@
 <template>
   <div>
     <div class="d-flex flex-wrap align-items-center mb-3 gap-3">
-      <Button
-        label="Añadir categoría"
-        icon="pi pi-plus"
-        @click="edit(category_selected)"
-      />
+      <Button label="Añadir categoría" icon="pi pi-plus" @click="add()" />
       <Button
         v-if="category_selected != null"
         :label="`Editar la categoría '${category_selected.label}'`"
