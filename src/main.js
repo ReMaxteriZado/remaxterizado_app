@@ -55,11 +55,12 @@ require("@/assets/fonts/Work_Sans/Work_Sans.css");
 // Auto animate
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 
-// Defaults
-import TableDefault from "@/components/partials/TableDefault.vue";
+// Tables
+import TableDefault from "@/components/partials/tables/TableDefault.vue";
+import LongTextColumn from "@/components/partials/tables/LongTextColumn.vue";
 
-// Form
-import FormTitle from "@/components/partials/FormTitle.vue";
+// Forms
+import FormTitle from "@/components/partials/forms/FormTitle.vue";
 import InputText from "@/components/partials/forms/InputText.vue";
 import InputPassword from "@/components/partials/forms/InputPassword.vue";
 import DropDown from "@/components/partials/forms/DropDown.vue";
@@ -131,10 +132,11 @@ app.use(PrimeVue, {
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 
-// Defaults
+// Tables
 app.component("TableDefault", TableDefault);
+app.component("LongTextColumn", LongTextColumn);
 
-// Form
+// Forms
 app.component("FormTitle", FormTitle);
 app.component("InputText", InputText);
 app.component("InputPassword", InputPassword);

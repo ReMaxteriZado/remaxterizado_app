@@ -1,42 +1,48 @@
 <template>
-	<div id="admin-layout">
-		<Toast />
-		<ConfirmDialog />
-		<LoadingComponent />
+  <div id="admin-layout">
+    <Toast />
+    <ConfirmDialog />
+    <LoadingComponent />
+    <div
+      class="d-flex align-items-center justify-content-center loading"
+      :class="[userLogged != null ? 'hide' : '']"
+    >
+      <img src="@/assets/images/logotipo-sin-fondo.png" width="300" />
+    </div>
 
-		<div
-			class="sidebar-section d-flex flex-column justify-content-between"
-			:class="[showSidebar ? 'sidebar-open' : '']"
-		>
-			<div>
-				<LogoComponent />
-				<SidebarComponent />
-			</div>
-			<Logout class="d-md-none" />
-		</div>
+    <div
+      class="sidebar-section d-flex flex-column justify-content-between"
+      :class="[showSidebar ? 'sidebar-open' : '']"
+    >
+      <div>
+        <LogoComponent />
+        <SidebarComponent />
+      </div>
+      <Logout class="d-md-none" />
+    </div>
 
-		<div class="top-bar-section">
-			<TopBar />
-		</div>
+    <div class="top-bar-section">
+      <TopBar />
+    </div>
 
-		<div class="content-section px-2 px-md-4 pb-2 pb-md-4">
-			<router-view v-slot="{ Component }">
-				<transition name="slide" mode="out-in">
-					<component :is="Component" :key="$route.path" />
-				</transition>
-			</router-view>
-		</div>
+    <div class="content-section px-2 px-md-4 pb-2 pb-md-4">
+      <router-view v-slot="{ Component }">
+        <transition name="slide" mode="out-in">
+          <component :is="Component" :key="$route.path" />
+        </transition>
+      </router-view>
+    </div>
 
-		<div class="logout-section d-none d-md-block">
-			<Logout />
-		</div>
+    <div class="logout-section d-none d-md-block">
+      <Logout />
+    </div>
 
-		<div
-			class="sidebar-overlay d-block d-md-none"
-			:class="[showSidebar ? 'sidebar-open' : '']"
-			@click="toggleSidebar(false)"
-		></div>
-	</div>
+    <div
+      class="sidebar-overlay d-block d-md-none"
+      :class="[showSidebar ? 'sidebar-open' : '']"
+      @click="toggleSidebar(false)"
+    ></div>
+  </div>
 </template>
 
 <script>
@@ -53,179 +59,220 @@ import ConfirmDialog from "primevue/confirmdialog";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
-	components: {
-		LogoComponent,
-		SidebarComponent,
-		LoadingComponent,
-		TopBar,
-		Toast,
-		ConfirmDialog,
-		BottomBar,
-		Logout,
-	},
-	data() {
-		return {};
-	},
-	computed: {
-		...mapState(["errorToast", "successToast", "warningToast", "showSidebar"]),
-	},
-	methods: {
-		...mapActions(["setFormAccessToken"]),
-		...mapMutations([
-			"changeSuccessToast",
-			"changeErrorToast",
-			"changeWarningToast",
-			"toggleSidebar",
-			"changeUserLogged",
-		]),
-	},
-	mounted() {
-		const vh = window.innerHeight * 0.01;
-		document.documentElement.style.setProperty("--vh", `${vh}px`);
+  components: {
+    LogoComponent,
+    SidebarComponent,
+    LoadingComponent,
+    TopBar,
+    Toast,
+    ConfirmDialog,
+    BottomBar,
+    Logout,
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState(["errorToast", "successToast", "warningToast", "showSidebar", "userLogged"]),
+  },
+  methods: {
+    ...mapActions(["setFormAccessToken"]),
+    ...mapMutations([
+      "changeSuccessToast",
+      "changeErrorToast",
+      "changeWarningToast",
+      "toggleSidebar",
+      "changeUserLogged",
+    ]),
+  },
+  mounted() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
 
-		this.changeUserLogged(JSON.parse(localStorage.getItem("userLogged")));
-		this.setFormAccessToken();
-	},
-	watch: {
-		successToast() {
-			if (this.successToast != null) {
-				this.$toast.add({
-					severity: "success",
-					summary: "Acción realizada",
-					detail:
-						this.successToast == true
-							? "Operación realizada con éxito"
-							: this.successToast,
-					life: 3000,
-				});
-			}
+    this.changeUserLogged(JSON.parse(localStorage.getItem("userLogged")));
+    this.setFormAccessToken();
+  },
+  watch: {
+    successToast() {
+      if (this.successToast != null) {
+        this.$toast.add({
+          severity: "success",
+          summary: "Acción realizada",
+          detail:
+            this.successToast == true
+              ? "Operación realizada con éxito"
+              : this.successToast,
+          life: 3000,
+        });
+      }
 
-			this.changeSuccessToast(null);
-		},
-		errorToast() {
-			if (this.errorToast != null) {
-				this.$toast.add({
-					severity: "error",
-					summary: "Error",
-					detail:
-						this.errorToast == true ? "Ha ocurrido un error" : this.errorToast,
-					life: 3000,
-				});
-			}
+      this.changeSuccessToast(null);
+    },
+    errorToast() {
+      if (this.errorToast != null) {
+        this.$toast.add({
+          severity: "error",
+          summary: "Error",
+          detail:
+            this.errorToast == true ? "Ha ocurrido un error" : this.errorToast,
+          life: 3000,
+        });
+      }
 
-			this.changeErrorToast(null);
-		},
-		warningToast() {
-			if (this.warningToast != null) {
-				this.$toast.add({
-					severity: "warn",
-					summary: "Advertencia",
-					detail:
-						this.warningToast == true
-							? "Ha ocurrido un error"
-							: this.warningToast,
-					life: 3000,
-				});
-			}
+      this.changeErrorToast(null);
+    },
+    warningToast() {
+      if (this.warningToast != null) {
+        this.$toast.add({
+          severity: "warn",
+          summary: "Advertencia",
+          detail:
+            this.warningToast == true
+              ? "Ha ocurrido un error"
+              : this.warningToast,
+          life: 3000,
+        });
+      }
 
-			this.changeWarningToast(null);
-		},
-	},
+      this.changeWarningToast(null);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 #admin-layout {
-	height: 100vh;
-	height: calc(var(--vh, 1vh) * 100);
-	display: grid;
-	grid-template-columns: 15.5% 1fr;
-	grid-template-rows: fit-content(10rem) auto 3rem;
-	grid-template-areas:
-		"sidebar-section top-bar-section"
-		"sidebar-section content-section"
-		"logout-section content-section";
-	background-color: rgb(245, 245, 245);
-	overflow: hidden;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  display: grid;
+  grid-template-columns: 15.5% 1fr;
+  grid-template-rows: fit-content(10rem) auto 3rem;
+  grid-template-areas:
+    "sidebar-section top-bar-section"
+    "sidebar-section content-section"
+    "logout-section content-section";
+  background-color: rgb(245, 245, 245);
+  overflow: hidden;
 
-	.top-bar-section {
-		grid-area: top-bar-section;
-		z-index: 20;
-	}
+  .top-bar-section {
+    grid-area: top-bar-section;
+    z-index: 20;
+  }
 
-	.sidebar-section {
-		grid-area: sidebar-section;
-		z-index: 20;
-		overflow-y: auto;
-		position: relative;
-		background-color: white;
-		box-shadow: $smooth-box-shadow;
-	}
+  .sidebar-section {
+    grid-area: sidebar-section;
+    z-index: 20;
+    overflow-y: auto;
+    position: relative;
+    background-color: white;
+    box-shadow: $smooth-box-shadow;
+  }
 
-	.content-section {
-		grid-area: content-section;
-		z-index: 50;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
+  .content-section {
+    grid-area: content-section;
+    z-index: 50;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
-	.logout-section {
-		grid-area: logout-section;
-		z-index: 20;
-	}
+  .logout-section {
+    grid-area: logout-section;
+    z-index: 20;
+  }
 
-	.slide-enter-active,
-	.slide-leave-active {
-		transition: all 0.2s ease;
-	}
+  .slide-enter-active,
+  .slide-leave-active {
+    transition: all 0.2s ease;
+  }
 
-	.slide-enter-from,
-	.slide-leave-to {
-		transform: translateX(30%);
-		opacity: 0;
-	}
+  .slide-enter-from,
+  .slide-leave-to {
+    transform: translateX(30%);
+    opacity: 0;
+  }
 
-	// Mobiles
-	@media only screen and (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
-		grid-template-columns: 100%;
-		grid-template-rows: fit-content(10rem) auto;
-		grid-template-areas:
-			"top-bar-section"
-			"content-section";
+  // Mobiles
+  @media only screen and (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+    grid-template-columns: 100%;
+    grid-template-rows: fit-content(10rem) auto;
+    grid-template-areas:
+      "top-bar-section"
+      "content-section";
 
-		.sidebar-section {
-			position: fixed;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			z-index: 90;
-			transform: translateX(-100%);
-			transition: $transition;
-			width: 80vw;
+    .sidebar-section {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 90;
+      transform: translateX(-100%);
+      transition: $transition;
+      width: 80vw;
 
-			&.sidebar-open {
-				transform: translateX(0);
-			}
-		}
+      &.sidebar-open {
+        transform: translateX(0);
+      }
+    }
 
-		.sidebar-overlay {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.5);
-			opacity: 0;
-			transition: $transition;
-			visibility: hidden;
-			z-index: 80;
+    .sidebar-overlay {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: $transition;
+      visibility: hidden;
+      z-index: 80;
 
-			&.sidebar-open {
-				opacity: 1;
-				visibility: visible;
-			}
-		}
-	}
+      &.sidebar-open {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  .loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("@/assets/images/login-background.jpg");
+    background-size: cover;
+    background-position: center;
+    z-index: 100;
+
+    &.hide {
+      animation: hide 1s ease-out forwards;
+
+      @keyframes hide {
+        from {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+    }
+
+    img {
+      animation: blink 1s ease infinite alternate;
+
+      @keyframes blink {
+        from {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0.3;
+        }
+      }
+    }
+  }
 }
 </style>

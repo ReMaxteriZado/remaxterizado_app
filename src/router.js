@@ -9,11 +9,12 @@ import AdminLayout from "@/components/layouts/AdminLayout.vue";
 import NotFound from "@/components/layouts/NotFound.vue";
 
 // Admin
-import DashboardComponent from "@/components/dashboard/DashboardComponent.vue";
-import CategoriesComponent from "@/components/categories/CategoriesComponent.vue";
-import LinksComponent from "@/components/links/LinksComponent.vue";
-import CodesComponent from "@/components/codes/CodesComponent.vue";
-import DemoComponent from "@/components/demo/DemosComponent.vue";
+import Dashboard from "@/components/dashboard/DashboardComponent.vue";
+import Categories from "@/components/categories/CategoriesComponent.vue";
+import Links from "@/components/links/LinksComponent.vue";
+import Codes from "@/components/codes/CodesComponent.vue";
+import Roles from "@/components/roles/RolesComponent.vue";
+import Demo from "@/components/demo/DemosComponent.vue";
 
 const routes = [
   {
@@ -30,27 +31,32 @@ const routes = [
       {
         path: "dashboard",
         name: "Dashboard",
-        component: DashboardComponent,
+        component: Dashboard,
       },
       {
         path: "categories",
         name: "Categorías",
-        component: CategoriesComponent,
+        component: Categories,
       },
       {
         path: "links",
         name: "Enlaces",
-        component: LinksComponent,
+        component: Links,
       },
       {
         path: "codes",
         name: "Códigos",
-        component: CodesComponent,
+        component: Codes,
+      },
+      {
+        path: "roles",
+        name: "Roles",
+        component: Roles,
       },
       {
         path: "demo",
         name: "Demo",
-        component: DemoComponent,
+        component: Demo,
       },
     ],
   },

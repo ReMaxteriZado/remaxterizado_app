@@ -80,8 +80,8 @@
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 
-import LoadingTable from "@/components/partials/LoadingTableComponent.vue";
-import TableFilters from "@/components/partials/TableFilters.vue";
+import LoadingTable from "@/components/partials/tables/LoadingTableComponent.vue";
+import TableFilters from "@/components/partials/tables/TableFilters.vue";
 
 import { mapState, mapActions, mapMutations } from "vuex";
 

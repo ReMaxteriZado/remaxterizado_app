@@ -82,6 +82,10 @@ export default {
 					href: "/admin/codes",
 				},
 				{
+					label: "Roles",
+					href: "/admin/roles",
+				},
+				{
 					label: "Demo",
 					href: "/admin/demo",
 				},
