@@ -61,6 +61,7 @@ import LongTextColumn from "@/components/partials/tables/LongTextColumn.vue";
 
 // Forms
 import FormTitle from "@/components/partials/forms/FormTitle.vue";
+import FormSubtitle from "@/components/partials/forms/FormSubtitle.vue";
 import InputText from "@/components/partials/forms/InputText.vue";
 import InputPassword from "@/components/partials/forms/InputPassword.vue";
 import DropDown from "@/components/partials/forms/DropDown.vue";
@@ -138,6 +139,7 @@ app.component("LongTextColumn", LongTextColumn);
 
 // Forms
 app.component("FormTitle", FormTitle);
+app.component("FormSubtitle", FormSubtitle);
 app.component("InputText", InputText);
 app.component("InputPassword", InputPassword);
 app.component("DropDown", DropDown);

@@ -42,6 +42,55 @@
             @change-value="(value) => (form.description = value)"
           />
         </div>
+        <div class="col-12">
+          <FormSubtitle title="Permisos" />
+        </div>
+        <div class="col-12">
+          <div
+            v-for="(permission, index) in permissions.list"
+            :key="index"
+            class="row align-items-center py-3"
+            :class="[index % 2 ? 'bg-light' : '']"
+          >
+            <div class="col-3">{{ permission.slug }}</div>
+            <div class="col">
+              <InputSwitch
+                :ref="'create-' + permission.id"
+                label="Crear"
+                :disabled="disabled"
+                :error="form.errors.get('create-' + permission.id)"
+                @change-value="(value) => (form['create-' + permission.id] = value)"
+              />
+            </div>
+            <div class="col">
+              <InputSwitch
+                :ref="'read-' + permission.id"
+                label="Leer"
+                :disabled="disabled"
+                :error="form.errors.get('read-' + permission.id)"
+                @change-value="(value) => (form['read-' + permission.id] = value)"
+              />
+            </div>
+            <div class="col">
+              <InputSwitch
+                :ref="'update-' + permission.id"
+                label="Actualizar"
+                :disabled="disabled"
+                :error="form.errors.get('update-' + permission.id)"
+                @change-value="(value) => (form['update-' + permission.id] = value)"
+              />
+            </div>
+            <div class="col">
+              <InputSwitch
+                :ref="'delete-' + permission.id"
+                label="Borrar"
+                :disabled="disabled"
+                :error="form.errors.get('delete-' + permission.id)"
+                @change-value="(value) => (form['delete-' + permission.id] = value)"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </form>
 
@@ -125,10 +174,9 @@ export default {
       this.clearForm();
 
       this.getRegisters({
-        route: "/categories",
-        stateVariable: "categories",
+        route: "/permissions",
+        stateVariable: "permissions",
         getAll: true,
-        showLoading: false,
       });
 
       const register = this.roles.register;
@@ -154,7 +202,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["dialogDefaults", "roles", "categories"]),
+    ...mapState(["dialogDefaults", "roles", "categories", "permissions"]),
   },
 };
 </script>
