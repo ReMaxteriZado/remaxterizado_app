@@ -10,6 +10,8 @@
 			v-model="model"
 			:disabled="disabled"
 			:placeholder="label"
+			:trueValue="1"
+			:falseValue="0"
 		/>
 
 		<div

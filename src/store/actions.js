@@ -130,6 +130,7 @@ const actions = {
     try {
       state.loading = true;
 
+      console.log(http.defaults.headers);
       const response = await http({
         method: "delete",
         url: url,

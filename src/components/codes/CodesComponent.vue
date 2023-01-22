@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<CodesTable
-			class="mt-4"
 			:route="route"
 			:stateVariable="stateVariable"
 		/>

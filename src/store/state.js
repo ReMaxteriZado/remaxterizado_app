@@ -1,7 +1,7 @@
 const defaults = ["links", "codes", "categories", "roles", "permissions"];
 
 const state = {
-	baseURL: "http://remaxterizado_api.test/api",
+	baseURL: "https://remaxterizado_api.test/api",
 	// baseURL: "https://api.remaxterizado.es/api",
 	showSidebar: false,
 	userLogged: null,

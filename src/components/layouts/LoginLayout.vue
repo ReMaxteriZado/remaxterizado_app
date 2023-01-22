@@ -26,7 +26,7 @@
 						/>
 					</div>
 					<div class="col-12 d-flex justify-content-end mt-4">
-						<Button @click="save()" label="Guardar" :disabled="form.busy" />
+						<Button @click="save()" label="Iniciar sesión" :disabled="form.busy" />
 					</div>
 				</div>
 			</form>
