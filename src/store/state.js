@@ -1,4 +1,4 @@
-const defaults = ["links", "codes", "categories", "roles", "permissions"];
+const defaults = ["links", "codes", "categories", "roles", "permissions", "users"];
 
 const state = {
 	baseURL: "https://remaxterizado_api.test/api",

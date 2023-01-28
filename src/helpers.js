@@ -1,18 +1,35 @@
+import store from "./store";
 import moment from "moment";
 
 export const func = {
-	formatFilters(id) {
-		const form = document.getElementById(id)
-		let formProps = null
+    checkUserHasPermission(permission, action = "read") {
+        if (store.state.userLogged.role.name == "super_admin") {
+            return true;
+        }
 
-		if (form != undefined) {
-			const formData = new FormData(form)
+        const permissions = store.state.userLogged.role.permissions;
+        let hasPermission = false;
 
-			formProps = Object.fromEntries(formData)
-		}
+        permissions.forEach(p => {
+            if (p.permission.name == permission && p[action] == 1) {
+                hasPermission = true;
+            }
+        });
 
-		return formProps
-	},
+        return hasPermission;
+    },
+    formatFilters(id) {
+        const form = document.getElementById(id)
+        let formProps = null
+
+        if (form != undefined) {
+            const formData = new FormData(form)
+
+            formProps = Object.fromEntries(formData)
+        }
+
+        return formProps
+    },
     formatDate(date, format = "DD/MM/YYYY HH:mm:ss") {
         moment.locale("es");
 

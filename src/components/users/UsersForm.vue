@@ -1,6 +1,6 @@
 <template>
   <Dialog
-    v-model:visible="$store.state.categories.dialog"
+    v-model:visible="$store.state.users.dialog"
     :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
     :style="{ width: '30vw' }"
     :modal="dialogDefaults.modal"
@@ -25,17 +25,35 @@
           />
         </div>
         <div class="col-12 col-md-6">
-          <DropDown
-            ref="parent_id"
-            label="Categoría"
-            :options="categories.list"
-            :displayText="['parent.name', 'name']"
-            :displayTextSeparator="' > '"
+          <InputText
+            ref="email"
+            label="Email"
             :disabled="disabled"
-            :error="form.errors.get('parent_id')"
-            @change-value="(value) => (form.parent_id = value)"
+            :error="form.errors.get('email')"
+            @change-value="(value) => (form.email = value)"
           />
         </div>
+        <div class="col-12 col-md-6">
+          <InputPassword
+            ref="password"
+            label="Contraseña"
+            :disabled="disabled"
+            :error="form.errors.get('password')"
+            @change-value="(value) => (form.password = value)"
+          />
+        </div>
+				<div class="col-12 col-md-6">
+					<DropDown
+						ref="role_id"
+						label="Rol"
+						:options="roles.list"
+						optionLabel="slug"
+						:displayText="'slug'"
+						:disabled="disabled"
+						:error="form.errors.get('role_id')"
+						@change-value="(value) => (form.role_id = value)"
+					/>
+				</div>
       </div>
     </form>
 
@@ -48,15 +66,10 @@
 </template>
 
 <script>
-import Dialog from "primevue/dialog";
-
 import Form from "vform";
 import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
-  components: {
-    Dialog,
-  },
   props: {
     route: {
       type: String,
@@ -69,19 +82,17 @@ export default {
   },
   data: () => ({
     form: new Form(),
-    modelName: "categoría",
-    title: `Añadir categoría`,
+    modelName: "usuario",
+    title: `Añadir usuario`,
     disabled: false,
     tags: [],
   }),
   methods: {
-    ...mapActions(["getCategories", "sendForm", "getRegisters"]),
+    ...mapActions(["sendForm", "getRegisters"]),
     ...mapMutations(["toggleFormDialog", "changeCurrentRegister"]),
     save() {
-      const update = this.categories.register != null;
-      const url = `/categories${
-        update ? `/${this.categories.register.id}` : ""
-      }`;
+      const update = this.users.register != null;
+      const url = `/users${update ? `/${this.users.register.id}` : ""}`;
 
       this.sendForm({
         method: update ? "put" : "post",
@@ -95,7 +106,12 @@ export default {
             value: false,
           });
 
-          this.getCategories();
+          this.getRegisters({
+            route: this.route,
+            stateVariable: this.stateVariable,
+            page: this.users.currentPage,
+            rows: this.users.rows,
+          });
         }
       });
     },
@@ -122,24 +138,25 @@ export default {
       this.clearForm();
 
       this.getRegisters({
-        route: "/categories",
-        stateVariable: "categories",
+        route: "/roles",
+        stateVariable: "roles",
         getAll: true,
         showLoading: false,
       });
 
-      const register = this.categories.register?.category;
+      const register = this.users.register;
 
       if (register != null) {
         for (const key in register) {
-          if (Object.hasOwnProperty.call(register, key)) {
-            if (this.$refs[key] != undefined) {
-              this.$refs[key].model = register[key];
-            }
+          if (
+            Object.hasOwnProperty.call(register, key) &&
+            this.$refs[key] != undefined
+          ) {
+            this.$refs[key].model = register[key];
           }
         }
 
-        if (this.categories.dialogMode == "edit") {
+        if (this.users.dialogMode == "edit") {
           this.title = `Editar ${this.modelName}`;
           this.disabled = false;
         } else {
@@ -150,7 +167,19 @@ export default {
     },
   },
   computed: {
-    ...mapState(["dialogDefaults", "categories"]),
+    ...mapState(["dialogDefaults", "users", "roles"]),
   },
 };
 </script>
+
+<style lang="scss" scoped>
+:deep(.p-chips) {
+  .p-chips-multiple-container {
+    gap: 0.5rem;
+  }
+
+  .p-chips-multiple-container {
+    width: 100%;
+  }
+}
+</style>

@@ -14,6 +14,7 @@ import Categories from "@/components/categories/CategoriesComponent.vue";
 import Links from "@/components/links/LinksComponent.vue";
 import Codes from "@/components/codes/CodesComponent.vue";
 import Roles from "@/components/roles/RolesComponent.vue";
+import Users from "@/components/users/UsersComponent.vue";
 import Demo from "@/components/demo/DemosComponent.vue";
 
 const routes = [
@@ -54,6 +55,11 @@ const routes = [
         component: Roles,
       },
       {
+        path: "users",
+        name: "Usuarios",
+        component: Users,
+      },
+      {
         path: "demo",
         name: "Demo",
         component: Demo,
@@ -67,7 +73,7 @@ const routes = [
 ];
 
 function checkLogin(to, from, next) {
-  if (localStorage.getItem("userLogged") != null) {
+  if (localStorage.getItem("accessToken") != null) {
     next({ path: "/admin/dashboard" });
   } else {
     next();
@@ -77,7 +83,7 @@ function checkLogin(to, from, next) {
 }
 
 function checkUserLogged(to, from, next) {
-  if (localStorage.getItem("userLogged") == null) {
+  if (localStorage.getItem("accessToken") == null) {
     next({ path: "/login" });
 
     return;

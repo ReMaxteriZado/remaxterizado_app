@@ -1,10 +1,10 @@
 <template>
 	<div class="w-100 d-flex flex-column">
 		<div v-for="(item, index) in items" :key="index">
-			<div v-if="!item.items">
+			<div v-if="!item.items && (item.permission != null ? $helper.checkUserHasPermission(item.permission) : true)">
 				<Link class="px-3" :item="item" @click="toggleSidebar(false)" />
 			</div>
-			<div v-else>
+			<div v-else-if="$helper.checkUserHasPermission(item.permission)">
 				<Accordion @click="item.right_down = !item.right_down">
 					<AccordionTab>
 						<template #header>
@@ -72,18 +72,27 @@ export default {
 				{
 					label: "Categorías",
 					href: "/admin/categories",
+					permission: "categories",
 				},
 				{
 					label: "Enlaces",
 					href: "/admin/links",
+					permission: "links",
 				},
 				{
 					label: "Códigos",
 					href: "/admin/codes",
+					permission: "codes",
 				},
 				{
 					label: "Roles",
 					href: "/admin/roles",
+					permission: "roles",
+				},
+				{
+					label: "Usuarios",
+					href: "/admin/users",
+					permission: "users",
 				},
 				{
 					label: "Demo",

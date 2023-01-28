@@ -1,4 +1,3 @@
-// import router from "../router";
 import Form from "vform";
 import http from "../axios";
 import { func } from "../helpers";
@@ -10,7 +9,6 @@ const actions = {
       const response = await form.post(state.baseURL + "/login");
 
       localStorage.setItem("accessToken", response.data.token);
-      localStorage.setItem("userLogged", JSON.stringify(response.data.user));
 
       window.location.href = "/admin/dashboard";
     } catch (error) {
@@ -117,6 +115,10 @@ const actions = {
 
       state.loading = false;
 
+      if (error.response?.data?.message) {
+        state.errorToast = error.response.data.message;
+      }
+
       if (error.response?.data) {
         for (const key in error.response.data) {
           errors.set(key, error.response.data[key]);
@@ -130,7 +132,6 @@ const actions = {
     try {
       state.loading = true;
 
-      console.log(http.defaults.headers);
       const response = await http({
         method: "delete",
         url: url,
@@ -140,12 +141,19 @@ const actions = {
       });
 
       state.loading = false;
+      state.successToast = "Registro/s borrado/s correctamente";
 
       return response;
     } catch (error) {
       console.error(error);
 
-      return error;
+      state.loading = false;
+
+      if (error.response?.data?.message) {
+        state.errorToast = error.response.data.message;
+      }
+
+      return error.response;
     }
   },
   async getRegisters({ state }, params) {
