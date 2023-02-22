@@ -97,6 +97,14 @@
                 "
               />
             </div>
+            <div class="col">
+              <InputSwitch
+                :ref="'all-' + permission.id"
+                label="Todos"
+                :disabled="disabled"
+                @change-value="checkAll(permission.id)"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -237,6 +245,14 @@ export default {
           });
         }
       });
+    },
+    checkAll(permission_id) {
+      const all = this.$refs["all-" + permission_id][0].model;
+
+      this.$refs["create-" + permission_id][0].model = all;
+      this.$refs["read-" + permission_id][0].model = all;
+      this.$refs["update-" + permission_id][0].model = all;
+      this.$refs["delete-" + permission_id][0].model = all;
     },
   },
   computed: {

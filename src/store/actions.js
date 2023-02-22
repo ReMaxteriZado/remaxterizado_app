@@ -193,6 +193,20 @@ const actions = {
       state[params.stateVariable].listTotal = response.data.total;
     } catch (error) {
       console.error(error);
+
+      if (error.response.data.message === "CSRF token mismatch.") {
+        location.reload();
+      }
+
+      if (
+        error.response.data?.message == "User not found" ||
+        error.response.data?.message == "Unauthorized" ||
+        error.response.data?.message == "Unauthenticated."
+      ) {
+        window.localStorage.clear();
+        window.location.href = "/login";
+      }
+
       state.showFormGeneralErrorToast = true;
 
       return error;

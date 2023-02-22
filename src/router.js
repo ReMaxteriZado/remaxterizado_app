@@ -6,7 +6,7 @@ import store from "./store";
 // Layouts
 import LoginLayout from "@/components/layouts/LoginLayout.vue";
 import AdminLayout from "@/components/layouts/AdminLayout.vue";
-import NotFound from "@/components/layouts/NotFound.vue";
+import WebLayout from "@/components/layouts/WebLayout.vue";
 
 // Admin
 import Dashboard from "@/components/dashboard/DashboardComponent.vue";
@@ -18,6 +18,11 @@ import Users from "@/components/users/UsersComponent.vue";
 import Demo from "@/components/demo/DemosComponent.vue";
 
 const routes = [
+  {
+    path: "/",
+    component: WebLayout,
+    name: "home"
+  },
   {
     path: "/login",
     component: LoginLayout,
@@ -68,7 +73,7 @@ const routes = [
   },
   {
     path: "/:pathMatch(.*)*",
-    component: NotFound,
+    redirect: "/",
   },
 ];
 
@@ -105,7 +110,7 @@ function checkUserLogged(to, from, next) {
       }
     })
     .catch((error) => {
-      console.error("Router JS ~ checkAdminRights", error.response);
+      console.error("Router JS ~ checkAdminRights", error.response, error.response?.data?.message);
 
       if (error.response.data.message === "CSRF token mismatch.") {
         location.reload();
