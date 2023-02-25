@@ -1,6 +1,7 @@
 <template>
 	<div class="container">
 		<h2>Proyectos</h2>
+		<h4>Que los proyectos se vayan filtrando según las skills seleccionadas</h4>
 		<p>
 			A lo largo de mi carrera profesional, he tenido la posibilidad de trabajar
 			en numerosos proyectos de diferentes dimensiones, ámbitos, tecnologías y

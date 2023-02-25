@@ -1,53 +1,16 @@
 <template>
 	<div class="dot-container">
-		<div class="dot" @click="$parent.showDotContent(dotNumber)"></div>
-		<div class="dot-name text-secondary">{{ title }}</div>
-		<div :class="{ show: showContent }" class="dot-content">
-			<h3 class="bg-secondary text-white px-3 py-1 mb-0">
-				<a
-					class="text-white"
-					:href="company_url"
-					target="_blank"
-					rel="noreferrer nofollow"
-					>{{ company }}</a
-				>
-			</h3>
-			<div class="p-3">
-				<h5 class="text-primary">{{ role }}</h5>
-				<p class="text-secondary">{{ period }}</p>
-				<p class="text-secondary mb-0">{{ description }}</p>
-			</div>
-		</div>
+		<div @click="$parent.showDotContent(dot.dotNumber)" class="dot"></div>
+		<div @click="$parent.showDotContent(dot.dotNumber)"
+			class="dot-name border border-2 border-primary text-primary rounded px-3 py-1">{{ dot.title }}</div>
 	</div>
 </template>
 
 <script>
 export default {
 	props: {
-		showContent: {
-			type: Boolean,
-			default: false,
-		},
-		dotNumber: {
-			type: Number,
-		},
-		title: {
-			type: String,
-		},
-		company: {
-			type: String,
-		},
-		company_url: {
-			type: String,
-		},
-		role: {
-			type: String,
-		},
-		period: {
-			type: String,
-		},
-		description: {
-			type: String,
+		dot: {
+			type: Object,
 		},
 	},
 };
@@ -69,6 +32,32 @@ export default {
 		border-radius: 50%;
 		cursor: pointer;
 		transition: all 0.3s ease;
+		position: relative;
+
+		&::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			height: 20px;
+			width: 20px;
+			border: 1px solid $primary;
+			border-radius: 100%;
+			animation: pulse 2.5s ease-out infinite;
+
+			@keyframes pulse {
+				0% {
+					transform: translate(-50%, -50%) scale(1);
+					opacity: 1;
+				}
+
+				100% {
+					transform: translate(-50%, -50%) scale(1.6);
+					opacity: 0;
+				}
+			}
+		}
 
 		&:hover {
 			background-color: rgb(225, 225, 225);
@@ -77,56 +66,30 @@ export default {
 
 	.dot-name {
 		position: absolute;
-		bottom: 120%;
+		bottom: 140%;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 10rem;
 		text-align: center;
+		white-space: nowrap;
+		font-size: 1.2rem;
 		font-weight: bold;
-	}
+		transition: $transition;
+		cursor: pointer;
 
-	.dot-content {
-		position: absolute;
-		top: 260%;
-		left: 50%;
-		transform: translateX(-50%);
-		background-color: white;
-		border-radius: 5px;
-		box-shadow: $smooth-box-shadow;
-		width: 20rem;
-		overflow: hidden;
-		opacity: 0;
-		visibility: hidden;
-
-		&.show {
-			animation: fade-in 0.5s ease-out forwards;
-
-			@keyframes fade-in {
-				0% {
-					opacity: 0;
-					visibility: hidden;
-				}
-				100% {
-					opacity: 1;
-					visibility: visible;
-					top: 200%;
-				}
-			}
-		}
-
-		a {
-			text-decoration: none;
+		&:hover {
+			background-color: $primary;
+			color: white !important;
 		}
 	}
 
 	&.first-dot {
 		left: calc(100% / 3);
-		animation-delay: 1s;
+		// animation-delay: 1.5s;
 	}
 
 	&.second-dot {
 		left: calc((100% / 3) * 2);
-		animation-delay: 1.5s;
+		animation-delay: 2.5s;
 	}
 
 	@keyframes show-up {

@@ -48,7 +48,7 @@ export default {
 
 			const elementRect = element.getBoundingClientRect();
 
-			const xAngle = (elementRect.top - y) / 100;
+			const xAngle = (elementRect.top - y) / 50;
 			const yAngle = ((elementRect.left - x) / 120) * -1;
 
 			element.style.transform = `perspective(500px) rotateX(${xAngle}deg) rotateY(${yAngle}deg) translateY(-50%)`;
