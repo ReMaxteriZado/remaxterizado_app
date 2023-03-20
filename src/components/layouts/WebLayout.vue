@@ -5,8 +5,8 @@
 		<About class="about" />
 		<Experience class="experience" />
 		<Skills class="skills" />
-		<Projects class="mt-5" />
-		<Footer class="mt-5" />
+		<Projects class="projects" />
+		<Footer class="footer" />
 	</div>
 </template>
 
@@ -35,7 +35,9 @@ export default {
 <style lang="scss" scoped>
 .about,
 .experience,
-.skills {
+.skills,
+.projects,
+.footer {
 	margin-top: 8rem;
 }
 </style>

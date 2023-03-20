@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h3 class="title text-primary text-center mb-4">Experiencia</h3>
+		<h3 class="title text-primary text-uppercase text-center mb-5">Experiencia</h3>
 		<div class="timeline">
 			<div class="line"></div>
 			<Dot v-for="dot in dots" :key="dot.dotNumber" :class="dot.className" :dot="dot" />
@@ -108,8 +108,7 @@ export default {
 .title {
 	font-size: 3rem;
 	font-weight: bold;
-	letter-spacing: 0.2rem;
-
+	letter-spacing: 0.5rem;
 }
 
 .timeline {

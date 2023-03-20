@@ -8,14 +8,8 @@
 			enfoques. A continuación, os dejo una pequeña muestra de aquellos que
 			considero más interesantes.
 		</p>
-		<div class="row mb-5">
-			<div class="col-12 col-md-6 gy-4">
-				<ProjectExample />
-			</div>
-			<div class="col-12 col-md-6 gy-4">
-				<ProjectExample />
-			</div>
-			<div class="col-12 col-md-6 gy-4">
+		<div class="row">
+			<div v-for="n in 6" :key="n" class="col-12 col-md-6 gy-4">
 				<ProjectExample />
 			</div>
 		</div>

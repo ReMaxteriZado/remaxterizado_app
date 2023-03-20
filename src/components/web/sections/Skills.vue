@@ -113,10 +113,6 @@ export default {
 			overflow: hidden;
 			transition: $transition;
 
-			img {
-				z-index: 5;
-			}
-
 			&::after {
 				content: "";
 				position: absolute;
@@ -132,7 +128,7 @@ export default {
 
 		&.active,
 		&:hover {
-			transform: translate(3px, 3px);
+			transform: translate(2px, 2px);
 
 			.image-container {
 				top: 50%;
@@ -147,7 +143,7 @@ export default {
 			.image-container {
 
 				&::after {
-					opacity: 0.4;
+					opacity: 0.25;
 				}
 			}
 		}

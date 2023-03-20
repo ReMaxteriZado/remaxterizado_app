@@ -1,6 +1,7 @@
 <template>
 	<div class="bg-secondary py-5">
 		<div class="container">
+			<h2 class="text-white">AÑADIR PARALLAX AL "SOBRE MI"</h2>
 			<div class="about-content">
 				<h1 class="text-white">Sobre mí</h1>
 				<p class="text-white">
