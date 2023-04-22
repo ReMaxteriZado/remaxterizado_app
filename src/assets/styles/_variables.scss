@@ -38,3 +38,17 @@ $large-tablet-max-width: 1400px;
 // Laptops
 $laptop-min-width: 1080px;
 $laptop-max-width: 1440px;
+
+@media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {}
+
+@media (min-width: $small-mobile-min-width) and (max-width: $small-mobile-max-width) {}
+
+@media (min-width: $large-mobile-min-width) and (max-width: $large-mobile-max-width) {}
+
+@media (min-width: $tablet-min-width) and (max-width: $tablet-max-width) {}
+
+@media (min-width: $small-tablet-min-width) and (max-width: $small-tablet-max-width) {}
+
+@media (min-width: $large-tablet-min-width) and (max-width: $large-tablet-max-width) {}
+
+@media (min-width: $laptop-min-width) and (max-width: $laptop-max-width) {}
