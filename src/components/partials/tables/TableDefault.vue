@@ -24,14 +24,7 @@
 				</div>
 				<div class="col-12 col-md-6">
 					<div
-						class="
-							action-buttons
-							d-flex
-							gap-3
-							align-items-center
-							justify-content-md-end
-							pb-1
-						"
+						class="action-buttons d-flex gap-3 align-items-center justify-content-md-end pb-1"
 					>
 						<Button
 							v-if="
@@ -84,12 +77,7 @@
 							$helper.checkUserHasPermission(route, 'update') ||
 							$route.name === 'Demo'
 						"
-						class="
-							p-button-rounded p-button-text
-							border-primary
-							bg-primary
-							text-white
-						"
+						class="p-button-rounded p-button-text border-primary bg-primary text-white"
 						icon="pi pi-pencil"
 						@click="showRegister(slotProps.data, 'edit')"
 					/>
@@ -98,12 +86,7 @@
 							$helper.checkUserHasPermission(route, 'delete') ||
 							$route.name === 'Demo'
 						"
-						class="
-							p-button-rounded p-button-text
-							border-primary
-							bg-primary
-							text-white
-						"
+						class="p-button-rounded p-button-text border-primary bg-primary text-white"
 						icon="pi pi-trash"
 						@click="deleteRegister(slotProps.data.id)"
 					/>
@@ -114,204 +97,204 @@
 </template>
 
 <script>
-import DataTable from "primevue/datatable";
-import Column from "primevue/column";
+	import DataTable from "primevue/datatable";
+	import Column from "primevue/column";
 
-import LoadingTable from "@/components/partials/tables/LoadingTableComponent.vue";
-import TableFilters from "@/components/partials/tables/TableFilters.vue";
+	import LoadingTable from "@/components/partials/tables/LoadingTable.vue";
+	import TableFilters from "@/components/partials/tables/TableFilters.vue";
 
-import { mapState, mapActions, mapMutations } from "vuex";
+	import { mapState, mapActions, mapMutations } from "vuex";
 
-export default {
-	components: {
-		TableFilters,
-		DataTable,
-		Column,
-		LoadingTable,
-	},
-	props: {
-		route: {
-			type: String,
-			required: true,
+	export default {
+		components: {
+			TableFilters,
+			DataTable,
+			Column,
+			LoadingTable,
 		},
-		stateVariable: {
-			type: String,
-			required: true,
+		props: {
+			route: {
+				type: String,
+				required: true,
+			},
+			stateVariable: {
+				type: String,
+				required: true,
+			},
+			list: {
+				type: Array,
+				default: () => [],
+			},
+			total: {
+				type: Number,
+				default: 0,
+			},
+			filters: {
+				type: Array,
+				default: () => [],
+			},
+			delete: {
+				type: String,
+			},
 		},
-		list: {
-			type: Array,
-			default: () => [],
+		data() {
+			return {
+				selectedIds: [],
+				timeout: null,
+				lastPageChange: null,
+			};
 		},
-		total: {
-			type: Number,
-			default: 0,
-		},
-		filters: {
-			type: Array,
-			default: () => [],
-		},
-		delete: {
-			type: String,
-		},
-	},
-	data() {
-		return {
-			selectedIds: [],
-			timeout: null,
-			lastPageChange: null,
-		};
-	},
-	methods: {
-		...mapActions(["getRegisters", "deleteRegisters"]),
-		...mapMutations([
-			"changeCurrentTablePage",
-			"toggleFormDialog",
-			"changeFormDialogMode",
-			"changeCurrentRegister",
-		]),
-		getList(event = null) {
-			if (
-				this.$helper.checkUserHasPermission(this.route) ||
-				this.$route.name === "Demo"
-			) {
+		methods: {
+			...mapActions(["getRegisters", "deleteRegisters"]),
+			...mapMutations([
+				"changeCurrentTablePage",
+				"toggleFormDialog",
+				"changeFormDialogMode",
+				"changeCurrentRegister",
+			]),
+			getList(event = null) {
+				if (
+					this.$helper.checkUserHasPermission(this.route) ||
+					this.$route.name === "Demo"
+				) {
+					this.getRegisters({
+						route: this.route,
+						stateVariable: this.stateVariable,
+						page: event?.page,
+						rows: event?.rows,
+					});
+				} else {
+					this.$router.push({ name: "Dashboard" });
+				}
+			},
+			changeCurrentPage(event) {
+				this.lastPageChange = event;
+
+				if (event != null) {
+					this.changeCurrentTablePage({
+						stateVariable: this.stateVariable,
+						event,
+					});
+				}
+
 				this.getRegisters({
 					route: this.route,
 					stateVariable: this.stateVariable,
 					page: event?.page,
 					rows: event?.rows,
 				});
-			} else {
-				this.$router.push({ name: "Dashboard" });
-			}
-		},
-		changeCurrentPage(event) {
-			this.lastPageChange = event;
 
-			if (event != null) {
-				this.changeCurrentTablePage({
-					stateVariable: this.stateVariable,
-					event,
-				});
-			}
-
-			this.getRegisters({
-				route: this.route,
-				stateVariable: this.stateVariable,
-				page: event?.page,
-				rows: event?.rows,
-			});
-
-			this.$emit("changeCurrentPage", event);
-		},
-		addRegister() {
-			this.toggleFormDialog({
-				stateVariable: this.stateVariable,
-				show: true,
-			});
-
-			this.$emit("addRegister");
-		},
-		showRegister(e, type) {
-			const register = e.data != undefined ? e.data : e;
-
-			this.changeCurrentRegister({
-				stateVariable: this.stateVariable,
-				register,
-			});
-
-			this.changeFormDialogMode({
-				stateVariable: this.stateVariable,
-				dialogMode: type,
-			});
-
-			this.toggleFormDialog({
-				stateVariable: this.stateVariable,
-				show: true,
-			});
-
-			this.$emit("showRegister", register, type);
-		},
-		deleteRegister(id) {
-			this.$confirm.require({
-				message: "¿Desea borrar el registro?",
-				header: "Borrar registro",
-				icon: "pi pi-exclamation-triangle",
-				accept: () => {
-					this.deleteRegisters({
-						url: `/${this.delete}/${id}`,
-					}).then(() => {
-						this.getList(this.lastPageChange);
-						this.$emit("getList", this.lastPageChange);
-					});
-				},
-			});
-		},
-		deleteCheckedRegisters() {
-			let ids = this.$helper.pushIdsToArray(
-				this.selectedIds,
-				this.lastPageChange != null
-					? this.lastPageChange.rows
-					: this.datatableDefaults.rows
-			);
-
-			this.$confirm.require({
-				message: "¿Desea borrar los registros seleccionados?",
-				header: "Borrar registros",
-				icon: "pi pi-exclamation-triangle",
-				accept: () => {
-					this.deleteRegisters({
-						url: `/${this.delete}-multiple`,
-						ids,
-					}).then(() => {
-						this.getList(this.lastPageChange);
-
-						this.$emit("getList", this.lastPageChange);
-						this.selectedIds = [];
-					});
-				},
-			});
-		},
-	},
-	computed: {
-		...mapState(["datatableDefaults"]),
-	},
-	watch: {
-		filters: {
-			handler() {
-				clearTimeout(this.timeout);
-
-				this.timeout = setTimeout(() => {
-					this.getList();
-				}, 250);
+				this.$emit("changeCurrentPage", event);
 			},
-			deep: true,
+			addRegister() {
+				this.toggleFormDialog({
+					stateVariable: this.stateVariable,
+					show: true,
+				});
+
+				this.$emit("addRegister");
+			},
+			showRegister(e, type) {
+				const register = e.data != undefined ? e.data : e;
+
+				this.changeCurrentRegister({
+					stateVariable: this.stateVariable,
+					register,
+				});
+
+				this.changeFormDialogMode({
+					stateVariable: this.stateVariable,
+					dialogMode: type,
+				});
+
+				this.toggleFormDialog({
+					stateVariable: this.stateVariable,
+					show: true,
+				});
+
+				this.$emit("showRegister", register, type);
+			},
+			deleteRegister(id) {
+				this.$confirm.require({
+					message: "¿Desea borrar el registro?",
+					header: "Borrar registro",
+					icon: "pi pi-exclamation-triangle",
+					accept: () => {
+						this.deleteRegisters({
+							url: `/${this.delete}/${id}`,
+						}).then(() => {
+							this.getList(this.lastPageChange);
+							this.$emit("getList", this.lastPageChange);
+						});
+					},
+				});
+			},
+			deleteCheckedRegisters() {
+				let ids = this.$helper.pushIdsToArray(
+					this.selectedIds,
+					this.lastPageChange != null
+						? this.lastPageChange.rows
+						: this.datatableDefaults.rows
+				);
+
+				this.$confirm.require({
+					message: "¿Desea borrar los registros seleccionados?",
+					header: "Borrar registros",
+					icon: "pi pi-exclamation-triangle",
+					accept: () => {
+						this.deleteRegisters({
+							url: `/${this.delete}-multiple`,
+							ids,
+						}).then(() => {
+							this.getList(this.lastPageChange);
+
+							this.$emit("getList", this.lastPageChange);
+							this.selectedIds = [];
+						});
+					},
+				});
+			},
 		},
-	},
-	mounted() {
-		this.getList();
-	},
-};
+		computed: {
+			...mapState(["datatableDefaults"]),
+		},
+		watch: {
+			filters: {
+				handler() {
+					clearTimeout(this.timeout);
+
+					this.timeout = setTimeout(() => {
+						this.getList();
+					}, 250);
+				},
+				deep: true,
+			},
+		},
+		mounted() {
+			this.getList();
+		},
+	};
 </script>
 
 <style lang="scss" scoped>
-.action-buttons {
-	button {
-		min-width: fit-content;
-	}
-}
-
-// Mobiles
-@media only screen and (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
-	:deep(.p-paginator-current) {
-		text-align: center;
-	}
-
-	:deep(.select-multiple) {
-		display: none !important;
-	}
-
 	.action-buttons {
-		overflow-x: auto;
+		button {
+			min-width: fit-content;
+		}
 	}
-}
+
+	// Mobiles
+	@media only screen and (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+		:deep(.p-paginator-current) {
+			text-align: center;
+		}
+
+		:deep(.select-multiple) {
+			display: none !important;
+		}
+
+		.action-buttons {
+			overflow-x: auto;
+		}
+	}
 </style>

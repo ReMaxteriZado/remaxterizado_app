@@ -23,8 +23,8 @@
 import Card from "primevue/card";
 import Listbox from "primevue/listbox";
 
-import TotalRegisters from "@/components/dashboard/TotalRegistersComponent.vue";
-import MaxCategories from "@/components/dashboard/MaxCategoriesComponent.vue";
+import TotalRegisters from "@/components/dashboard/TotalRegisters.vue";
+import MaxCategories from "@/components/dashboard/MaxCategories.vue";
 
 import { mapActions, mapState } from "vuex";
 

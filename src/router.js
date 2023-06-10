@@ -9,25 +9,31 @@ import AdminLayout from "@/components/layouts/AdminLayout.vue";
 import WebLayout from "@/components/layouts/WebLayout.vue";
 
 // Admin
-import Dashboard from "@/components/dashboard/DashboardComponent.vue";
-import Categories from "@/components/categories/CategoriesComponent.vue";
-import Links from "@/components/links/LinksComponent.vue";
-import Codes from "@/components/codes/CodesComponent.vue";
-import Roles from "@/components/roles/RolesComponent.vue";
-import Users from "@/components/users/UsersComponent.vue";
-import Demo from "@/components/demo/DemosComponent.vue";
+import Dashboard from "@/components/dashboard/Dashboard.vue";
+import Categories from "@/components/categories/Categories.vue";
+import Links from "@/components/links/Links.vue";
+import Codes from "@/components/codes/Codes.vue";
+import Roles from "@/components/roles/Roles.vue";
+import Users from "@/components/users/Users.vue";
+import Demo from "@/components/demo/Demos.vue";
 
 const routes = [
   {
     path: "/",
     component: WebLayout,
-    name: "home"
+    name: "home",
+    meta: {
+      title: "Inicio",
+    },
   },
   {
     path: "/login",
     component: LoginLayout,
     beforeEnter: checkLogin,
     name: "login",
+    meta: {
+      title: "Login",
+    },
   },
   {
     path: "/admin",
@@ -38,36 +44,58 @@ const routes = [
         path: "dashboard",
         name: "Dashboard",
         component: Dashboard,
+        meta: {
+          title: "Dashboard",
+        },
       },
       {
         path: "categories",
         name: "Categorías",
         component: Categories,
+        meta: {
+          title: "Categorías",
+        },
+
       },
       {
         path: "links",
         name: "Enlaces",
         component: Links,
+        meta: {
+          title: "Enlaces",
+        },
       },
       {
         path: "codes",
         name: "Códigos",
         component: Codes,
+        meta: {
+          title: "Códigos",
+        },
       },
       {
         path: "roles",
         name: "Roles",
         component: Roles,
+        meta: {
+          title: "Roles",
+        },
       },
       {
         path: "users",
         name: "Usuarios",
         component: Users,
+        meta: {
+          title: "Usuarios",
+        },
       },
       {
         path: "demo",
         name: "Demo",
         component: Demo,
+        meta: {
+          title: "Demo",
+        },
       },
     ],
   },
@@ -110,7 +138,11 @@ function checkUserLogged(to, from, next) {
       }
     })
     .catch((error) => {
-      console.error("Router JS ~ checkAdminRights", error.response, error.response?.data?.message);
+      console.error(
+        "Router JS ~ checkAdminRights",
+        error.response,
+        error.response?.data?.message
+      );
 
       if (error.response.data.message === "CSRF token mismatch.") {
         location.reload();
@@ -132,6 +164,26 @@ function checkUserLogged(to, from, next) {
 const router = new createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  // Get the page title from the route meta data that we have defined
+  // See further down below for how we setup this data
+  const title = to.meta.title;
+
+  //Take the title from the parameters
+  const titleFromParams = to.params.pageTitle;
+  // If the route has a title, set it as the page title of the document/page
+  if (title) {
+    document.title = title;
+  }
+  // If we have a title from the params, extend the title with the title
+  // from our params
+  if (titleFromParams) {
+    document.title = `${titleFromParams} - ${document.title}`;
+  }
+  // Continue resolving the route
+  next();
 });
 
 export default router;

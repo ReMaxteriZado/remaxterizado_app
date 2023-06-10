@@ -2,11 +2,12 @@
 	<div class="web">
 		<Sidebar />
 		<Navbar />
-		<Header class="mt-md-5" />
-		<About id="about-me" class="about" />
-		<Experience id="experience" class="experience" />
-		<Skills class="skills" />
+		<Header />
+		<About id="about-me" />
+		<Experience id="experience" />
+		<Skills />
 		<Footer id="contact" class="footer" />
+		<ToggleSidebarButton />
 	</div>
 </template>
 
@@ -18,6 +19,7 @@
 	import Experience from "@/components/web/sections/Experience.vue";
 	import Skills from "@/components/web/sections/Skills.vue";
 	import Footer from "@/components/web/sections/Footer.vue";
+	import ToggleSidebarButton from "@/components/web/partials/ToggleSidebarButton.vue";
 
 	export default {
 		components: {
@@ -28,28 +30,17 @@
 			Experience,
 			Skills,
 			Footer,
+			ToggleSidebarButton,
 		},
 	};
 </script>
 
 <style lang="scss" scoped>
-	.about,
-	.experience,
-	.skills {
-		padding-top: 8rem;
-	}
-
 	.footer {
 		margin-top: 8rem;
 	}
 
-	@media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
-		.about,
-		.experience,
-		.skills {
-			padding-top: 4rem;
-		}
-
+	@media (min-width: $mobile-min-width) and (max-width: $large-tablet-max-width) {
 		.footer {
 			margin-top: 4rem;
 		}

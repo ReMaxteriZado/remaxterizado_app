@@ -27,6 +27,7 @@
 					:placeholder="filter.placeholder"
 					:manualInput="true"
 				/>
+				<input hidden type="text" :name="filter.name" :value="filter.value" />
 			</div>
 		</div>
 	</form>

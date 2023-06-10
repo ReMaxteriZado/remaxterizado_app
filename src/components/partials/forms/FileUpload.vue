@@ -3,7 +3,7 @@
 		<label class="w-100 text-primary text-bold">{{ label }}</label>
 
 		<FileUpload
-			:showUploadButton="false"
+			:id="randomId"
 			cancelLabel="Cancelar"
 			:chooseLabel="chooseLabel"
 			:previewWidth="100"
@@ -75,152 +75,162 @@
 </template>
 
 <script>
-import FileUpload from "primevue/fileupload";
+	import FileUpload from "primevue/fileupload";
 
-import { mapActions } from "vuex";
+	import { mapActions } from "vuex";
 
-export default {
-	components: {
-		FileUpload,
-	},
-	data: () => ({
-		files: [],
-	}),
-	props: {
-		label: {
-			type: String,
-			default: "Seleccionar archivos",
+	export default {
+		components: {
+			FileUpload,
 		},
-		fileLimit: {
-			type: Number,
-			default: 1,
+		data: () => ({
+			files: [],
+		}),
+		props: {
+			label: {
+				type: String,
+				default: "Seleccionar archivos",
+			},
+			fileLimit: {
+				type: Number,
+				default: 1,
+			},
+			maxFileSize: {
+				type: Number,
+				default: 1100000,
+			},
+			chooseLabel: {
+				type: String,
+				default: "Subir archivo",
+			},
+			accept: {
+				type: String,
+				default: null,
+			},
+			error: {
+				type: String,
+				default: null,
+			},
+			disabled: {
+				type: Boolean,
+				default: false,
+			},
+			old_file_id: {
+				type: Number,
+				default: null,
+			},
+			old_files_array: {
+				type: Array,
+				default: () => [],
+			},
+			is_from_database: {
+				type: Boolean,
+				default: false,
+			},
+			download_old_file_route: {
+				type: String,
+				default: null,
+			},
+			show_old_files_array_delete: {
+				type: Boolean,
+				default: false,
+			},
+			delete_old_file_route: {
+				type: String,
+				default: null,
+			},
+			dispatch_action_on_delete: {
+				type: Object,
+				default: null,
+			},
 		},
-		maxFileSize: {
-			type: Number,
-			default: 1100000,
-		},
-		chooseLabel: {
-			type: String,
-			default: "Subir archivo",
-		},
-		accept: {
-			type: String,
-			default: null,
-		},
-		error: {
-			type: String,
-			default: null,
-		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-		old_file_id: {
-			type: Number,
-			default: null,
-		},
-		old_files_array: {
-			type: Array,
-			default: () => [],
-		},
-		is_from_database: {
-			type: Boolean,
-			default: false,
-		},
-		download_old_file_route: {
-			type: String,
-			default: null,
-		},
-		show_old_files_array_delete: {
-			type: Boolean,
-			default: false,
-		},
-		delete_old_file_route: {
-			type: String,
-			default: null,
-		},
-		dispatch_action_on_delete: {
-			type: Object,
-			default: null,
-		},
-	},
-	methods: {
-		...mapActions(["downloadFile", "deleteFile"]),
-		selected(event) {
-			event.files.forEach((file) => {
-				this.getBase64(file);
-			});
-		},
-		removeAllFiles() {
-			this.files = [];
-
-			const button = document.querySelector(".p-fileupload-buttonbar button");
-
-			if (button) {
-				button.click();
-			}
-		},
-		removeFile(event) {
-			this.files.forEach((file) => {
-				if (file.name == event.file.name) {
-					this.files.splice(this.files.indexOf(file), 1);
-				}
-			});
-		},
-		getBase64(file) {
-			this.removeAllFiles();
-
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-
-			reader.onload = () => {
-				this.files.push({ name: file.name, base64: reader.result });
-			};
-
-			reader.onerror = (error) => {
-				this.$toast.add({
-					severity: "error",
-					summary: "Ha ocurrido un error",
-					detail: "Inténtelo nuevamente",
-					life: 3000,
+		methods: {
+			...mapActions(["downloadFile", "deleteFile"]),
+			selected(event) {
+				event.files.forEach((file) => {
+					this.getBase64(file);
 				});
+			},
+			removeAllFiles() {
+				this.files = [];
 
-				console.error("Error: ", error);
-			};
+				const fileUploadElement = document.getElementById(this.randomId);
+
+				const button = fileUploadElement.querySelector(
+					".p-fileupload-buttonbar button"
+				);
+
+				if (button) {
+					button.click();
+				}
+			},
+			removeFile(event) {
+				this.files.forEach((file) => {
+					if (file.name == event.file.name) {
+						this.files.splice(this.files.indexOf(file), 1);
+					}
+				});
+			},
+			getBase64(file) {
+				this.removeAllFiles();
+
+				const reader = new FileReader();
+				reader.readAsDataURL(file);
+
+				reader.onload = () => {
+					this.files.push({ name: file.name, base64: reader.result });
+				};
+
+				reader.onerror = (error) => {
+					this.$toast.add({
+						severity: "error",
+						summary: "Ha ocurrido un error",
+						detail: "Inténtelo nuevamente",
+						life: 3000,
+					});
+
+					console.error("Error: ", error);
+				};
+			},
 		},
-	},
-};
+		computed: {
+			randomId() {
+				return Math.random().toString(36).substr(2, 9);
+			},
+		},
+	};
 </script>
 
-<style
-	lang="scss"
-	scoped
->
-:deep(.p-fileupload-empty p) {
-	margin-bottom: 0;
-}
+<style lang="scss" scoped>
+	:deep(.p-fileupload-empty p) {
+		margin-bottom: 0;
+	}
 
-:deep(.p-fileupload-buttonbar) {
-	gap: 1rem;
-}
+	:deep(.p-fileupload-buttonbar) {
+		gap: 1rem;
 
-:deep(.p-fileupload-buttonbar .p-button:last-child) {
-	background-color: #131313 !important;
-}
+		button:nth-of-type(1) {
+			display: none;
+		}
+	}
 
-:deep(.p-fileupload-content) {
-	padding: 1.25rem;
-}
+	:deep(.p-fileupload-buttonbar .p-button:last-child) {
+		background-color: #131313 !important;
+	}
 
-:deep(.p-fileupload-file) {
-	gap: 1rem;
-}
+	:deep(.p-fileupload-content) {
+		padding: 1.25rem;
+	}
 
-:deep(.p-badge) {
-	display: none;
-}
+	:deep(.p-fileupload-file) {
+		gap: 1rem;
+	}
 
-:deep(.p-fileupload-file-thumbnail) {
-	border-radius: 6px;
-}
+	:deep(.p-badge) {
+		display: none;
+	}
+
+	:deep(.p-fileupload-file-thumbnail) {
+		border-radius: 6px;
+	}
 </style>

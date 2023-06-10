@@ -6,8 +6,7 @@
 			<div
 				v-for="skill in skills"
 				:key="skill"
-				class="custom-badge px-5 py-3"
-				:class="{ active: skill.active }"
+				class="custom-badge p-2 px-md-5 py-md-3"
 			>
 				<div
 					class="image-container d-flex justify-content-center align-items-center rounded"
@@ -19,7 +18,9 @@
 						width="25"
 					/>
 				</div>
-				{{ skill.label }}
+				<div class="skill-label text-center">
+					{{ skill.label }}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -34,67 +35,56 @@
 						label: "Vue",
 						img: "vue.png",
 						bgColor: "#41b883",
-						active: false,
 					},
 					{
 						label: "Laravel",
 						img: "laravel.png",
 						bgColor: "#eb4d43",
-						active: false,
 					},
 					{
 						label: "JavaScript",
 						img: "js.png",
 						bgColor: "#f6a81d",
-						active: false,
 					},
 					{
 						label: "PHP",
 						img: "php.png",
 						bgColor: "#6180b6",
-						active: false,
 					},
 					{
 						label: "SCSS",
 						img: "sass.png",
 						bgColor: "#c76395",
-						active: false,
 					},
 					{
 						label: "CSS3",
 						img: "css.png",
 						bgColor: "#3595cf",
-						active: false,
 					},
 					{
 						label: "JQuery",
 						img: "jquery.png",
 						bgColor: "#1163a4",
-						active: false,
 					},
 					{
 						label: "GIT",
 						img: "git.png",
 						bgColor: "#e84d31",
-						active: false,
 					},
 					{
 						label: "HTML5",
 						img: "html5.png",
 						bgColor: "#e96228",
-						active: false,
 					},
 					{
 						label: "SQL",
 						img: "sql.png",
 						bgColor: "#d88d28",
-						active: false,
 					},
 					{
 						label: "Android",
 						img: "android.png",
 						bgColor: "#3bd481",
-						active: false,
 					},
 				],
 			};
@@ -123,21 +113,8 @@
 				left: -1rem;
 				overflow: hidden;
 				transition: $transition;
-
-				&::after {
-					content: "";
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background-color: black;
-					opacity: 0;
-					transition: $transition;
-				}
 			}
 
-			&.active,
 			&:hover {
 				transform: translate(2px, 2px);
 
@@ -146,15 +123,39 @@
 					transform: translateY(-50%);
 				}
 			}
+		}
+	}
 
-			&.active {
-				background-color: $secondary;
-				color: white;
+	@media (min-width: $mobile-min-width) and (max-width: $large-tablet-max-width) {
+		.skills {
+			gap: 1rem;
+
+			.custom-badge {
+				width: 40%;
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-size: 0.8rem;
 
 				.image-container {
-					&::after {
-						opacity: 0.25;
+					width: 3rem;
+					height: 3rem;
+					position: relative;
+					top: unset;
+					left: unset;
+				}
+
+				&:hover {
+					transform: unset;
+
+					.image-container {
+						top: auto;
+						transform: unset;
 					}
+				}
+
+				.skill-label {
+					width: calc(100% - 3.5rem);
 				}
 			}
 		}

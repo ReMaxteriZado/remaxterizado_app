@@ -1,5 +1,5 @@
 <template>
-	<div class="d-none d-md-block position-sticky top-0 left-0 text-uppercase">
+	<div class="d-none d-lg-block position-fixed text-uppercase">
 		<div class="container">
 			<div class="row align-items-center py-4">
 				<div class="col-6 d-flex">
@@ -63,11 +63,14 @@
 </script>
 
 <style lang="scss" scoped>
-	.position-sticky {
+	.position-fixed {
 		background: rgba(255, 255, 255, 0.25);
 		box-shadow: 0 8px 32px 0 rgba($secondary, 0.37);
 		backdrop-filter: blur(4px);
-		z-index: 1;
+		z-index: 10;
+		top: 0;
+		left: 0;
+		right: 0;
 
 		.links {
 			position: relative;

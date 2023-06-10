@@ -1,17 +1,45 @@
 <template>
-	<div class="container">
-		<div class="w-100 group d-flex justify-content-end flex-column">
-			<div class="image rounded"></div>
-			<div
-				v-if="currentText != ''"
-				class="name rounded px-4 py-2 bg-secondary text-white text-uppercase"
-				:class="{ animate: currentText.length == text.length }"
-			>
-				<div class="main-text">{{ currentText }}</div>
-				<div class="secondary-text">
-					Focused on <span class="text-primary">Frontend</span>
-				</div>
+	<div class="w-100 group">
+		<div class="image"></div>
+		<div
+			v-if="currentText != ''"
+			class="name rounded px-4 py-2 bg-secondary text-white text-uppercase"
+			:class="{ animate: currentText.length == text.length }"
+		>
+			<div class="main-text">{{ currentText }}</div>
+			<div class="secondary-text">
+				Focused on <span class="text-primary">Frontend</span>
 			</div>
+		</div>
+		<div class="waves">
+			<div class="bottom-bg"></div>
+			<svg
+				v-for="n in 3"
+				:key="n"
+				width="100%"
+				height="100%"
+				viewBox="0 0 1000 1000"
+				xmlns="http://www.w3.org/2000/svg"
+				preserveAspectRatio="none"
+				overflow="auto"
+				shape-rendering="auto"
+				fill="#ffffff"
+			>
+				<defs>
+					<path
+						id="wavepath"
+						d="M 0 2000 0 500 Q 123 360 246 500 t 246 0 246 0 246 0 246 0 246 0 246 0  v1000 z"
+					/>
+					<path id="motionpath" d="M -492 0 0 0" />
+				</defs>
+				<g>
+					<use xlink:href="#wavepath" y="125" fill="#041525">
+						<animateMotion :dur="n * 5.3 + 's'" repeatCount="indefinite">
+							<mpath xlink:href="#motionpath" />
+						</animateMotion>
+					</use>
+				</g>
+			</svg>
 		</div>
 	</div>
 </template>
@@ -20,7 +48,7 @@
 	export default {
 		data() {
 			return {
-				text: "Software Developer",
+				text: "FullStack Developer",
 				currentText: "",
 			};
 		},
@@ -29,7 +57,9 @@
 				this.typeWriter();
 			}, 1000);
 
-			this.trackMouse();
+			if (!("ontouchstart" in document.documentElement)) {
+				this.trackMouse();
+			}
 		},
 		methods: {
 			typeWriter() {
@@ -51,12 +81,14 @@
 			animate(className, x, y) {
 				const element = document.querySelector(className);
 
-				const elementRect = element.getBoundingClientRect();
+				if (element) {
+					const elementRect = element.getBoundingClientRect();
 
-				const xAngle = (elementRect.top - y) / 50;
-				const yAngle = ((elementRect.left - x) / 120) * -1;
+					const xAngle = (elementRect.top - y) / 50;
+					const yAngle = ((elementRect.left - x) / 120) * -1;
 
-				element.style.transform = `perspective(500px) rotateX(${xAngle}deg) rotateY(${yAngle}deg) translateY(-50%)`;
+					element.style.transform = `perspective(500px) rotateX(${xAngle}deg) rotateY(${yAngle}deg) translateY(-50%)`;
+				}
 			},
 		},
 	};
@@ -67,17 +99,28 @@
 		position: relative;
 
 		.image {
-			width: 80%;
+			width: 100%;
+			height: 100vh;
 			background-image: url("@/assets/images/header.jpeg");
 			background-size: cover;
 			background-position: center;
-			aspect-ratio: 4/3;
 			transition: $transition;
-			animation: animate 1s ease-out forwards;
+			animation: animate 0.5s ease-out forwards;
+			position: relative;
+
+			&::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.3);
+			}
 
 			@keyframes animate {
 				from {
-					transform: translateX(80px);
+					transform: translateY(80px);
 					opacity: 0;
 				}
 
@@ -91,7 +134,7 @@
 		.name {
 			position: absolute;
 			top: 50%;
-			left: -10%;
+			left: 10%;
 			transform: translateY(-50%);
 			white-space: nowrap;
 			font-size: 3rem;
@@ -124,38 +167,76 @@
 				}
 			}
 		}
+
+		.waves {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 15rem;
+
+			svg {
+				opacity: 0.5;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+			}
+
+			.bottom-bg {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 10rem;
+				background: linear-gradient(0deg, $secondary 0%, rgba(0, 0, 0, 0) 100%);
+			}
+		}
 	}
 
-	@media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
-		.container {
-			padding: 0;
+	@media (min-width: $mobile-min-width) and (max-width: $large-tablet-max-width) {
+		.group {
+			.name {
+				left: 50%;
+				transform: translateX(-50%) scale(0.9);
 
-			.group {
-				.image {
-					position: relative;
-					width: 100%;
-					aspect-ratio: 16/9;
-					border-radius: 0 !important;
+				.main-text {
+					font-size: 1.8rem;
 				}
 
-				.name {
+				.secondary-text {
 					position: relative;
-					transform: none;
+					text-align: center;
+					top: auto;
 					left: auto;
-					white-space: inherit;
-					border-radius: 0 !important;
+					transform: translateY(-50%);
+					transition: $transition;
+					font-size: 1.5rem;
+					opacity: 0;
+				}
 
-					.main-text {
-						font-size: 1.8rem;
-					}
-
+				&.animate {
 					.secondary-text {
-						position: relative;
-						top: auto;
-						left: auto;
-						transform: none;
-						font-size: 1.5rem;
+						transform: translateY(0%);
+						opacity: 1;
 					}
+					&:hover {
+						.main-text {
+							transform: none;
+						}
+
+						.secondary-text {
+							top: auto;
+						}
+					}
+				}
+			}
+
+			.waves {
+				height: 10rem;
+
+				.bottom-bg {
+					height: 5rem;
 				}
 			}
 		}
