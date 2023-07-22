@@ -13,59 +13,60 @@
 @import "~bootstrap/scss/bootstrap";
 
 ::selection {
-	color: white;
-	background: $primary;
+  color: white;
+  background: $primary;
 }
 
 // Code for Firefox
 ::-moz-selection {
-	color: white;
-	background: $primary;
+  color: white;
+  background: $primary;
 }
 
 // Width
 ::-webkit-scrollbar {
-	height: 6px;
-	width: 6px;
+  height: 6px;
+  width: 6px;
 }
 
 // Track
 ::-webkit-scrollbar-track {
-	background: rgba(#000000, 0.2);
-	border-radius: $border-radius;
+  background: rgba(#000000, 0.2);
+  border-radius: $border-radius;
 }
 
 // Handle
 ::-webkit-scrollbar-thumb {
-	background: $primary;
-	border-radius: $border-radius;
+  background: $primary;
+  border-radius: $border-radius;
 }
 
 // Handle on hover
 ::-webkit-scrollbar-thumb:hover {
-	background: darken($primary, 20%);
+  background: darken($primary, 20%);
 }
 
 #app {
-	font-family: Work_Sans, sans-serif;
+  font-family: Work_Sans, sans-serif;
+  background-color: #eeeeee;
 
-	section {
-		padding-top: 5rem;
-	}
+  section {
+    padding-top: 5rem;
+  }
 
-	.datatable {
-		a {
-			color: $primary;
-			text-decoration: none;
-		}
-	}
+  .datatable {
+    a {
+      color: $primary;
+      text-decoration: none;
+    }
+  }
 
-	hr {
-		height: 2px;
-		background-color: white;
-	}
+  hr {
+    height: 2px;
+    background-color: white;
+  }
 }
 
 .cursor-pointer {
-	cursor: pointer;
+  cursor: pointer;
 }

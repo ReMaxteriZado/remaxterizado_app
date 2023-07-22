@@ -34,7 +34,9 @@ dom.watch();
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-AOS.init();
+AOS.init({
+  once: true,
+});
 
 // PrimeVue
 import PrimeVue from "primevue/config";
@@ -46,14 +48,14 @@ import ConfirmationService from "primevue/confirmationservice";
 import Tooltip from "primevue/tooltip";
 import Ripple from "primevue/ripple";
 import Button from "primevue/button";
-import Badge from 'primevue/badge';
+import Badge from "primevue/badge";
 import Dialog from "primevue/dialog";
 
 // Fonts
 require("@/assets/fonts/Work_Sans/Work_Sans.css");
 
 // Auto animate
-import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
+import { autoAnimatePlugin } from "@formkit/auto-animate/vue";
 
 // Tables
 import TableDefault from "@/components/partials/tables/TableDefault.vue";
@@ -86,49 +88,57 @@ app.use(ConfirmationService);
 app.use(autoAnimatePlugin);
 
 app.use(PrimeVue, {
-	ripple: true,
-	locale: {
-		dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
-		dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
-		dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
-		monthNames: [
-			"Enero",
-			"Febrero",
-			"Marzo",
-			"Abril",
-			"Mayo",
-			"Junio",
-			"Julio",
-			"Agosto",
-			"Septiembre",
-			"Octubre",
-			"Noviembre",
-			"Diciembre",
-		],
-		monthNamesShort: [
-			"Ene",
-			"Feb",
-			"Mar",
-			"Abr",
-			"May",
-			"Jun",
-			"Jul",
-			"Ago",
-			"Sep",
-			"Oct",
-			"Nov",
-			"Dic",
-		],
-		today: "Hoy",
-		firstDayOfWeek: 1,
-		accept: "Aceptar",
-		reject: "Rechazar",
-		clear: "Limpiar",
-		weak: "Débil",
-		medium: "Medio",
-		strong: "Fuerte",
-		pending: "Pendiente",
-	},
+  ripple: true,
+  locale: {
+    dayNames: [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+    ],
+    dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+    dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+    monthNames: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ],
+    monthNamesShort: [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic",
+    ],
+    today: "Hoy",
+    firstDayOfWeek: 1,
+    accept: "Aceptar",
+    reject: "Rechazar",
+    clear: "Limpiar",
+    weak: "Débil",
+    medium: "Medio",
+    strong: "Fuerte",
+    pending: "Pendiente",
+  },
 });
 
 app.component("font-awesome-icon", FontAwesomeIcon);
