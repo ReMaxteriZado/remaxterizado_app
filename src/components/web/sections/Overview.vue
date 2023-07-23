@@ -1,6 +1,6 @@
 <template>
   <div class="overview row">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-lg-4">
       <h2
         class="title text-uppercase"
         data-aos="fade-right"
@@ -9,7 +9,7 @@
         Overview
       </h2>
     </div>
-    <div class="col-12 col-md-8">
+    <div class="col-12 col-lg-8">
       <div class="d-flex flex-column gap-3">
         <!-- Technologies -->
         <div
@@ -173,7 +173,6 @@
 export default {
   data() {
     return {
-      animation: "fade-left",
       duration: 800,
       skills: [
         {
@@ -275,6 +274,15 @@ export default {
       }
     },
   },
+  computed: {
+    animation() {
+      if (window.innerWidth >= 768) {
+        return "fade-left";
+      } else {
+        return "fade-up";
+      }
+    },
+  },
   mounted() {
     this.loadAccordion();
   },
@@ -371,6 +379,14 @@ export default {
           transform: translateY(-50%);
         }
       }
+    }
+  }
+
+  @media (min-width: $tablet-min-width) and (max-width: $tablet-max-width) {
+    margin-top: 5rem;
+
+    .title {
+      font-size: 2.5rem;
     }
   }
 }

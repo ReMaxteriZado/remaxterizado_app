@@ -43,13 +43,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.footer {
-  margin-top: 8rem;
-}
-
-@media (min-width: $mobile-min-width) and (max-width: $large-tablet-max-width) {
+.web {
   .footer {
-    margin-top: 4rem;
+    margin-top: 8rem;
+  }
+
+  @media (min-width: $mobile-min-width) and (max-width: $large-tablet-max-width) {
+    .footer {
+      margin-top: 4rem;
+    }
   }
 }
 </style>

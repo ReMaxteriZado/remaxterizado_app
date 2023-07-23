@@ -8,7 +8,7 @@
       <h2>Last projects</h2>
       <div class="line"></div>
     </div>
-    <div class="d-flex gap-2">
+    <div class="d-flex flex-column flex-lg-row gap-2">
       <a
         v-for="(project, index) in projects"
         :key="index"
@@ -109,12 +109,22 @@ export default {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 5;
+        z-index: 2;
       }
     }
 
     &:hover {
       flex-grow: 1.5;
+    }
+  }
+
+  @media (min-width: $tablet-min-width) and (max-width: $large-tablet-max-width) {
+    .project-container {
+      .project {
+        img {
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+      }
     }
   }
 }
