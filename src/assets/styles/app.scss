@@ -12,6 +12,10 @@
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
 
+* {
+  cursor: none;
+}
+
 ::selection {
   color: white;
   background: $primary;
