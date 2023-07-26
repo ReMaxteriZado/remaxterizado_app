@@ -31,7 +31,7 @@ export default {
     width: 100%;
     height: 100%;
     background: rgba(#000000, 0.3);
-    z-index: 9999;
+    z-index: 100;
     opacity: 0;
     visibility: hidden;
     transition: $transition;

@@ -1,14 +1,19 @@
 <template>
 	<div class="web">
-		<div class="cursor"></div>
-		<div class="cursor2"></div>
+		<div class="cursor d-none d-md-block"></div>
+		<div class="cursor2 d-none d-md-block"></div>
+
+		<div class="background"></div>
+		<div class="background"></div>
+		<div class="background"></div>
+
 		<Sidebar />
 		<Navbar />
 		<div class="row justify-content-center mx-0">
-			<div class="col-12 col-md-10">
+			<div class="content col-12 col-md-10">
 				<Header />
-				<Projects id="last-projects" />
-				<Overview id="overview" />
+				<Projects id="last-projects" class="padding-top" />
+				<Overview id="overview" class="padding-top" />
 				<Footer id="footer" />
 			</div>
 		</div>
@@ -76,6 +81,7 @@
 					});
 				});
 			},
+			initParticles() {},
 			preventRightClick() {
 				document.addEventListener("contextmenu", (event) =>
 					event.preventDefault()
@@ -115,7 +121,7 @@
 			position: fixed;
 			pointer-events: none;
 			transform: translate(calc(-50% + 15px), -50%);
-			z-index: 9999;
+			z-index: 95;
 
 			&.hover {
 				background-color: $primary;
@@ -138,7 +144,7 @@
 			transform: translate(-50%, -50%);
 			pointer-events: none;
 			transition: width 0.3s, height 0.3s, opacity 0.3s;
-			z-index: 9999;
+			z-index: 95;
 
 			&.mousedown {
 				width: 50px;
@@ -146,11 +152,52 @@
 			}
 		}
 
+		.background {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: -50%;
+			right: -50%;
+			animation: slide 15s ease-in-out infinite alternate;
+			background-image: linear-gradient(-60deg, #eeeeee 50%, #bcbcbc 50%);
+			opacity: 0.4;
+
+			&:nth-of-type(2) {
+				animation-direction: alternate-reverse;
+				animation-duration: 24s;
+			}
+
+			&:nth-of-type(3) {
+				animation-duration: 30s;
+			}
+		}
+
+		@keyframes slide {
+			0% {
+				transform: translateX(-25%);
+			}
+			100% {
+				transform: translateX(25%);
+			}
+		}
+
+		.content {
+			z-index: 5;
+		}
+
+		.padding-top {
+			padding-top: 6rem;
+		}
+
 		.footer {
 			margin-top: 8rem;
 		}
 
 		@media (min-width: $mobile-min-width) and (max-width: $large-tablet-max-width) {
+			.padding-top {
+				padding-top: 1rem;
+			}
+
 			.footer {
 				margin-top: 4rem;
 			}
