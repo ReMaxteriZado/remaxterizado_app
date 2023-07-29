@@ -11,8 +11,26 @@
 					class="back-top cursor-hover d-flex align-items-center gap-3 px-3 py-2"
 					@click="goTop"
 				>
-					<div class="h5 mb-0">Back top</div>
+					<div class="h5 mb-0">
+						{{ $t("footer.back_to_top") }}
+					</div>
 					<i class="fa fa-chevron-up small"></i>
+				</div>
+			</div>
+			<div class="d-none d-lg-flex align-items-center gap-3">
+				<div
+					class="language cursor-hover px-3 py-1 border-dark rounded"
+					:class="{ 'bg-primary text-white': english }"
+					@click="changeLanguage('en')"
+				>
+					EN
+				</div>
+				<div
+					class="language cursor-hover px-3 py-1 border-dark rounded"
+					@click="changeLanguage('es')"
+					:class="{ 'bg-primary text-white': spanish }"
+				>
+					ES
 				</div>
 			</div>
 			<div class="icons d-flex align-items-center gap-4">
@@ -90,6 +108,17 @@
 			goTop() {
 				window.scrollTo(0, 0);
 			},
+			changeLanguage(language) {
+				this.$i18n.locale = language;
+			},
+		},
+		computed: {
+			english() {
+				return this.$i18n.locale === "en";
+			},
+			spanish() {
+				return this.$i18n.locale === "es";
+			},
 		},
 	};
 </script>
@@ -99,6 +128,15 @@
 		padding-bottom: 5rem;
 
 		.back-top {
+			transition: $transition;
+			border-radius: 10rem;
+
+			&:hover {
+				background-color: lightgray;
+			}
+		}
+
+		.language {
 			transition: $transition;
 			border-radius: 10rem;
 

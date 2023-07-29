@@ -1,0 +1,35 @@
+@font-face {
+	font-family: "Work_Sans";
+	src: url("/src/assets/fonts/Work_Sans/WorkSans-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "Work_Sans";
+	src: url("/src/assets/fonts/Work_Sans/WorkSans-ExtraLight.ttf");
+	font-weight: 100;
+}
+
+@font-face {
+	font-family: "Work_Sans";
+	src: url("/src/assets/fonts/Work_Sans/WorkSans-Bold.ttf");
+	font-weight: 900;
+}
+
+@font-face {
+	font-family: "Poppins";
+	src: url("/src/assets/fonts/Poppins/Poppins-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("/src/assets/fonts/Poppins/Poppins-ExtraLight.ttf");
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("/src/assets/fonts/Poppins/Poppins-Bold.ttf");
+    font-weight: 900;
+}

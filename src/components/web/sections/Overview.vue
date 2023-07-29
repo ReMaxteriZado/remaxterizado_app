@@ -6,7 +6,7 @@
 				data-aos="fade-right"
 				data-aos-duration="800"
 			>
-				Overview
+				{{ $t("overview.title") }}
 			</h2>
 		</div>
 		<div class="col-12 col-lg-8">
@@ -21,7 +21,7 @@
 					<div
 						class="accordion cursor-hover d-flex justify-content-between align-items-center w-100"
 					>
-						<div class="title">Technologies</div>
+						<div class="title">{{ $t("overview.technologies") }}</div>
 						<div class="icon d-flex align-items-center justify-content-center">
 							<span>
 								<i class="fa fa-chevron-right"></i>
@@ -57,7 +57,7 @@
 					<div
 						class="accordion cursor-hover d-flex justify-content-between align-items-center w-100"
 					>
-						<div class="title">Experience</div>
+						<div class="title">{{ $t("overview.experience") }}</div>
 						<div class="icon d-flex align-items-center justify-content-center">
 							<span>
 								<i class="fa fa-chevron-right"></i>
@@ -73,12 +73,16 @@
 							:class="[index == 0 ? 'mt-3' : 'mt-5']"
 						>
 							<div class="h5">
-								<b>{{ experience.title }}</b> | {{ experience.period }}
+								<b>{{ experience.title }}</b> |
+								{{ $t(`overview.company_${index + 1}.period`) }}
 							</div>
 
-							<p class="mb-0 description" v-html="experience.description"></p>
+							<p
+								class="mb-0 description"
+								v-html="$t(`overview.company_${index + 1}.description`)"
+							></p>
 							<a :href="experience.company_url" target="_blank" class="fw-bold"
-								>Company website
+								>Company's website
 							</a>
 						</div>
 					</div>
@@ -95,7 +99,7 @@
 					<div
 						class="accordion cursor-hover d-flex justify-content-between align-items-center w-100"
 					>
-						<div class="title">About me</div>
+						<div class="title">{{ $t("overview.about_me") }}</div>
 						<div class="icon d-flex align-items-center justify-content-center">
 							<span>
 								<i class="fa fa-chevron-right"></i>
@@ -106,15 +110,10 @@
 					<!-- Accordion content -->
 					<div class="panel">
 						<p>
-							Full Stack Programmer with advanced knowledge in VueJS, Laravel
-							and PHP among others. I am specialized in Front-end, responsive
-							and animations, and I would like to focus my career in this
-							direction. career in this direction.
+							{{ $t("overview.about_me_description_1") }}
 						</p>
 						<p class="mb-0">
-							I consider myself a responsible, hardworking and eager to learn
-							person. to learn. With B1 level of English and eager to keep
-							improving.
+							{{ $t("overview.about_me_description_2") }}
 						</p>
 					</div>
 				</div>
@@ -130,7 +129,7 @@
 					<div
 						class="accordion cursor-hover d-flex justify-content-between align-items-center w-100"
 					>
-						<div class="title">Repository</div>
+						<div class="title">{{ $t("overview.repository") }}</div>
 						<div class="icon d-flex align-items-center justify-content-center">
 							<span>
 								<i class="fa fa-chevron-right"></i>
@@ -141,25 +140,22 @@
 					<!-- Accordion content -->
 					<div class="panel">
 						<p>
-							You can check by yourself and with no filters, all the code I have
-							made to create this whole website. Even a back panel designed from
-							scratch to store some of my links of interest, code blocks, ...
+							{{ $t("overview.repository_description_1") }}
 						</p>
 						<p>
-							From my very first day at work, I have learned all my knowledge
-							for my own. The code that you can see has been totally developed
-							by myself.
+							{{ $t("overview.repository_description_2") }}
 						</p>
 						<div class="d-flex gap-4">
 							<a
 								href="https://github.com/ReMaxteriZado/remaxterizado_app"
 								target="_blank"
-								>Frontend repository</a
 							>
+								{{ $t("overview.frontend_repository") }}
+							</a>
 							<a
 								href="https://github.com/ReMaxteriZado/remaxterizado_api"
 								target="_blank"
-								>Backend repository</a
+								>{{ $t("overview.backend_repository") }}</a
 							>
 						</div>
 					</div>
@@ -235,21 +231,10 @@
 					{
 						title: "Tca-tik",
 						company_url: "https://tcatik.com/",
-						period: "2020 May - 2022 June",
-						description: `<p>Two years of experience in the development of web pages and business management
-						and business management applications for different clients, using different languages and technologies
-						languages and technologies according to the needs of each project.</p>
-						<p>In these years I worked as lead developer on more than 10 projects, and helped with many others.
-							with many others</p>`,
 					},
 					{
 						title: "Occam",
 						company_url: "https://www.occamagenciadigital.com/",
-						period: "2022 June - Actuality",
-						description: `<p>Lead developer of all the company's web projects, whether they are web pages, administration panels or
-						web pages, administration panels or APIs for mobile applications.</p>
-						<p>I have created numerous projects as a sole developer, the largest of them being 
-							an ERP with more than 100 people working on it every day.</p>`,
 					},
 				],
 			};

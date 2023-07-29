@@ -29,9 +29,7 @@
 		},
 		watch: {
 			showSidebar() {
-				setTimeout(() => {
-					this.sidebarShown = this.showSidebar;
-				}, 500);
+				this.sidebarShown = this.showSidebar;
 			},
 		},
 	};
@@ -42,7 +40,7 @@
 		position: fixed;
 		bottom: 1rem;
 		right: 1rem;
-		z-index: 4;
+		z-index: 9;
 		border-radius: 100%;
 		box-shadow: $smooth-box-shadow;
 		transition: $transition;

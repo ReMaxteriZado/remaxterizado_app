@@ -28,6 +28,8 @@
         "prismjs": "^1.28.0",
         "vform": "^2.1.2",
         "vue": "^3.2.13",
+        "vue-gtag": "^2.0.1",
+        "vue-i18n": "^9.2.2",
         "vue-prism-editor": "^2.0.0-alpha.2",
         "vue-router": "^4.0.14",
         "vuex": "^4.0.2",

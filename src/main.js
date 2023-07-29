@@ -52,10 +52,22 @@ import Badge from "primevue/badge";
 import Dialog from "primevue/dialog";
 
 // Fonts
-require("@/assets/fonts/Work_Sans/Work_Sans.css");
+require("@/assets/fonts/fonts.css");
 
 // Auto animate
 import { autoAnimatePlugin } from "@formkit/auto-animate/vue";
+
+// vue-i18n
+import { createI18n } from 'vue-i18n'
+import translations from "./translations";
+
+const i18n = createI18n({
+  locale: 'en',
+  messages: translations,
+});
+
+// Google Analytics
+import VueGtag from 'vue-gtag';
 
 // Tables
 import TableDefault from "@/components/partials/tables/TableDefault.vue";
@@ -86,6 +98,11 @@ app.use(router);
 app.use(ToastService);
 app.use(ConfirmationService);
 app.use(autoAnimatePlugin);
+app.use(i18n)
+
+app.use(VueGtag, {
+  config: { id: 'G-CDGFGECCRE' }
+});
 
 app.use(PrimeVue, {
   ripple: true,

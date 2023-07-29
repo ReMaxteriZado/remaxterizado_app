@@ -5,19 +5,21 @@
 			data-aos-duration="800"
 			class="d-flex align-items-center gap-4 mb-5"
 		>
-			<h2>Last projects</h2>
+			<h2>{{ $t("projects.title") }}</h2>
 			<div class="line"></div>
 		</div>
-		<div class="d-flex flex-column flex-lg-row gap-2">
+		<div
+			class="d-flex flex-column flex-lg-row justify-content-center w-100 gap-2"
+		>
 			<a
 				v-for="(project, index) in projects"
 				:key="index"
 				:href="project.url"
 				target="_blank"
-				class="project-container cursor-hover"
+				class="project-container"
 			>
 				<div
-					class="project w-100 h-100"
+					class="project cursor-hover w-100 h-100"
 					:style="{
 						backgroundImage:
 							'url(' +
@@ -115,6 +117,12 @@
 
 			&:hover {
 				flex-grow: 1.5;
+			}
+		}
+
+		@media only screen and (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+			.project-container {
+				height: 25rem;
 			}
 		}
 

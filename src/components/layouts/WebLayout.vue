@@ -1,7 +1,7 @@
 <template>
 	<div class="web">
-		<div class="cursor d-none d-md-block"></div>
-		<div class="cursor2 d-none d-md-block"></div>
+		<div class="cursor d-none d-xl-block"></div>
+		<div class="cursor2 d-none d-xl-block"></div>
 
 		<div class="background"></div>
 		<div class="background"></div>
@@ -81,7 +81,6 @@
 					});
 				});
 			},
-			initParticles() {},
 			preventRightClick() {
 				document.addEventListener("contextmenu", (event) =>
 					event.preventDefault()

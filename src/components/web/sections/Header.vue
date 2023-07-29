@@ -13,7 +13,7 @@
 				:data-aos-duration="duration"
 				data-aos-delay="200"
 			>
-				<h1 class="animate">website</h1>
+				<h1 class="animate text-primary">website</h1>
 			</div>
 			<div
 				class="d-none d-lg-flex align-items-center gap-4"
@@ -22,10 +22,9 @@
 				data-aos-delay="400"
 			>
 				<p class="animate mb-0">
-					Welcome to my portolio with information about me, my skills and some
-					projects
+					{{ $t("header.welcome") }}
 				</p>
-				<h1 class="animate">Developer</h1>
+				<h1 class="animate text-secondary">Developer</h1>
 			</div>
 			<div class="d-lg-none">
 				<h1
@@ -41,8 +40,7 @@
 					:data-aos-duration="duration"
 					data-aos-delay="600"
 				>
-					Welcome to my portolio with information about me, my skills and some
-					projects
+					{{ $t("header.welcome") }}
 				</p>
 			</div>
 		</div>

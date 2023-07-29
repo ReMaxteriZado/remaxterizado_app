@@ -27,7 +27,7 @@
 							<div
 								class="link cursor-hover bg-white text-secondary px-3 py-2 rounded h5 mb-0"
 							>
-								{{ link.text }}
+								{{ $t(`navbar.${link.i18n}`) }}
 							</div>
 						</a>
 					</div>
@@ -46,11 +46,11 @@
 				links: [
 					{
 						name: "last-projects",
-						text: "Last projects",
+						i18n: "last_projects",
 					},
 					{
 						name: "overview",
-						text: "Overview",
+						i18n: "overview",
 					},
 				],
 			};
